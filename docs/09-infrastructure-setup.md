@@ -34,9 +34,9 @@ Verification: four local deployment-guard tests passed, Actionlint 1.7.12 report
 
 ## DNS status and required records
 
-At initial inspection, authoritative nameservers were `aster.dns-parking.com` and `helios.dns-parking.com`, the apex A record was `2.57.91.91`, and the site displayed a Hostinger parking page. No development CNAME existed. Hostinger browser sign-in is required to edit this zone; the connected Hostinger Mail plugin does not manage DNS.
+At initial inspection, authoritative nameservers were `aster.dns-parking.com` and `helios.dns-parking.com`, the apex A record was `2.57.91.91`, and the site displayed a Hostinger parking page. No development CNAME existed. The owner completed Hostinger sign-in, and the DNS edits below were saved successfully on 2026-10-15.
 
-Vercel's project-specific configuration returned these preferred records. Re-query before applying if setup is resumed later:
+Applied the following preferred records returned by Vercel's project-specific configuration:
 
 | Type | Host | Value |
 | --- | --- | --- |
@@ -44,13 +44,17 @@ Vercel's project-specific configuration returned these preferred records. Re-que
 | A | `@` | `64.29.17.1` |
 | CNAME | `dev` | `a34dcb59e9859370.vercel-dns-017.com` |
 
-Replace the parking A record with the preferred apex records, resolve conflicting web A/AAAA/CNAME records, and preserve MX/TXT/mail records. No nameserver transfer is needed. Domain attachment alone does not make a website live; validate authoritative/public DNS, Vercel configuration, certificates and HTTP responses after the first approved deployment. Do not claim DNS has changed until the provider confirms the write.
+The parking A record was replaced. The existing `www` CNAME to `usjunkcars.si` was preserved, and `www.usjunkcars.si` was attached to the production Vercel project with a 308 redirect to the apex. No nameservers or unrelated records were changed. The inspected zone contained no mail records.
+
+Both authoritative nameservers, Cloudflare DNS (`1.1.1.1`) and Google DNS (`8.8.8.8`) returned the new apex A records and development CNAME. Vercel reported `misconfigured: false` for both domains. An automatically renewing Vercel certificate was issued for apex/dev/www (`cert_8EIUO3ibrKZs6xvwuACElUO0`). Certificate issuance and correct DNS still do not constitute a deployed application; repeat HTTPS/application checks after the first approved deployment.
+
+Subsequent HTTPS probes to apex, dev and www all completed with certificate verification result `0` and HTTP `404`. TLS is working; no application deployment exists yet, so application routing and the configured www redirect are not live. This is not a lead-generation site launch.
 
 ## Required owner actions
 
-- Complete Hostinger sign-in in the provided browser so the DNS records can be updated, or set the records above directly.
 - Create a Vercel token with access to the named team and save it directly as `VERCEL_TOKEN` in both GitHub environments at [repository environments](https://github.com/amfrshawon/usjunkcar/settings/environments). Do not paste credentials into chat or Git. Token presence was not confirmed during initial setup.
-- Review the infrastructure release PR before merging into `main`. Merging infrastructure with deployment flags false does not publish the site. Enabling production later requires the actual site/release review and the protected production environment approval.
+- Verify/set the two plain runtime variables in the Vercel project settings above; connector access was denied and local CLI login is absent.
+- [Infrastructure PR #1](https://github.com/amfrshawon/usjunkcar/pull/1) is open. The owner explicitly chose **keep it on dev for review** on 2026-10-15; do not merge until new approval. Merging infrastructure with deployment flags false would not publish the site. Enabling production later requires the actual site/release review and the protected production environment approval.
 
 Credentials are entered by the owner directly in the CI provider; no authentication secret is retrieved from local stores or recorded in this repository.
 
