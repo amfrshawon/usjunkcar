@@ -11,6 +11,13 @@ The owner requested connecting the domain and configuring development/production
 
 Both projects belong to Vercel team `amfrshawons-projects` (`team_UsWcYsLNsRZinsKuL9xrTeYr`). They were requested with Next.js, root `apps/web`, separate `APP_ENV`/`SITE_URL`, and no Git integration. Both project-domain ownership checks returned verified; this is distinct from correct DNS routing and HTTPS readiness.
 
+Runtime variable creation was requested with project creation, but the connector returned HTTP 403 when listing variables or attempting an explicit upsert. Their persistence is **unverified**. The local Vercel CLI has no authenticated session. The deployment preflight checks the actual plain `APP_ENV` and `SITE_URL` using the environment's token and refuses deployment if absent/wrong. Verify/set these non-secret values in each project's **Production** context:
+
+| Project | `APP_ENV` | `SITE_URL` |
+| --- | --- | --- |
+| `usjunkcar-dev` | `development` | `https://dev.usjunkcars.si` |
+| `usjunkcar-prod` | `production` | `https://usjunkcars.si` |
+
 Development Vercel authentication is enabled for all deployments. Production protects generated deployment URLs and previews, while its approved custom production domain is intended to be public. Do not weaken development protection to make smoke tests pass.
 
 GitHub environment policies allow only `dev` for development and only `main` for production. Production requires reviewer `amfrshawon`, allows the solo owner to review their own run, and disables administrator bypass. Branch protection denies deletion/force pushes on both branches. `main` additionally requires a PR, the `Validate` check, an up-to-date branch and resolved conversations; rules apply to administrators. Zero independent PR approvals avoids a solo-owner deadlock; explicit owner release approval is still required.
@@ -22,6 +29,8 @@ GitHub environment policies allow only `dev` for development and only `main` for
 `infra/deployment.json` fixes repository, team, projects and origins. Both `enabled` flags are deliberately **false**: the repository has no Next.js app, database or release-ready business content. CI can pass configuration checks while reporting that deployment is disabled. It must not serve the root static clone. Creating an app automatically activates the application-check requirements, even while deployment is disabled.
 
 Once enabled, the deployment job waits for the relevant GitHub environment, checks the current branch SHA, protection rules, project/organization, root and framework, then pulls configuration, applies the reviewed predeployment contract, builds, stages without assigning domains, tests, rechecks the SHA and promotes the same artifact. There are no executable rollback or database jobs independent of this contract yet. No real deployment has been demonstrated by this setup.
+
+Verification: four local deployment-guard tests passed, Actionlint 1.7.12 reported no workflow errors, and [the initial dev CI run](https://github.com/amfrshawon/usjunkcar/actions/runs/38621919333) passed validation with deployment correctly skipped. This is configuration evidence only, not app or live-release evidence.
 
 ## DNS status and required records
 

@@ -44,4 +44,10 @@ assert.equal(project.rootDirectory, config.rootDirectory);
 assert.equal(project.framework, 'nextjs');
 assert.ok(!project.link, 'Automatic Git deployments must remain disconnected');
 assert.equal(project.ssoProtection?.deploymentType, branch === 'dev' ? 'all' : 'prod_deployment_urls_and_all_previews');
+// Read metadata/plain configuration only; never decrypt or print stored secrets.
+const runtime = await get(`https://api.vercel.com/v10/projects/${target.projectId}/env?teamId=${config.teamId}&decrypt=false`, env.VERCEL_TOKEN);
+for (const [key, value] of [['APP_ENV', target.environment], ['SITE_URL', target.origin]]) {
+  assert.ok(runtime.envs?.some(item => item.key === key && item.type === 'plain' &&
+    item.value === value && item.target?.includes('production')), `Configure the correct plain ${key} in the Vercel project's Production context`);
+}
 console.log(`Verified ${branch} → ${target.projectName} → ${target.origin} at ${env.GITHUB_SHA}`);
