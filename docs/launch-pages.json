@@ -1,0 +1,18 @@
+{
+  "status": "proposal-not-runtime-configuration",
+  "productionOrigin": "https://usjunkcars.si",
+  "developmentOrigin": "https://dev.usjunkcars.si",
+  "maxPublicContentPages": 10,
+  "pages": [
+    { "id": "home", "path": "/", "family": "home", "approvedForPublication": false },
+    { "id": "quote", "path": "/online-quote", "family": "quote", "approvedForPublication": false },
+    { "id": "areas", "path": "/areas", "family": "directory", "approvedForPublication": false },
+    { "id": "about", "path": "/about-us", "family": "company", "approvedForPublication": false },
+    { "id": "contact", "path": "/contact-us", "family": "contact", "approvedForPublication": false },
+    { "id": "faq", "path": "/faqs", "family": "faq", "approvedForPublication": false },
+    { "id": "prices", "path": "/car-prices", "family": "pricing", "approvedForPublication": false },
+    { "id": "damaged", "path": "/car-condition-damaged", "family": "condition", "approvedForPublication": false },
+    { "id": "privacy", "path": "/privacy-policy", "family": "legal", "approvedForPublication": false },
+    { "id": "terms", "path": "/terms-and-conditions", "family": "legal", "approvedForPublication": false }
+  ]
+}
