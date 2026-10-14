@@ -1,0 +1,22 @@
+{
+  "repository": "amfrshawon/usjunkcar",
+  "teamId": "team_UsWcYsLNsRZinsKuL9xrTeYr",
+  "rootDirectory": "apps/web",
+  "vercelCliVersion": "64.0.2",
+  "environments": {
+    "dev": {
+      "environment": "development",
+      "projectName": "usjunkcar-dev",
+      "projectId": "prj_CJwvmCfXbOGgTuSUX71n5HW9izIc",
+      "origin": "https://dev.usjunkcars.si",
+      "enabled": false
+    },
+    "main": {
+      "environment": "production",
+      "projectName": "usjunkcar-prod",
+      "projectId": "prj_zsFoaQNOc7M5uhmBzqrOSzzflFzs",
+      "origin": "https://usjunkcars.si",
+      "enabled": false
+    }
+  }
+}

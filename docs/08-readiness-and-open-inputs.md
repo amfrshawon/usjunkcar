@@ -15,7 +15,7 @@ Snapshot: 2026-10-15. This file separates the baseline, the planning handoff and
 | Next.js product | Not scaffolded in this repository |
 | Database/auth/dashboard | Planned, not provisioned or implemented |
 | Existing chatbot | Awaiting owner-provided implementation |
-| CI/CD/protections/DNS | Specified, not configured or activated by this task |
+| CI/CD/protections/DNS | Subsequently requested on 2026-10-15; see [actual infrastructure state](09-infrastructure-setup.md) |
 | Mobile apps | Planned architecture only |
 
 The documentation commit is not permission to publish the baseline. Do not interpret a Git branch as an environment deployment.

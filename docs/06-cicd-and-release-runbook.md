@@ -2,7 +2,7 @@
 
 ## Status and owner contract
 
-This is the specification for the next agent. No Vercel project, DNS record, Supabase project, GitHub environment, branch rule or executable deployment workflow is configured by the planning task. The task creates/publishes `dev` with these docs and retains existing `main`.
+This is the release specification. The initial planning task configured no infrastructure. The owner requested infrastructure setup on 2026-10-15; [the setup record](09-infrastructure-setup.md) now tracks actual projects, controls and remaining dependencies. The implemented combined workflow follows the stages below; it stays disabled for application deployment until the Next.js app and required checks exist.
 
 The owner's workflow is: develop locally → owner reviews → owner says “push to dev” → commit/push that scope → CI deploys `dev.usjunkcars.si` → owner reviews that environment → owner approves the identified release → promote through `main` → CI deploys `usjunkcars.si`.
 

@@ -18,6 +18,7 @@ Read [AGENTS.md](AGENTS.md), the [product plan](docs/00-product-plan.md), and th
 | [Roadmap and verification](docs/07-roadmap-and-verification.md) | Backlog, acceptance tests and next-agent prompt |
 | [Readiness and evidence](docs/08-readiness-and-open-inputs.md) | Current state, open inputs and references |
 | [Launch proposal](docs/launch-pages.json) | Ten candidate public URLs; none approved for publication yet |
+| [Infrastructure setup](docs/09-infrastructure-setup.md) | Actual hosting projects, GitHub controls, DNS and activation dependencies |
 
 ## Required addresses and branches
 
@@ -27,6 +28,8 @@ Read [AGENTS.md](AGENTS.md), the [product plan](docs/00-product-plan.md), and th
 - Shared API: `/api/v1` on each environment's own origin
 
 Only `main` and `dev` are long-lived remote branches. Implementation work stays local on `dev` until the owner reviews it and explicitly requests a commit/push. Production releases require separate approval for the identified release. Publishing these planning docs is authorized; publishing the application is a later milestone.
+
+Infrastructure configuration was requested on 2026-10-15. The branch-aware GitHub workflow validates this repository now, and gates deployment until the Next.js app is implemented and enabled. Hosting projects and protected GitHub environments have been created. See the setup record for unfinished DNS/credential/application dependencies; configuration is not evidence of a live deployment.
 
 ## Current repository
 
