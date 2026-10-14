@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 10</title>
+    <defs>
+        <linearGradient x1="82.9666351%" y1="85.571848%" x2="13.6019236%" y2="12.9328077%" id="linearGradient-1">
+            <stop stop-color="#158BDD" offset="0%"></stop>
+            <stop stop-color="#0953B8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Vin-Check" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Free-VIN-Lookup" transform="translate(-935, -2172)">
+            <g id="Group-8" transform="translate(0, 1680)">
+                <g id="Group-10" transform="translate(935, 492)">
+                    <circle id="Oval" fill="url(#linearGradient-1)" cx="20" cy="20" r="20"></circle>
+                    <g id="Group" transform="translate(8, 8)">
+                        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M6.45455,19 L2,22.5 L2,4 C2,3.44772 2.44772,3 3,3 L21,3 C21.5523,3 22,3.44772 22,4 L22,18 C22,18.5523 21.5523,19 21,19 L6.45455,19 Z M5.76282,17 L20,17 L20,5 L4,5 L4,18.3851 L5.76282,17 Z M8,10 L16,10 L16,12 L8,12 L8,10 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

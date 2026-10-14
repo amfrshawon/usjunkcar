@@ -1,0 +1,258 @@
+{
+  "reference": [
+    {
+      "class": "hero",
+      "height": 621,
+      "width": 1160,
+      "y": 123
+    },
+    {
+      "class": "home-about",
+      "height": 423,
+      "width": 1160,
+      "y": 792
+    },
+    {
+      "class": "hiw",
+      "height": 314,
+      "width": 1160,
+      "y": 1316
+    },
+    {
+      "class": "guarantee",
+      "height": 106,
+      "width": 1160,
+      "y": 1730
+    },
+    {
+      "class": "section benefits",
+      "height": 573,
+      "width": 1160,
+      "y": 1936
+    },
+    {
+      "class": "map section",
+      "height": 774,
+      "width": 1160,
+      "y": 2659
+    },
+    {
+      "class": "section",
+      "height": 657,
+      "width": 1160,
+      "y": 3583
+    },
+    {
+      "class": "section certs",
+      "height": 577,
+      "width": 1160,
+      "y": 4382
+    },
+    {
+      "class": "top-service",
+      "height": 338,
+      "width": 1160,
+      "y": 5110
+    },
+    {
+      "class": "gradient-wrapper",
+      "height": 3084,
+      "width": 1160,
+      "y": 5548
+    },
+    {
+      "class": "section vehicles-old",
+      "height": 1189,
+      "width": 1160,
+      "y": 5548
+    },
+    {
+      "class": "section vehicles-old",
+      "height": 640,
+      "width": 1160,
+      "y": 7386
+    },
+    {
+      "class": "section rt",
+      "height": 459,
+      "width": 1160,
+      "y": 8172
+    },
+    {
+      "class": "video-section playing",
+      "height": 633,
+      "width": 1160,
+      "y": 8781
+    },
+    {
+      "class": "section testimonials",
+      "height": 731,
+      "width": 1160,
+      "y": 9564
+    },
+    {
+      "class": "section brands",
+      "height": 226,
+      "width": 1160,
+      "y": 10445
+    },
+    {
+      "class": "section faq",
+      "height": 248,
+      "width": 1160,
+      "y": 10822
+    },
+    {
+      "class": "section latest",
+      "height": 560,
+      "width": 1160,
+      "y": 11220
+    },
+    {
+      "class": "section keywords",
+      "height": 257,
+      "width": 1160,
+      "y": 11930
+    },
+    {
+      "class": "section featured",
+      "height": 161,
+      "width": 1160,
+      "y": 12337
+    },
+    {
+      "class": "footer",
+      "height": 719,
+      "width": 1160,
+      "y": 12696
+    }
+  ],
+  "clone": [
+    {
+      "class": "hero",
+      "height": 621,
+      "width": 1160,
+      "y": 123
+    },
+    {
+      "class": "home-about",
+      "height": 423,
+      "width": 1160,
+      "y": 792
+    },
+    {
+      "class": "hiw",
+      "height": 314,
+      "width": 1160,
+      "y": 1316
+    },
+    {
+      "class": "guarantee",
+      "height": 106,
+      "width": 1160,
+      "y": 1730
+    },
+    {
+      "class": "section benefits",
+      "height": 573,
+      "width": 1160,
+      "y": 1936
+    },
+    {
+      "class": "map section",
+      "height": 774,
+      "width": 1160,
+      "y": 2659
+    },
+    {
+      "class": "section",
+      "height": 657,
+      "width": 1160,
+      "y": 3583
+    },
+    {
+      "class": "section certs",
+      "height": 577,
+      "width": 1160,
+      "y": 4382
+    },
+    {
+      "class": "top-service",
+      "height": 338,
+      "width": 1160,
+      "y": 5110
+    },
+    {
+      "class": "gradient-wrapper",
+      "height": 3084,
+      "width": 1160,
+      "y": 5548
+    },
+    {
+      "class": "section vehicles-old",
+      "height": 1189,
+      "width": 1160,
+      "y": 5548
+    },
+    {
+      "class": "section vehicles-old",
+      "height": 640,
+      "width": 1160,
+      "y": 7386
+    },
+    {
+      "class": "section rt",
+      "height": 459,
+      "width": 1160,
+      "y": 8172
+    },
+    {
+      "class": "video-section",
+      "height": 633,
+      "width": 1160,
+      "y": 8781
+    },
+    {
+      "class": "section testimonials",
+      "height": 731,
+      "width": 1160,
+      "y": 9564
+    },
+    {
+      "class": "section brands",
+      "height": 226,
+      "width": 1160,
+      "y": 10445
+    },
+    {
+      "class": "section faq",
+      "height": 248,
+      "width": 1160,
+      "y": 10822
+    },
+    {
+      "class": "section latest",
+      "height": 560,
+      "width": 1160,
+      "y": 11220
+    },
+    {
+      "class": "section keywords",
+      "height": 257,
+      "width": 1160,
+      "y": 11930
+    },
+    {
+      "class": "section featured",
+      "height": 161,
+      "width": 1160,
+      "y": 12337
+    },
+    {
+      "class": "footer",
+      "height": 719,
+      "width": 1160,
+      "y": 12628
+    }
+  ]
+}

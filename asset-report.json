@@ -1,0 +1,14 @@
+{
+  "assets": 144,
+  "unavailable": [
+    "/frontend/fonts/Manrope/Manrope-ExtraBold.woff",
+    "/frontend/fonts/Manrope/Manrope-Regular.woff",
+    "/frontend/fonts/Manrope/Manrope-SemiBold.woff",
+    "/images/icons/dmca.svg",
+    "/frontend/fonts/Manrope/Manrope-Bold.woff",
+    "/images/usjunkyards_logo.svg",
+    "/frontend/fonts/Manrope/Manrope-Light.woff",
+    "/frontend/fonts/Manrope/Manrope-Light.woff2",
+    "/frontend/fonts/Manrope/Manrope-Medium.woff"
+  ]
+}
