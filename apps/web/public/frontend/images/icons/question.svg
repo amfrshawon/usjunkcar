@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 12</title>
+    <defs>
+        <linearGradient x1="82.9666351%" y1="85.571848%" x2="13.6019236%" y2="12.9328077%" id="linearGradient-1">
+            <stop stop-color="#158BDD" offset="0%"></stop>
+            <stop stop-color="#0953B8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Vin-Check" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Free-VIN-Lookup" transform="translate(-235, -1905)">
+            <g id="Group-8" transform="translate(0, 1680)">
+                <g id="Group-12" transform="translate(235, 225)">
+                    <circle id="Oval" fill="url(#linearGradient-1)" cx="20" cy="20" r="20"></circle>
+                    <g id="Group" transform="translate(8, 8)">
+                        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                        <path d="M12,19 C12.8284,19 13.5,19.6716 13.5,20.5 C13.5,21.3284 12.8284,22 12,22 C11.1716,22 10.5,21.3284 10.5,20.5 C10.5,19.6716 11.1716,19 12,19 Z M12,2 C15.3137,2 18,4.68629 18,8 C18,10.1646 17.2474,11.2907 15.3259,12.9231 C13.3986,14.5604 13,15.2969 13,17 L11,17 C11,14.526 11.787,13.3052 14.031,11.3989 C15.5479,10.1102 16,9.43374 16,8 C16,5.79086 14.2091,4 12,4 C9.79086,4 8,5.79086 8,8 L8,9 L6,9 L6,8 C6,4.68629 8.68629,2 12,2 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

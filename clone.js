@@ -57,11 +57,6 @@ topButton.addEventListener('click', event => {
   event.preventDefault();
   window.scrollTo({top: 0, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
 });
-// The reference opens the selected question on its FAQ page in a new tab.
-document.querySelectorAll('.js-link-faq a').forEach(link => {
-  link.href = `https://www.usjunkcars.com/faqs?name=${encodeURIComponent(link.textContent.trim())}`;
-  link.target = '_blank'; link.rel = 'noopener';
-});
 // Homepage-only widgets below are skipped on inner pages.
 const input = document.querySelector('.search-form__input');
 if (input) {

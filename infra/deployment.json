@@ -4,10 +4,10 @@
   "host": "69.62.69.84",
   "nodeVersion": "24.22.0",
   "rootDirectory": "apps/web",
-  "staticDevPreview": true,
+  "staticDevPreview": false,
   "staticProduction": false,
   "environments": {
-    "dev": {"environment": "development", "origin": "https://dev.usjunkcars.si", "sshUser": "usjunkcars-dev", "port": 3401, "enabled": false},
+    "dev": {"environment": "development", "origin": "https://dev.usjunkcars.si", "sshUser": "usjunkcars-dev", "port": 3401, "enabled": true},
     "main": {"environment": "production", "origin": "https://usjunkcars.si", "sshUser": "usjunkcars-main", "port": 3400, "enabled": false}
   }
 }
