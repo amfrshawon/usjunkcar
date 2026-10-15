@@ -13,6 +13,21 @@ class ReleaseSafety(unittest.TestCase):
         sha='a'*40
         receiver.validate_manifest({'commit':sha,'branch':'dev','kind':'static-preview'},sha,'dev')
         with self.assertRaises(ValueError): receiver.validate_manifest({'commit':sha,'branch':'main','kind':'static-preview'},sha,'main')
+    def test_static_site_is_main_only(self):
+        sha='a'*40
+        receiver.validate_manifest({'commit':sha,'branch':'main','kind':'static-site'},sha,'main')
+        with self.assertRaises(ValueError): receiver.validate_manifest({'commit':sha,'branch':'dev','kind':'static-site'},sha,'dev')
+    def test_static_site_packaging_needs_production_switch(self):
+        import json, os
+        config=json.loads((Path(__file__).resolve().parents[2]/'infra/deployment.json').read_text())
+        env=dict(os.environ, GITHUB_SHA='a'*40, GITHUB_REF_NAME='main')
+        result=subprocess.run(['python3','scripts/package-preview.py'],env=env,capture_output=True,text=True)
+        if config['staticProduction']:
+            self.assertEqual(result.returncode,0,result.stderr)
+            Path('release.tar.gz').unlink()
+        else:
+            self.assertNotEqual(result.returncode,0)
+            self.assertIn('switched off',result.stderr)
     def test_rejects_parent_path(self):
         with self.assertRaises(ValueError): receiver.validate_members([tarfile.TarInfo('../outside')])
     def test_rejects_absolute_path(self):

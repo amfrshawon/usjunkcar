@@ -43,3 +43,17 @@ Verification on 2026-10-15: seven infrastructure tests and Actionlint passed; bo
 The application, database, dashboard, chatbot, mobile apps and launch content are not built by this infrastructure task. No application release has been tested end to end. Both deployment flags remain false. Configuration, HTTPS, authentication and coexistence checks establish infrastructure readiness only.
 
 For fresh-server recovery, inspect `infra/vps/bootstrap.sh`: it is one-time bootstrap and refuses an existing vhost. Restore secrets privately, issue/restore TLS, install `infra/vps/nginx.conf`, validate and reload Nginx. Never rerun bootstrap over an existing installation or restart unrelated services. Keep infrastructure/runtime backups before changes.
+
+## Launching the static site on production (owner steps)
+
+The repository can now release the static site (homepage, Locations, About, FAQ, Contact, Privacy Policy) to `https://usjunkcars.si` without the Next.js app. It stays off until the owner switches it on.
+
+1. **Reinstall the release receiver on the VPS (root, one time).** The updated `infra/vps/receive-release.py` accepts a `static-site` release on `main`; the copy installed on the server rejects it. Copy it to the server and run `install -m 755 receive-release.py /usr/local/lib/usjunkcars/receive-release.py`. Back up the installed file first.
+2. **Confirm the GitHub `production` environment** still requires the owner's review and only allows the `main` branch. The deployment preflight checks this and refuses to deploy otherwise.
+3. **Switch the static site on** in the release pull request by setting `"staticProduction": true` in `infra/deployment.json`. Keep `main.enabled` false; it is reserved for the Next.js app.
+4. **Merge the reviewed `dev` → `main` pull request.** CI packages the public site (no preview guard, indexable, no dev links), the receiver health-checks it on port 3402, then switches port 3400. Nginx stops showing the holding page as soon as port 3400 answers.
+5. **Verify:** `https://usjunkcars.si/` returns 200, `/api/v1/health` reports `production`, pages have no `noindex` header, and the Peddle offer opens.
+
+**Roll back:** set `"staticProduction": false` and redeploy, or restore the previous release symlink on the VPS; with nothing on port 3400, Nginx serves the holding page again.
+
+Before switching on, replace the Peddle staging ID (329729, staging embed host) with the live publisher ID and host.

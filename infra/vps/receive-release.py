@@ -17,7 +17,7 @@ import urllib.request
 MAX_BYTES = 400 * 1024 * 1024
 
 def validate_manifest(manifest, sha, branch):
-    kinds = ['nextjs-standalone', 'static-preview'] if branch == 'dev' else ['nextjs-standalone']
+    kinds = ['nextjs-standalone', 'static-preview'] if branch == 'dev' else ['nextjs-standalone', 'static-site']
     if manifest.get('kind') not in kinds or manifest != {'commit': sha, 'branch': branch, 'kind': manifest.get('kind')}:
         raise ValueError('Release identity mismatch')
 

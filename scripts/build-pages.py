@@ -267,3 +267,100 @@ write('contact', 'Contact US Junk Cars | Call 1-844-512-0697 for Cash for Junk C
                                         'contactType': 'customer service', 'areaServed': 'US', 'availableLanguage': 'English'}}},
        breadcrumb_ld('contact', 'Contact us')],
       contact_body)
+
+# ---------------------------------------------------------------- Privacy Policy
+EFFECTIVE = 'October 15, 2026'
+PRIVACY_EMAIL = 'privacy@usjunkcars.si'
+P_SECTIONS = [
+    ('overview', 'Who we are and what this policy covers', f'''
+<p>US Junk Cars ("US Junk Cars", "we", "us") operates <a href="/">usjunkcars.si</a>, a service that helps people across the United States get cash offers for junk, damaged and unwanted vehicles and arrange free pickup. This Privacy Policy explains what personal information we collect, how we use and share it, and the choices and rights you have.</p>
+<p>It applies to our website, phone calls, text messages and emails, and the instant offer form on our site. It does not apply to websites or services run by others, even if we link to them.</p>'''),
+    ('collect', 'Information we collect', '''
+<p>We collect only what we need to give you an offer, complete the pickup and run our service.</p>
+<table class="legal-table"><thead><tr><th>Category</th><th>Examples</th><th>Where it comes from</th></tr></thead><tbody>
+<tr><td>Contact details</td><td>Name, phone number, email address</td><td>You, when you request an offer or call us</td></tr>
+<tr><td>Vehicle details</td><td>Year, make, model, trim, mileage, condition, VIN, photos you share</td><td>You, and vehicle data services used to confirm the details</td></tr>
+<tr><td>Location</td><td>ZIP code and pickup address</td><td>You</td></tr>
+<tr><td>Ownership and identity</td><td>Title status, the name on the title, a photo ID shown at pickup</td><td>You and the pickup driver</td></tr>
+<tr><td>Payment details</td><td>The name and details needed to pay you</td><td>You, at or before pickup</td></tr>
+<tr><td>Communications</td><td>Call recordings where permitted and disclosed, messages and emails</td><td>You and us</td></tr>
+<tr><td>Device and usage data</td><td>IP address, browser type, pages visited, referring site, approximate location</td><td>Your browser, through cookies and similar technologies</td></tr>
+</tbody></table>
+<p>We do not knowingly collect sensitive personal information such as Social Security numbers, and we do not ask for it to make an offer.</p>'''),
+    ('use', 'How we use your information', '''
+<ul>
+<li>To calculate and present your instant cash offer, and to confirm that it matches your vehicle.</li>
+<li>To schedule and complete the pickup, verify ownership, and pay you.</li>
+<li>To contact you about your offer, your pickup or questions you send us.</li>
+<li>To keep records required by state vehicle, salvage and anti-theft laws.</li>
+<li>To improve our pricing, website and service, including our Super Intelligent pricing models, using information that is aggregated or de-identified where possible.</li>
+<li>To prevent fraud, protect our users and partners, and comply with the law.</li>
+<li>To send service updates and, only with your permission, marketing messages you can opt out of at any time.</li>
+</ul>'''),
+    ('share', 'How we share information', '''
+<p>We do not sell your personal information for money. We share it only as needed to deliver the service:</p>
+<ul>
+<li><strong>Offer and purchasing partners.</strong> Instant offers on our site are provided through our partner Peddle, LLC. Information you enter in the offer form is collected by Peddle to create and honor your offer, and is handled under Peddle's own privacy policy.</li>
+<li><strong>Towing and recycling partners.</strong> Licensed tow operators and auto recyclers who pick up and process your vehicle receive the details needed to do so, such as your name, phone number, pickup address and vehicle details.</li>
+<li><strong>Service providers.</strong> Companies that host our website, handle calls and messages, provide analytics or verify vehicle data, under contracts that limit their use of your information.</li>
+<li><strong>Legal and safety reasons.</strong> Government agencies, law enforcement or others when required by law, such as state reporting of purchased salvage vehicles, or to protect rights, property and safety.</li>
+<li><strong>Business transfers.</strong> A buyer or successor if our business is sold, merged or reorganized, subject to this policy.</li>
+</ul>'''),
+    ('cookies', 'Cookies and analytics', '''
+<p>We use cookies and similar technologies to keep the site working, remember your preferences, understand how visitors use our pages, and measure the performance of our advertising. Some of these are set by third parties such as analytics and advertising providers.</p>
+<p>You can block or delete cookies in your browser settings, and the site will still work, though some features may be limited. Where required by law, we honor Global Privacy Control (GPC) browser signals as a request to opt out of targeted advertising and the "sale" or "sharing" of personal information.</p>'''),
+    ('messages', 'Calls, text messages and email', f'''
+<p>If you give us your phone number, we may call or text you about your offer and pickup. We will only send automated marketing calls or texts with your prior express written consent, and consent is never a condition of selling your car. Message and data rates may apply.</p>
+<p>Reply <strong>STOP</strong> to any text to opt out of further texts, or <strong>HELP</strong> for help. You can unsubscribe from marketing emails using the link in any email, or by contacting us at {PRIVACY_EMAIL}. We may still contact you about an offer or pickup that is in progress.</p>'''),
+    ('rights', 'Your privacy rights', '''
+<p>Depending on where you live, you may have the right to:</p>
+<ul>
+<li>Know what personal information we have about you and get a copy of it.</li>
+<li>Correct inaccurate personal information.</li>
+<li>Delete your personal information, subject to legal exceptions such as records we must keep.</li>
+<li>Opt out of targeted advertising, the "sale" or "sharing" of personal information, and certain profiling.</li>
+<li>Not be treated differently for exercising these rights.</li>
+</ul>
+<p><strong>California residents</strong> have these rights under the California Consumer Privacy Act as amended by the CPRA. In the past 12 months we collected the categories listed in the "Information we collect" section, for the purposes in "How we use your information", and disclosed them to the recipients in "How we share information". Residents of states with similar laws, including Virginia, Colorado, Connecticut, Utah, Texas, Oregon and others, have comparable rights, and may appeal a decision we make about their request by replying to our response.</p>
+<p>To make a request, contact us using the details below. We will verify your identity before acting on a request, and you may use an authorized agent where the law allows.</p>'''),
+    ('security', 'How we protect and keep your information', '''
+<p>We use administrative, technical and physical safeguards appropriate to the information we handle, such as encrypted connections (HTTPS), access controls and limited staff access. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
+<p>We keep personal information only as long as needed for the purposes in this policy, including to meet legal, tax and vehicle-record requirements, and then delete or de-identify it.</p>'''),
+    ('children', "Children's privacy", '''
+<p>Our service is for adults who own or are authorized to sell a vehicle. We do not knowingly collect personal information from children under 16. If you believe a child has given us information, contact us and we will delete it.</p>'''),
+    ('changes', 'Changes to this policy', '''
+<p>We may update this policy as our service or the law changes. We will post the new version on this page and update the effective date above. If we make material changes, we will provide additional notice where required.</p>'''),
+    ('contact', 'Contact us', f'''
+<p>Questions or privacy requests can be sent to:</p>
+<ul>
+<li>Email: <a href="mailto:{PRIVACY_EMAIL}">{PRIVACY_EMAIL}</a></li>
+<li>Phone: <a href="{TEL}">{PHONE}</a></li>
+<li>Website: <a href="/contact/">usjunkcars.si/contact</a></li>
+</ul>'''),
+]
+toc = ''.join(f'<li><a href="#{i}">{t}</a></li>' for i, t, _ in P_SECTIONS)
+body = ''.join(f'<section id="{i}"><h2>{n}. {t}</h2>{c}</section>' for n, (i, t, c) in enumerate(P_SECTIONS, 1))
+privacy_body = f'''<section class="page-title"><div class="container"><h1 class="section-title">Privacy Policy</h1>
+<p class="page-title__lead">How US Junk Cars collects, uses and protects your information when you sell us your car.</p>
+<div class="legal-meta"><span><b>Effective:</b> {EFFECTIVE}</span><span><b>Last updated:</b> {EFFECTIVE}</span><span><b>Applies to:</b> usjunkcars.si</span></div></div></section>
+<section class="page-section"><div class="container">
+<div class="legal-glance">
+<div class="page-card"><h3>We never sell your data</h3><p>Your information is used to make your offer and complete your pickup, not sold for money.</p></div>
+<div class="page-card"><h3>Only what we need</h3><p>Contact, vehicle and pickup details. No Social Security number is needed for an offer.</p></div>
+<div class="page-card"><h3>You stay in control</h3><p>Ask to see, correct or delete your data, and opt out of marketing at any time.</p></div>
+<div class="page-card"><h3>Shared to get the job done</h3><p>Only with our offer partner, tow and recycling partners, and service providers.</p></div>
+</div></div></section>
+<section class="page-section page-section--tint"><div class="container"><div class="legal-layout">
+<nav class="legal-toc" aria-label="Privacy policy sections"><p>On this page</p><ol>{toc}</ol></nav>
+<div class="legal-body page-content">{body}</div>
+</div></div></section>
+'''
+write('privacy-policy', 'Privacy Policy | US Junk Cars',
+      'How US Junk Cars collects, uses, shares and protects your personal information, and your privacy rights '
+      'when you sell your junk car.',
+      'Privacy Policy',
+      [{'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Privacy Policy', 'url': f'{SITE}/privacy-policy/',
+        'datePublished': '2026-10-15', 'dateModified': '2026-10-15',
+        'publisher': {'@type': 'Organization', 'name': 'US Junk Cars', 'url': f'{SITE}/'}},
+       breadcrumb_ld('privacy-policy', 'Privacy Policy')],
+      privacy_body)
