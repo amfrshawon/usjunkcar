@@ -170,17 +170,3 @@ document.querySelectorAll('.map svg a').forEach(link => {
     title.textContent = state; link.prepend(title);
   }
 });
-const banner = document.querySelector('.report-banner');
-const bannerKey = 'usjunkcars-promotion-dismissed';
-try { banner.hidden = sessionStorage.getItem(bannerKey) === 'yes'; } catch { /* Storage is optional. */ }
-function updateBannerSpace() {
-  const height = banner.hidden ? 0 : banner.getBoundingClientRect().height;
-  document.documentElement.style.setProperty('--report-banner-height', `${height}px`);
-}
-banner.querySelector('button').addEventListener('click', () => {
-  banner.hidden = true;
-  try { sessionStorage.setItem(bannerKey, 'yes'); } catch { /* Storage is optional. */ }
-  updateBannerSpace();
-});
-new ResizeObserver(updateBannerSpace).observe(banner);
-updateBannerSpace();

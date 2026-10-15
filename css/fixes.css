@@ -56,10 +56,6 @@
 	margin-right: 32px;
 }
 
-html.yeps-bottom-show .top-button{
-	bottom: calc(var(--yeps-bottom-height, 0px) + 12px);
-}
-
 @media (max-width: 575.98px) {
 	.top-button span{
 		display: none;
