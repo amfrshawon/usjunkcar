@@ -9,7 +9,7 @@ with tempfile.TemporaryDirectory() as tmp:
     app = stage / 'apps/web'
     public = app / 'public'
     public.mkdir(parents=True)
-    for name in ['index.html','clone.css','clone.js','css','external','frontend','images']:
+    for name in ['index.html','clone.css','clone.js','peddle-offer.js','css','external','frontend','images']:
         source = root / name
         if source.is_dir(): shutil.copytree(source, public/name)
         else: shutil.copy2(source, public/name)
