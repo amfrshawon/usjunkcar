@@ -69,62 +69,6 @@ input.form.addEventListener('submit', event => {
   input.value = input.value.trim();
   if (!input.value) { event.preventDefault(); input.reportValidity(); }
 });
-// Keep video playback identical to the reference: the player replaces its poster inline.
-const play = document.querySelector('.video-section__play');
-play.addEventListener('click', () => {
-  const iframe = document.createElement('iframe');
-  iframe.src = `${play.dataset.src}&autoplay=1`;
-  iframe.title = 'USJunkCars company and service video';
-  iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-  iframe.allowFullscreen = true;
-  iframe.className = 'clone-video-player';
-  document.querySelector('.video-section').classList.add('playing');
-  play.parentElement.append(iframe);
-  iframe.focus();
-  play.hidden = true;
-}, {once: true});
-// Review carousel, with keyboard and touch controls and only the active review exposed.
-const reviews = document.querySelector('.testimonials-slider');
-const reviewSlides = [...reviews.querySelectorAll('.testimonials-slider__item')];
-const reviewPagination = reviews.querySelector('.swiper-pagination');
-reviews.setAttribute('role', 'region');
-reviews.setAttribute('aria-label', 'Customer reviews');
-reviews.setAttribute('aria-roledescription', 'carousel');
-let reviewIndex = 0;
-const dots = reviewSlides.map((slide, index) => {
-  const dot = document.createElement('button');
-  dot.type = 'button'; dot.className = 'swiper-pagination-bullet';
-  dot.setAttribute('aria-label', `Show review ${index + 1}`);
-  dot.addEventListener('click', () => showReview(index));
-  reviewPagination.append(dot);
-  slide.setAttribute('role', 'group');
-  slide.setAttribute('aria-label', `${index + 1} of ${reviewSlides.length}`);
-  return dot;
-});
-function showReview(index) {
-  reviewIndex = (index + reviewSlides.length) % reviewSlides.length;
-  reviewSlides.forEach((slide, i) => { slide.hidden = i !== reviewIndex; });
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('swiper-pagination-bullet-active', i === reviewIndex);
-    dot.setAttribute('aria-current', String(i === reviewIndex));
-  });
-}
-reviews.querySelector('.testimonials-slider__prev').addEventListener('click', () => showReview(reviewIndex - 1));
-reviews.querySelector('.testimonials-slider__next').addEventListener('click', () => showReview(reviewIndex + 1));
-reviews.addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-    event.preventDefault(); showReview(reviewIndex + (event.key === 'ArrowRight' ? 1 : -1));
-  }
-});
-let touchStart = null;
-reviews.addEventListener('touchstart', event => { touchStart = event.touches[0].clientX; }, {passive: true});
-reviews.addEventListener('touchend', event => {
-  if (touchStart === null) return;
-  const delta = event.changedTouches[0].clientX - touchStart;
-  if (Math.abs(delta) > 50) showReview(reviewIndex + (delta < 0 ? 1 : -1));
-  touchStart = null;
-}, {passive: true});
-showReview(0);
 // Native scrolling keeps every brand accessible by touch, keyboard and pagination.
 const brands = document.querySelector('.brands-slider');
 const brandTrack = brands.querySelector('.swiper-wrapper');
