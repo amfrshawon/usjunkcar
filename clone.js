@@ -62,49 +62,54 @@ document.querySelectorAll('.js-link-faq a').forEach(link => {
   link.href = `https://www.usjunkcars.com/faqs?name=${encodeURIComponent(link.textContent.trim())}`;
   link.target = '_blank'; link.rel = 'noopener';
 });
+// Homepage-only widgets below are skipped on inner pages.
 const input = document.querySelector('.search-form__input');
-input.required = true;
-input.setAttribute('aria-label', 'Search by city or ZIP code');
-input.form.addEventListener('submit', event => {
-  input.value = input.value.trim();
-  if (!input.value) { event.preventDefault(); input.reportValidity(); }
-});
+if (input) {
+  input.required = true;
+  input.setAttribute('aria-label', 'ZIP code for an instant offer');
+  input.form.addEventListener('submit', event => {
+    input.value = input.value.trim();
+    if (!input.value) { event.preventDefault(); input.reportValidity(); }
+  });
+}
 // Native scrolling keeps every brand accessible by touch, keyboard and pagination.
 const brands = document.querySelector('.brands-slider');
-const brandTrack = brands.querySelector('.swiper-wrapper');
-const brandPagination = brands.querySelector('.swiper-pagination');
-brandTrack.tabIndex = 0;
-brandTrack.setAttribute('role', 'region');
-brandTrack.setAttribute('aria-label', 'Popular vehicle brands');
-let brandDots = [];
-function updateBrandDots() {
-  const page = Math.round(brandTrack.scrollLeft / brandTrack.clientWidth);
-  brandDots.forEach((dot, i) => {
-    dot.classList.toggle('swiper-pagination-bullet-active', i === page);
-    dot.setAttribute('aria-current', String(i === page));
-  });
-}
-function layoutBrands() {
-  const pages = Math.max(1, Math.ceil(brandTrack.scrollWidth / brandTrack.clientWidth));
-  brandPagination.replaceChildren();
-  brandDots = Array.from({length: pages}, (_, i) => {
-    const dot = document.createElement('button');
-    dot.type = 'button'; dot.className = 'swiper-pagination-bullet';
-    dot.setAttribute('aria-label', `Show brand page ${i + 1}`);
-    dot.addEventListener('click', () => brandTrack.scrollTo({left: i * brandTrack.clientWidth, behavior: reducedMotion.matches ? 'instant' : 'smooth'}));
-    brandPagination.append(dot);
-    return dot;
-  });
-  updateBrandDots();
-}
-new ResizeObserver(layoutBrands).observe(brandTrack);
-brandTrack.addEventListener('scroll', updateBrandDots, {passive: true});
-brandTrack.addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-    event.preventDefault();
-    brandTrack.scrollBy({left: (event.key === 'ArrowRight' ? 1 : -1) * brandTrack.clientWidth, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
+if (brands) {
+  const brandTrack = brands.querySelector('.swiper-wrapper');
+  const brandPagination = brands.querySelector('.swiper-pagination');
+  brandTrack.tabIndex = 0;
+  brandTrack.setAttribute('role', 'region');
+  brandTrack.setAttribute('aria-label', 'Popular vehicle brands');
+  let brandDots = [];
+  function updateBrandDots() {
+    const page = Math.round(brandTrack.scrollLeft / brandTrack.clientWidth);
+    brandDots.forEach((dot, i) => {
+      dot.classList.toggle('swiper-pagination-bullet-active', i === page);
+      dot.setAttribute('aria-current', String(i === page));
+    });
   }
-});
+  function layoutBrands() {
+    const pages = Math.max(1, Math.ceil(brandTrack.scrollWidth / brandTrack.clientWidth));
+    brandPagination.replaceChildren();
+    brandDots = Array.from({length: pages}, (_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button'; dot.className = 'swiper-pagination-bullet';
+      dot.setAttribute('aria-label', `Show brand page ${i + 1}`);
+      dot.addEventListener('click', () => brandTrack.scrollTo({left: i * brandTrack.clientWidth, behavior: reducedMotion.matches ? 'instant' : 'smooth'}));
+      brandPagination.append(dot);
+      return dot;
+    });
+    updateBrandDots();
+  }
+  new ResizeObserver(layoutBrands).observe(brandTrack);
+  brandTrack.addEventListener('scroll', updateBrandDots, {passive: true});
+  brandTrack.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      brandTrack.scrollBy({left: (event.key === 'ArrowRight' ? 1 : -1) * brandTrack.clientWidth, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
+    }
+  });
+}
 // Map names are available on both hover and keyboard focus.
 document.querySelectorAll('.map svg a').forEach(link => {
   const state = link.querySelector('[data-state]')?.getAttribute('data-state') || link.getAttribute('data-state') || new URL(link.href.baseVal, location.href).pathname.slice(1).replaceAll('-', ' ');

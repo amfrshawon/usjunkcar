@@ -9,15 +9,15 @@ with tempfile.TemporaryDirectory() as tmp:
     app = stage / 'apps/web'
     public = app / 'public'
     public.mkdir(parents=True)
-    for name in ['index.html','clone.css','clone.js','peddle-offer.js','css','external','frontend','images']:
+    for name in ['index.html','clone.css','clone.js','peddle-offer.js','sitemap.xml','robots.txt','css','external','frontend','images','locations','about','faq','contact']:
         source = root / name
         if source.is_dir(): shutil.copytree(source, public/name)
         else: shutil.copy2(source, public/name)
-    for name in ['index.html','clone.js']:
-        p=public/name
+    pages=sorted(public.glob('**/index.html'))
+    for p in pages+[public/'clone.js']:
         p.write_text(p.read_text().replace('www.usjunkcars.com','dev.usjunkcars.si').replace('usjunkcars.com','usjunkcars.si'))
-    page=public/'index.html'
-    page.write_text(page.read_text().replace('</body>','<script src="/preview-guard.js"></script></body>'))
+    for page in pages:
+        page.write_text(page.read_text().replace('</body>','<script src="/preview-guard.js"></script></body>'))
     (public/'preview-guard.js').write_text('''
 document.addEventListener('submit', event => {event.preventDefault(); event.stopImmediatePropagation(); alert('Design preview only. Search and lead submissions are not connected yet.');}, true);
 document.addEventListener('click', event => {
