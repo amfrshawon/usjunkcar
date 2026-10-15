@@ -46,7 +46,7 @@ docs/
 .github/workflows/     # implement in infrastructure phase
 ```
 
-Use pnpm workspaces. Add Turborepo only if multiple executable apps justify it. Share schemas/business logic with mobile first; UI reuse is optional. Move the current static fixture into `reference/` during migration and set the Vercel build root to `apps/web` with workspace access.
+Use pnpm workspaces. Add Turborepo only if multiple executable apps justify it. Share schemas/business logic with mobile first; UI reuse is optional. Move the static fixture into `reference/`. Package Next.js standalone output at `apps/web` for the VPS; see `10-vps-setup.md`.
 
 ## Environment contract
 
@@ -56,9 +56,9 @@ Use pnpm workspaces. Add Turborepo only if multiple executable apps justify it. 
 | Development | approved `dev` push | `https://dev.usjunkcars.si` | Dedicated dev Supabase | Test recipients only |
 | Production | approved `main` release | `https://usjunkcars.si` | Dedicated production Supabase | Approved real providers |
 
-Suggested Vercel projects: `usjunkcar-dev`, `usjunkcar-prod`. Both use their own Vercel production deployment context for a stable domain. The dev project's CLI `--prod` is still the business development environment. Hard-code branch→GitHub environment→project mapping; never select targets from arbitrary workflow inputs.
+Hosting is the owner's VPS at `69.62.69.84`, with isolated systemd services `usjunkcars-dev` (3401) and `usjunkcars-main` (3400). GitHub Actions controls deployments. Branch/environment/user mapping is fixed in `infra/deployment.json`; never accept arbitrary targets. Vercel is no longer required.
 
-Set `APP_ENV=development` on the dev project independently of Vercel labels. Validate site origin, database project and environment together at startup. Use host-only cookies and separate auth callbacks; no shared `.usjunkcars.si` staff cookie. Generate absolute URLs from validated config, not the request Host header.
+Set `APP_ENV=development` on dev while `NODE_ENV=production` runs the optimized server. Validate site origin, database project and environment together at startup. Use host-only cookies and separate auth callbacks; no shared `.usjunkcars.si` staff cookie. Generate absolute URLs from validated config, not the request Host header.
 
 ## Configuration names (no secret values)
 
@@ -73,8 +73,8 @@ Set `APP_ENV=development` on the dev project independently of Vercel labels. Val
 | Mail provider key, `MAIL_FROM`, test allowlist | Server only | Notifications/invitations |
 | Upload and anti-abuse settings | Server, except approved widget key | Input protection |
 | Redacted telemetry configuration | Per provider | Error/performance reporting |
-| Vercel org/project IDs and pinned CLI version | CI variables per environment | Fixed deployment target |
-| Vercel token and automation bypass secret | CI secrets per environment | Deploy/test only |
+| VPS host, user, port and pinned Node version | Tracked infrastructure configuration | Fixed deployment target |
+| `VPS_SSH_KEY` | Separate protected CI secret per environment | Forced-command deploy only |
 
 Create a names-only `.env.example` during bootstrap. Enter credentials in provider/CI settings, never docs/chat or Git.
 

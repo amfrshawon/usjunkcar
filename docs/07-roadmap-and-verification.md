@@ -12,7 +12,7 @@ Each phase produces a reviewable local result and updates a phase log with work 
 | P3 — Data and intake | Migrations, RLS, staff auth, lead transactions, form/contact API, file validation, outbox | Accepted submission survives retries/provider failure; permissions and transaction tests pass |
 | P4 — Staff dashboard | List/board/detail, assignment, tasks, offers, pickup calendar, metrics, audit and failure queue | End-to-end seller→staff flow, conflict handling, role boundaries, responsive controls |
 | P5 — Existing bot | Inspect owner's implementation, adapter, knowledge approval, scoped tools, streaming, handoff | Real bot creates one durable lead; injection/retry/outage tests; no private-data leakage |
-| P6 — Infrastructure | Two Vercel/Supabase environments, GitHub workflows/protections, DNS, backups, telemetry | Approved dev push reaches protected dev domain; production cannot bypass approval; target-mismatch test fails safely |
+| P6 — Infrastructure | Isolated VPS dev/main services, separate Supabase environments, GitHub workflows/protections, DNS, backups, telemetry | Localhost reviewed first; approved dev push reaches protected dev domain; production cannot bypass approval; target-mismatch test fails safely |
 | P7 — Launch review | Real identity/content/legal approvals, selected ten pages, performance/a11y/SEO audit, operational runbook | Owner acceptance, production gate and rollback rehearsal, then explicit launch approval |
 | P8 — Mobile | Confirm audience, native designs, shared client, iOS/Android auth/files/push and beta distribution | Device testing, version compatibility, secure local storage; separate store-release approval |
 

@@ -28,7 +28,7 @@ Sellers understand the service, provide vehicle information through a form or ch
 | Backend | Route Handlers + TypeScript domain services | HTTP interface usable by mobile |
 | Data/auth/files | Supabase PostgreSQL, Auth, private Storage | SQL migrations and coherent access policies |
 | Data client | Supabase JS, generated DB types, SQL RPC for transactions | Preserve caller identity/RLS; one migration system |
-| Hosting | Two Vercel projects, gated GitHub Actions | Separate domains, credentials and release targets |
+| Hosting | Owner's Hostinger VPS, gated GitHub Actions | Isolated dev/main services and credentials; see docs/10-vps-setup.md |
 | UI | Tailwind; accessible primitives and shadcn/ui for staff controls as useful | Marketing follows reference; dashboard follows workflow |
 | Contracts | Zod, OpenAPI and typed client | Reusable validation and integration contract |
 | Notifications | Email adapter first; SMS/WhatsApp if selected later | Provider and business sending identity pending |

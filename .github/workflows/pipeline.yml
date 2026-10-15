@@ -1,39 +1,34 @@
-name: CI and gated deployment
-
+name: CI and gated VPS deployment
 on:
   push:
     branches: [dev, main]
   pull_request:
     branches: [main]
-
 permissions:
   contents: read
-
-# Serialize each branch, including promotion; never cancel a migration halfway.
 concurrency:
   group: release-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
-
 jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     outputs:
       deploy: ${{ steps.config.outputs.deploy }}
       environment: ${{ steps.config.outputs.environment }}
       origin: ${{ steps.config.outputs.origin }}
-      project_id: ${{ steps.config.outputs.project_id }}
-      team_id: ${{ steps.config.outputs.team_id }}
-      cli_version: ${{ steps.config.outputs.cli_version }}
+      ssh_user: ${{ steps.config.outputs.ssh_user }}
+      host: ${{ steps.config.outputs.host }}
+      node_version: ${{ steps.config.outputs.node_version }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '24'
-      - name: Require release PR from dev in this repository
+          node-version: '24.22.0'
+      - name: Require same-repository dev release PR
         if: github.event_name == 'pull_request'
         env:
           HEAD_BRANCH: ${{ github.head_ref }}
@@ -42,32 +37,23 @@ jobs:
           test "$HEAD_BRANCH" = dev
           test "$HEAD_REPOSITORY" = "$GITHUB_REPOSITORY"
       - id: config
-        name: Validate targets and application readiness
         run: node scripts/check-infrastructure.mjs
-      - name: Verify deployment safety guards
-        run: node --test scripts/infrastructure.test.mjs
-      - name: Install pinned workspace dependencies
+      - run: python3 -m unittest discover -s tests/infrastructure -v
+      - name: Verify application
         if: steps.config.outputs.has_app == 'true'
         run: |
           corepack enable
           pnpm install --frozen-lockfile
-      - name: Application verification
-        if: steps.config.outputs.has_app == 'true'
-        run: pnpm run ci:check
-      - name: Report deployment readiness
-        env:
-          DEPLOY: ${{ steps.config.outputs.deploy }}
-        run: |
-          if [ "$DEPLOY" != true ]; then
-            echo 'CI checked configuration. Deployment is disabled until the Next.js app and release checks are ready.' >> "$GITHUB_STEP_SUMMARY"
-          fi
-
+          pnpm run ci:check
+      - name: Report pending application
+        if: steps.config.outputs.deploy != 'true'
+        run: echo 'Infrastructure checked; application deployment remains off pending localhost review and approval.' >> "$GITHUB_STEP_SUMMARY"
   deploy:
     name: Deploy reviewed branch
     needs: validate
     if: github.event_name == 'push' && needs.validate.outputs.deploy == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 40
     permissions:
       contents: read
       actions: read
@@ -76,77 +62,50 @@ jobs:
       name: ${{ needs.validate.outputs.environment }}
       url: ${{ needs.validate.outputs.origin }}
     env:
-      VERCEL_ORG_ID: ${{ needs.validate.outputs.team_id }}
-      VERCEL_PROJECT_ID: ${{ needs.validate.outputs.project_id }}
       APP_ENV: ${{ needs.validate.outputs.environment }}
       SITE_URL: ${{ needs.validate.outputs.origin }}
-      VERCEL_TELEMETRY_DISABLED: '1'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '24'
-      - name: Verify branch, approval controls and hosting target
+          node-version: ${{ needs.validate.outputs.node_version }}
+      - name: Verify release controls
         run: node scripts/deployment-preflight.mjs
         env:
           GH_TOKEN: ${{ github.token }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Install reviewed tools and dependencies
-        env:
-          VERCEL_CLI_VERSION: ${{ needs.validate.outputs.cli_version }}
+      - name: Build reviewed standalone artifact
         run: |
-          npm install --global "vercel@$VERCEL_CLI_VERSION"
           corepack enable
           pnpm install --frozen-lockfile
-      - name: Pull correct project configuration
-        run: |
-          vercel pull --yes --environment=production
-          vercel project inspect --non-interactive
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Check release policy and apply approved additive migrations
+          pnpm run ci:package
+          test -s release.tar.gz
+      - name: Validate publication and apply approved additive migrations
         run: pnpm run ci:predeploy
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_PROJECT_ID: ${{ vars.SUPABASE_PROJECT_ID }}
-      - name: Build production-context artifact for this project
-        run: vercel build --prod
-      - id: stage
-        name: Stage without assigning domain
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          set -euo pipefail
-          deployment_url="$(vercel deploy --prebuilt --prod --skip-domain --yes)"
-          DEPLOYMENT_URL="$deployment_url" node --input-type=module -e '
-            const value = process.env.DEPLOYMENT_URL;
-            const url = new URL(value);
-            if (url.protocol !== "https:" || url.origin !== value || !url.hostname.endsWith(".vercel.app")) process.exit(1);
-          '
-          printf 'url=%s\n' "$deployment_url" >> "$GITHUB_OUTPUT"
-      - name: Test staged deployment with protection enabled
-        run: pnpm run ci:smoke
-        env:
-          BASE_URL: ${{ steps.stage.outputs.url }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Recheck current SHA and promote tested artifact
+      - name: Deploy to isolated VPS account
         env:
           GH_TOKEN: ${{ github.token }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          DEPLOYMENT_URL: ${{ steps.stage.outputs.url }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_USER: ${{ needs.validate.outputs.ssh_user }}
+          VPS_HOST: ${{ needs.validate.outputs.host }}
         run: |
+          set -euo pipefail
           node scripts/deployment-preflight.mjs
-          vercel promote "$DEPLOYMENT_URL" --yes
-      - name: Verify custom domain
-        run: pnpm run ci:smoke
+          test -n "$VPS_SSH_KEY"
+          umask 077
+          key_file="$(mktemp)"
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s\n' "$VPS_SSH_KEY" > "$key_file"
+          ssh -i "$key_file" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=infra/vps/known_hosts "$VPS_USER@$VPS_HOST" "deploy $GITHUB_SHA" < release.tar.gz
+      - name: Verify HTTPS access boundary
         env:
-          BASE_URL: ${{ needs.validate.outputs.origin }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Record deployment
-        env:
-          DEPLOYMENT_URL: ${{ steps.stage.outputs.url }}
+          TARGET_ORIGIN: ${{ needs.validate.outputs.origin }}
         run: |
-          printf 'Commit: `%s`\n\nEnvironment: %s\n\nDomain: %s\n\nArtifact: %s\n' "$GITHUB_SHA" "$APP_ENV" "$SITE_URL" "$DEPLOYMENT_URL" >> "$GITHUB_STEP_SUMMARY"
+          status="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' "$TARGET_ORIGIN/")"
+          if [ "$APP_ENV" = development ]; then test "$status" = 401; else test "$status" = 200; fi
+          printf 'VPS release `%s` verified for %s\n' "$GITHUB_SHA" "$TARGET_ORIGIN" >> "$GITHUB_STEP_SUMMARY"

@@ -1,5 +1,7 @@
 # Infrastructure configuration — 2026-10-15
 
+> HISTORICAL / SUPERSEDED: The owner selected their existing Hostinger VPS. Do not execute the Vercel token, DNS or activation instructions below. Current authoritative setup: [VPS setup](10-vps-setup.md) and [release runbook](06-cicd-and-release-runbook.md). Dormant Vercel projects are no longer deployment targets.
+
 The owner requested connecting the domain and configuring development/production CI/CD. This extends the planning-only scope. Application development and publication still follow the separate owner review process.
 
 ## Configured resources

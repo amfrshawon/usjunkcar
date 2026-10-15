@@ -14,14 +14,16 @@
 Use exactly two long-lived remote branches: `dev` and `main`. Do not create additional remote branches unless requested.
 
 1. Implement and test locally on `dev`; completion alone does not authorize a commit/push.
-2. Present the result, evidence and limitations for review.
+2. Start localhost and present the preview URL, result, evidence and limitations for owner review before any application push.
 3. An explicit instruction such as “push to dev” authorizes committing and pushing the reviewed scope to `dev` only. Changed scope needs review again.
 4. Development deployment targets only `dev.usjunkcars.si` with development credentials/data.
-5. Use a `dev` → `main` release PR only after the owner approves the identified release/commit. Never infer production approval from development approval.
+5. Have the owner review dev on desktop and mobile. Use a `dev` → `main` release PR only after the owner approves the identified release/commit. Never infer production approval from development approval.
 6. Production targets only `usjunkcars.si`, through protected environment checks.
 7. Never force-push or replace `main` history. A push is not proof of a successful deployment.
 
 Publishing the planning documents in this handoff is explicitly authorized. Future implementation pushes follow the rules above.
+
+The owner also authorized completing VPS infrastructure. Read `docs/10-vps-setup.md` for current hosting; Vercel is superseded. Keep infrastructure PR #1 on dev until separate main approval. Infrastructure readiness does not authorize application publication.
 
 ## Implementation constraints
 

@@ -45,7 +45,7 @@ No secrets belong in these answers or docs. Configure credentials through provid
 | D01 | Next.js, new domain, dashboard/database, existing bot, ten-page cap | Owner requirements |
 | D02 | Only `main`/`dev`; owner reviews before push and production approval | Owner requirements |
 | D03 | Supabase SQL/Auth/Storage; TypeScript domain/API layer | Proposed default |
-| D04 | Two Vercel projects, gated CLI deployments, no automatic Git bypass | Proposed default |
+| D04 | Owner's Hostinger VPS, isolated services, gated GitHub Actions | Owner selected; current setup in docs/10-vps-setup.md |
 | D05 | Ten paths in `launch-pages.json` | Proposed, all unapproved for publication |
 | D06 | Native React Native/Expo; staff app first | Proposed; audience unresolved |
 | D07 | No real notification send from dev | Implementation requirement for environment isolation |

@@ -18,7 +18,8 @@ Read [AGENTS.md](AGENTS.md), the [product plan](docs/00-product-plan.md), and th
 | [Roadmap and verification](docs/07-roadmap-and-verification.md) | Backlog, acceptance tests and next-agent prompt |
 | [Readiness and evidence](docs/08-readiness-and-open-inputs.md) | Current state, open inputs and references |
 | [Launch proposal](docs/launch-pages.json) | Ten candidate public URLs; none approved for publication yet |
-| [Infrastructure setup](docs/09-infrastructure-setup.md) | Actual hosting projects, GitHub controls, DNS and activation dependencies |
+| [Current VPS setup](docs/10-vps-setup.md) | Services, DNS, private preview and application activation contract |
+| [Historical Vercel setup](docs/09-infrastructure-setup.md) | Superseded; do not follow its activation instructions |
 
 ## Required addresses and branches
 
@@ -29,7 +30,7 @@ Read [AGENTS.md](AGENTS.md), the [product plan](docs/00-product-plan.md), and th
 
 Only `main` and `dev` are long-lived remote branches. Implementation work stays local on `dev` until the owner reviews it and explicitly requests a commit/push. Production releases require separate approval for the identified release. Publishing these planning docs is authorized; publishing the application is a later milestone.
 
-Infrastructure configuration was requested on 2026-10-15. The branch-aware GitHub workflow validates this repository now, and gates deployment until the Next.js app is implemented and enabled. Hosting projects and protected GitHub environments have been created. See the setup record for unfinished DNS/credential/application dependencies; configuration is not evidence of a live deployment.
+Infrastructure uses the owner's Hostinger VPS with separate dev/main users, services, deployment keys and protected GitHub environments. DNS and HTTPS target the VPS. Dev requires a review password; production serves a neutral not-launched holding response. Both application deployment switches remain off. See the current VPS setup for verification and the next agent's activation contract. Vercel is not required.
 
 ## Current repository
 
