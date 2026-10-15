@@ -1,0 +1,18 @@
+/* Extracted from the reference page head */
+.mobile-text {
+		display: none;
+	}
+
+	.desktop-text {
+		display: inline;
+	}
+
+	@media (max-width: 991px) {
+		.desktop-text {
+			display: none !important;
+		}
+
+		.mobile-text {
+			display: inline !important;
+		}
+	}

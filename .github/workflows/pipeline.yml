@@ -1,0 +1,119 @@
+name: CI and gated VPS deployment
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      deploy: ${{ steps.config.outputs.deploy }}
+      preview: ${{ steps.config.outputs.preview }}
+      environment: ${{ steps.config.outputs.environment }}
+      origin: ${{ steps.config.outputs.origin }}
+      ssh_user: ${{ steps.config.outputs.ssh_user }}
+      host: ${{ steps.config.outputs.host }}
+      node_version: ${{ steps.config.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24.22.0'
+      - name: Require same-repository dev release PR
+        if: github.event_name == 'pull_request'
+        env:
+          HEAD_BRANCH: ${{ github.head_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          test "$HEAD_BRANCH" = dev
+          test "$HEAD_REPOSITORY" = "$GITHUB_REPOSITORY"
+      - id: config
+        run: node scripts/check-infrastructure.mjs
+      - run: python3 -m unittest discover -s tests/infrastructure -v
+      - name: Check static preview server
+        run: node --test tests/infrastructure/preview.test.cjs
+      - name: Verify application
+        if: steps.config.outputs.has_app == 'true'
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm run ci:check
+      - name: Report pending application
+        if: steps.config.outputs.deploy != 'true'
+        run: echo 'Infrastructure checked; application deployment remains off pending localhost review and approval.' >> "$GITHUB_STEP_SUMMARY"
+  deploy:
+    name: Deploy reviewed branch
+    needs: validate
+    if: github.event_name == 'push' && needs.validate.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      actions: read
+      deployments: read
+    environment:
+      name: ${{ needs.validate.outputs.environment }}
+      url: ${{ needs.validate.outputs.origin }}
+    env:
+      APP_ENV: ${{ needs.validate.outputs.environment }}
+      SITE_URL: ${{ needs.validate.outputs.origin }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ needs.validate.outputs.node_version }}
+      - name: Verify release controls
+        run: node scripts/deployment-preflight.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build reviewed standalone artifact
+        if: needs.validate.outputs.preview != 'true'
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm run ci:package
+          test -s release.tar.gz
+      - name: Package approved static dev preview
+        if: needs.validate.outputs.preview == 'true'
+        run: python3 scripts/package-preview.py
+      - name: Validate publication and apply approved additive migrations
+        if: needs.validate.outputs.preview != 'true'
+        run: pnpm run ci:predeploy
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_ID: ${{ vars.SUPABASE_PROJECT_ID }}
+      - name: Deploy to isolated VPS account
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_USER: ${{ needs.validate.outputs.ssh_user }}
+          VPS_HOST: ${{ needs.validate.outputs.host }}
+        run: |
+          set -euo pipefail
+          node scripts/deployment-preflight.mjs
+          test -n "$VPS_SSH_KEY"
+          umask 077
+          key_file="$(mktemp)"
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s\n' "$VPS_SSH_KEY" > "$key_file"
+          ssh -i "$key_file" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=infra/vps/known_hosts "$VPS_USER@$VPS_HOST" "deploy $GITHUB_SHA" < release.tar.gz
+      - name: Verify HTTPS access boundary
+        env:
+          TARGET_ORIGIN: ${{ needs.validate.outputs.origin }}
+        run: |
+          status="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code}' "$TARGET_ORIGIN/")"
+          if [ "$APP_ENV" = development ]; then test "$status" = 401; else test "$status" = 200; fi
+          printf 'VPS release `%s` verified for %s\n' "$GITHUB_SHA" "$TARGET_ORIGIN" >> "$GITHUB_STEP_SUMMARY"
