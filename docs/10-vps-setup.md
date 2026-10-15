@@ -36,6 +36,8 @@ Each GitHub environment has its own `VPS_SSH_KEY`. Temporary private generation 
 
 ## Operational limits
 
+Update 2026-10-15: the owner explicitly requested publishing the current localhost build to dev. `staticDevPreview: true` now permits a private homepage-only release on dev, independently of the disabled full-application switches. The archive kind is `static-preview`, accepted only for dev; the server also refuses production runtime. It packages an allowlist of static assets, rewrites reference-domain links, blocks contact clicks/form submissions, and does not expose repository files. Disable `staticDevPreview` before implementing `apps/web/package.json`. Production remains a holding page and PR #1 stays unmerged. This preview does not implement lead intake, search, other pages, a database or dashboard.
+
 Verification on 2026-10-15: seven infrastructure tests and Actionlint passed; both scoped SSH keys rejected arbitrary shell commands; all 13 pre-existing Nginx vhost checksums were unchanged. HTTPS checks showed no regression across those 13 sites (one pre-existing dev 502 independently recovered to 200). New apex returned 503/noindex, dev returned 401 without credentials and 503 with valid credentials, and www returned 308 to apex, all with valid TLS. Certbot renewal timer is active.
 
 The application, database, dashboard, chatbot, mobile apps and launch content are not built by this infrastructure task. No application release has been tested end to end. Both deployment flags remain false. Configuration, HTTPS, authentication and coexistence checks establish infrastructure readiness only.

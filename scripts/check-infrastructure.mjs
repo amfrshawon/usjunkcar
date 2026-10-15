@@ -21,6 +21,8 @@ assert.equal(launch.maxPublicContentPages, 10);
 assert.ok(launch.pages.length <= 10);
 assert.equal(new Set(launch.pages.map(p => p.path)).size, launch.pages.length);
 const hasApp = existsSync('apps/web/package.json');
+assert.equal(typeof c.staticDevPreview, 'boolean');
+assert.ok(!(hasApp && c.staticDevPreview), 'Disable the static preview when implementing the application');
 if (hasApp || Object.values(c.environments).some(e => e.enabled)) {
   assert.ok(hasApp, 'Cannot deploy before apps/web exists');
   const root = json('package.json');
@@ -29,6 +31,7 @@ if (hasApp || Object.values(c.environments).some(e => e.enabled)) {
   for (const name of ['ci:check','ci:package','ci:predeploy']) assert.ok(root.scripts?.[name], `Implement ${name}`);
 }
 const target = c.environments[process.env.GITHUB_REF_NAME];
-const outputs = {has_app:hasApp, deploy:Boolean(hasApp && target?.enabled), environment:target?.environment??'', origin:target?.origin??'', ssh_user:target?.sshUser??'', host:c.host, node_version:c.nodeVersion};
+const preview = c.staticDevPreview && process.env.GITHUB_REF_NAME === 'dev' && !hasApp;
+const outputs = {has_app:hasApp, preview, deploy:Boolean(preview || (hasApp && target?.enabled)), environment:target?.environment??'', origin:target?.origin??'', ssh_user:target?.sshUser??'', host:c.host, node_version:c.nodeVersion};
 if(process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT,Object.entries(outputs).map(([k,v])=>`${k}=${v}\n`).join(''));
-console.log(hasApp ? 'VPS configuration validated; application checks required.' : 'VPS configuration validated. No app: application deployment disabled.');
+console.log(hasApp ? 'VPS configuration validated; application checks required.' : 'VPS configuration validated. Full application disabled; static preview allowed only on dev.');

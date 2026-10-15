@@ -34,6 +34,8 @@ Infrastructure uses the owner's Hostinger VPS with separate dev/main users, serv
 
 ## Current repository
 
+The owner approved pushing the localhost homepage to private dev on 2026-10-15. `staticDevPreview` enables a temporary dev-only static release through CI. It serves the homepage/assets, blocks submissions and external contact clicks, and cannot run in production. Other page families, backend and dashboard remain unimplemented. Disable this preview flag when replacing it with the Next.js app.
+
 The root contains a static homepage reference captured from `https://www.usjunkcars.com/`. Run `npm run dev` to view it at `http://localhost:4173`. No Next.js app, independent backend, database, auth or dashboard exists here yet. Many links, phone numbers and claims still belong to the reference business. Do not launch this fixture as the new website.
 
 The audit recovered truncated HTML and restored the lower homepage and local interactions. Desktop measurements are in `audit/desktop-layout.json`. The complete mobile, interaction and asset audit was not finished before this planning handoff. `preview.png` and `asset-report.json` are historical artifacts, not release evidence.

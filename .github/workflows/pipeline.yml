@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 25
     outputs:
       deploy: ${{ steps.config.outputs.deploy }}
+      preview: ${{ steps.config.outputs.preview }}
       environment: ${{ steps.config.outputs.environment }}
       origin: ${{ steps.config.outputs.origin }}
       ssh_user: ${{ steps.config.outputs.ssh_user }}
@@ -39,6 +40,8 @@ jobs:
       - id: config
         run: node scripts/check-infrastructure.mjs
       - run: python3 -m unittest discover -s tests/infrastructure -v
+      - name: Check static preview server
+        run: node --test tests/infrastructure/preview.test.cjs
       - name: Verify application
         if: steps.config.outputs.has_app == 'true'
         run: |
@@ -76,12 +79,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Build reviewed standalone artifact
+        if: needs.validate.outputs.preview != 'true'
         run: |
           corepack enable
           pnpm install --frozen-lockfile
           pnpm run ci:package
           test -s release.tar.gz
+      - name: Package approved static dev preview
+        if: needs.validate.outputs.preview == 'true'
+        run: python3 scripts/package-preview.py
       - name: Validate publication and apply approved additive migrations
+        if: needs.validate.outputs.preview != 'true'
         run: pnpm run ci:predeploy
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

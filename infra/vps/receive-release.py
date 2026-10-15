@@ -16,6 +16,11 @@ import urllib.request
 
 MAX_BYTES = 400 * 1024 * 1024
 
+def validate_manifest(manifest, sha, branch):
+    kinds = ['nextjs-standalone', 'static-preview'] if branch == 'dev' else ['nextjs-standalone']
+    if manifest.get('kind') not in kinds or manifest != {'commit': sha, 'branch': branch, 'kind': manifest.get('kind')}:
+        raise ValueError('Release identity mismatch')
+
 def validate_members(members):
     total = 0
     for member in members:
@@ -73,8 +78,7 @@ def main():
                 validate_members(members)
                 tf.extractall(stage, members=members, filter='data')
             manifest = json.loads((stage / 'release.json').read_text())
-            if manifest != {'commit': sha, 'branch': branch, 'kind': 'nextjs-standalone'}:
-                raise ValueError('Release identity mismatch')
+            validate_manifest(manifest, sha, branch)
             entry = stage / 'apps/web/server.js'
             if not entry.is_file():
                 raise ValueError('Standalone Next.js entrypoint missing')

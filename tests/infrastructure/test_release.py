@@ -9,6 +9,10 @@ receiver=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(receiver)
 
 class ReleaseSafety(unittest.TestCase):
+    def test_static_preview_is_dev_only(self):
+        sha='a'*40
+        receiver.validate_manifest({'commit':sha,'branch':'dev','kind':'static-preview'},sha,'dev')
+        with self.assertRaises(ValueError): receiver.validate_manifest({'commit':sha,'branch':'main','kind':'static-preview'},sha,'main')
     def test_rejects_parent_path(self):
         with self.assertRaises(ValueError): receiver.validate_members([tarfile.TarInfo('../outside')])
     def test_rejects_absolute_path(self):

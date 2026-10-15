@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const c=JSON.parse(readFileSync('infra/deployment.json','utf8'));
 const e=process.env, t=c.environments[e.GITHUB_REF_NAME];
-assert.ok(t?.enabled);
+assert.ok(t?.enabled || (c.staticDevPreview && e.GITHUB_REF_NAME === 'dev'));
 assert.equal(e.GITHUB_EVENT_NAME,'push');
 assert.equal(e.GITHUB_REPOSITORY,c.repository);
 assert.equal(e.GITHUB_REF,`refs/heads/${e.GITHUB_REF_NAME}`);
