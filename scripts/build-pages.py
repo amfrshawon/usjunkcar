@@ -23,13 +23,31 @@ def link_nav(page):
     return page
 
 
-home = link_nav((ROOT / 'index.html').read_text())
+def state_name(slug):
+    return ' '.join(w.capitalize() for w in slug.split('-')).replace('Of ', 'of ')
+
+
+def local_states(page):
+    """Map and state-list links open the instant offer (phone fallback) instead of the reference site."""
+    page = re.sub(r'<a class="region-link" href="https://www\.usjunkcars\.com/([a-z-]+)" rel="noopener" target="_blank" '
+                  r'title="Opens the original USJunkCars website">',
+                  lambda m: f'<a class="region-link" data-peddle-offer="" data-state="{state_name(m.group(1))}" '
+                            f'href="{TEL}" aria-label="Cash for junk cars in {state_name(m.group(1))}">', page)
+    page = re.sub(r'<a class="location-cities__list-link" href="https://www\.usjunkcars\.com/([a-z-]+)" rel="noopener" '
+                  r'target="_blank" title="Opens the original USJunkCars website">',
+                  lambda m: f'<a class="location-cities__list-link" data-peddle-offer="" href="{TEL}">', page)
+    return page
+
+
+home = local_states(link_nav((ROOT / 'index.html').read_text()))
 (ROOT / 'index.html').write_text(home)
 
 head_end = home.index('<main class="main">')
 shell_top, shell_bottom = home[:head_end], home[home.index('</main>'):]
 steps = re.search(r'<div class="hiw">\s*<div class="container container--small">.*?</ul>\s*</div>\s*</div>', home, re.S).group(0)
 cta = re.search(r'<div class="hiw">\s*<div class="container">\s*<div class="hiw__cta".*?</div>\s*</div>\s*</div>\s*</div>', home, re.S).group(0)
+map_block = re.search(r'<section class="map section">.*?</section>', home, re.S).group(0)
+state_block = re.search(r'<div class="section">\s*<div class="container">\s*<div class="location-counties">.*?</ul>\s*</div>\s*</div>\s*</div>', home, re.S).group(0)
 offer_btn = ('<a class="button button--default" data-peddle-offer="" href="%s"><span class="button__inner">'
              'Get My Instant Offer <svg class="icon icon--arrow-left" height="20" width="11"> '
              '<use xlink:href="#icon-arrow-left"></use> </svg></span></a>' % TEL)
@@ -92,11 +110,14 @@ STATES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 
           'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
           'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
           'West Virginia', 'Wisconsin', 'Wyoming']
-state_list = ''.join(f'<li><a data-peddle-offer="" href="{TEL}">Junk car removal in {s}</a></li>' for s in STATES)
+loc_map = (map_block.replace('Nationwide service', 'Click your state for an instant offer')
+           .replace('<h2 class="map__title section-title text-center">Cash for Junk Cars Near You, in Every State</h2>', ''))
+loc_states = state_block.replace('Find our location near you:', 'Or choose your state from the list:')
 loc_body = title_block(
     'Junk Car Removal Near Me: Service Across the USA',
-    'Find cash for junk cars near you without calling around. Enter your ZIP code in the offer form and we confirm '
-    'pickup for your address, with free towing from your driveway, street, parking lot or repair shop.') + f'''
+    'Find cash for junk cars near you without calling around. Pick your state, enter your ZIP code in the offer form '
+    'and we confirm pickup for your address, with free towing from your driveway, street, parking lot or repair shop.') + \
+    loc_map + '\n' + loc_states + '\n' + '''
 <section class="page-section"><div class="container"><div class="page-content">
 <h2 class="section-title">How local junk car pickup works</h2>
 <p>US Junk Cars works with licensed towing and recycling partners in cities, suburbs and rural areas across the country. When you request an offer, your ZIP code tells us who can reach your car fastest, so you are not paying for a tow from the other side of the state.</p>
@@ -114,12 +135,6 @@ loc_body = title_block(
 <div class="page-card"><h3>Junk car pickup near me</h3><p>Pickup is free everywhere we operate, and nothing is deducted from your offer for towing.</p></div>
 <div class="page-card"><h3>Cash for junk cars near me</h3><p>You get paid when the car is collected, not after an inspection days later.</p></div>
 </div></div></section>
-<section class="page-section page-section--tint"><div class="container"><div class="page-content">
-<h2 class="section-title">Choose your state</h2>
-<p>We buy junk cars in every state listed below. Service reaches most ZIP codes; select your state to start an offer and the form confirms coverage for your exact address.</p>
-</div>
-<ul class="state-grid">{state_list}</ul>
-</div></section>
 ''' + cta + '\n'
 write('locations', 'Junk Car Removal Near Me in All 50 States | US Junk Cars',
       'Junk car removal near you in every state. Get cash for junk cars with free pickup from your driveway, '
