@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { HtmlFragment } from '@/components/Fragment';
-import { CANONICAL_ORIGIN, peddleBootstrap } from '@/server/config';
+import { CANONICAL_ORIGIN, GTM_ID, gtmBootstrap, peddleBootstrap } from '@/server/config';
 import { readFragment } from '@/server/publication';
 
 export const metadata: Metadata = {
@@ -26,16 +26,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-US">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: gtmBootstrap() }} />
         {STYLES.map(href => <link key={href} rel="stylesheet" href={href} precedence="default" />)}
         <script dangerouslySetInnerHTML={{ __html: peddleBootstrap() }} />
       </head>
       <body className="home" id="top" style={{ position: 'relative' }}>
+        <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} /></noscript>
         <HtmlFragment html={readFragment('shell', 'sprite.svg')} />
         <HtmlFragment html={readFragment('shell', 'header.html')} />
         {children}
         <HtmlFragment html={readFragment('shell', 'footer.html')} />
         <script defer src="/clone.js?v=next1" />
         <script defer src="/peddle-offer.js?v=2" />
+        <script defer src="/analytics.js?v=1" />
       </body>
     </html>
   );

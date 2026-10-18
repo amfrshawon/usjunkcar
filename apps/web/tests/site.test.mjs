@@ -109,6 +109,17 @@ test('no reference-business identity in pages or public assets', async () => {
   }
 });
 
+test('every public page loads Google Tag Manager and the site event script', async () => {
+  for (const route of visible) {
+    const html = await (await fetch(`${origin}${route.path}`)).text();
+    assert.match(html, /googletagmanager\.com\/gtm\.js\?id=/, `${route.path} is missing the GTM loader`);
+    assert.match(html, /GTM-TNC9P49R/, `${route.path} uses the wrong container`);
+    assert.match(html, /googletagmanager\.com\/ns\.html\?id=GTM-TNC9P49R/, `${route.path} is missing the GTM noscript frame`);
+    assert.match(html, /src="\/analytics\.js\?v=\d+"/, `${route.path} is missing analytics.js`);
+  }
+  assert.equal((await fetch(`${origin}/analytics.js`)).status, 200);
+});
+
 test('no more than ten public content pages', () => {
   assert.ok(visible.length <= 10);
 });
