@@ -125,6 +125,25 @@
               }
             }
           ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          "name": "How US Junk Cars works",
+          "description": "Since 2015, US Junk Cars has helped drivers turn junk cars into cash. Get an instant offer in about two minutes, free towing and payment on the spot, powered by Super Intelligent pricing.",
+          "thumbnailUrl": "https://usjunkcars.si/video/usjunkcars-launch-poster.jpg",
+          "uploadDate": "2026-10-18",
+          "duration": "PT57S",
+          "contentUrl": "https://usjunkcars.si/video/usjunkcars-launch-1080.mp4",
+          "embedUrl": "https://usjunkcars.si/#how-it-works-video",
+          "publisher": {
+            "@type": "Organization",
+            "name": "USJunkCars",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://usjunkcars.si/images/brand/og-image.png"
+            }
+          }
         }
       ],
       "status": "published",
