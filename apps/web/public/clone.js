@@ -106,11 +106,29 @@ if (brands) {
   });
 }
 // Map names are available on both hover and keyboard focus.
-document.querySelectorAll('.map svg a').forEach(link => {
-  const state = link.querySelector('[data-state]')?.getAttribute('data-state') || link.getAttribute('data-state') || new URL(link.href.baseVal, location.href).pathname.slice(1).replaceAll('-', ' ');
-  link.setAttribute('aria-label', state.replace(/\b\w/g, c => c.toUpperCase()));
-  if (!link.querySelector('title')) {
-    const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    title.textContent = state; link.prepend(title);
-  }
-});
+function labelMapLinks() {
+  document.querySelectorAll('.map svg a').forEach(link => {
+    const state = link.querySelector('[data-state]')?.getAttribute('data-state') || link.getAttribute('data-state') || new URL(link.href.baseVal, location.href).pathname.slice(1).replaceAll('-', ' ');
+    link.setAttribute('aria-label', state.replace(/\b\w/g, c => c.toUpperCase()));
+    if (!link.querySelector('title')) {
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = state; link.prepend(title);
+    }
+  });
+}
+labelMapLinks();
+// The homepage map is ~100 KB of SVG, so it is fetched when it nears the viewport instead of being
+// part of the page. Its box has a fixed height, so nothing moves when it arrives.
+const mapSlot = document.querySelector('[data-map-src]');
+if (mapSlot) {
+  const loadMap = () => fetch(mapSlot.dataset.mapSrc)
+    .then(res => (res.ok ? res.text() : Promise.reject(new Error(`map ${res.status}`))))
+    .then(svg => { mapSlot.innerHTML = svg; labelMapLinks(); })
+    .catch(() => {});
+  if ('IntersectionObserver' in window) {
+    const near = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { near.disconnect(); loadMap(); }
+    }, {rootMargin: '150% 0px'});
+    near.observe(mapSlot);
+  } else loadMap();
+}

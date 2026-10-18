@@ -120,6 +120,20 @@ test('every public page loads Google Tag Manager and the site event script', asy
   assert.equal((await fetch(`${origin}/analytics.js`)).status, 200);
 });
 
+test('content pages are lean static documents for fast mobile loads', async () => {
+  for (const route of visible) {
+    const html = await (await fetch(origin + route.path)).text();
+    // No React flight payload or Next.js client runtime: the pages have no client components.
+    assert.doesNotMatch(html, /self\.__next_f|\/_next\/static\//, `${route.path} ships the React client payload`);
+    // Styles are inlined; render-blocking stylesheet requests would delay first paint.
+    assert.doesNotMatch(html, /<link[^>]+rel="stylesheet"/, `${route.path} links a render-blocking stylesheet`);
+    assert.match(html, /<style>[^<]*\.header\{/, `${route.path} is missing the inlined site stylesheet`);
+  }
+  const home = await (await fetch(`${origin}/`)).text();
+  assert.match(home, /<link rel="preload" href="\/images\/backgrounds\/hero-board-red\.webp" as="image" fetchpriority="high"\/>/);
+  assert.equal((await fetch(`${origin}/fragments/us-map.html`)).status, 200);
+});
+
 test('no more than ten public content pages', () => {
   assert.ok(visible.length <= 10);
 });
