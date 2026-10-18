@@ -10,4 +10,9 @@ Processing: Adobe Photoshop API background removal (hero and banner), then trimm
 
 Keep the Adobe Stock license records in the owner's Adobe account. Adobe Stock's standard license does not allow use of these images in a logo or trademark.
 
-Still from the reference site: condition and vehicle-type icons (`/external/*.svg`), the homepage background images in `/frontend/images/base/`, and the US flag graphic. Replace these before launch.
+## Original artwork (owned by US Junk Cars)
+
+- `images/icons/*.svg`: 49 icons for conditions, titles, paperwork, vehicle types and page sections, drawn for this site by `scripts/build-icons.py`.
+- `images/backgrounds/*`: the hero board, the call-to-action banner and the US flag graphic, drawn by `scripts/build-backgrounds.py`. The US flag design itself is public domain.
+
+Still in `apps/web/public` from the reference site, but not loaded by any current page: CSS-only images for page types this site does not have (`frontend/images/base/hero_image-brand_bg.png`, `image-car.png`, `image.png`), small generic UI glyphs referenced by the stylesheet (`frontend/images/icons/`), and car-brand logos in the brand slider (`frontend/images/brands/`, manufacturer trademarks).
