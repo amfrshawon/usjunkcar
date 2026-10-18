@@ -58,11 +58,12 @@ export function gtmBootstrap(): string {
 }
 
 /**
- * Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment. The stub
- * queues calls (boot, open, hydrate) until the embed script arrives. That script is fetched shortly
- * after the page has loaded, or on the visitor's first interaction if sooner, instead of on `load`.
+ * Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment, minus its
+ * automatic script load. The stub queues calls (boot, open, hydrate) until the embed script arrives,
+ * and window.loadPeddleEmbed() fetches that script. peddle-offer.js calls it only when a visitor first
+ * presses an offer control, so the embed and the captcha resources it pulls never load on page view.
  */
 export function peddleBootstrap(): string {
   const { publisherID, host } = PEDDLE;
-  return `PeddlePublisherEmbedConfig={publisherID:${JSON.stringify(publisherID)},target:null,zIndex:10000},function(){if("function"!=typeof window.PeddlePublisherEmbed){if(!window.PeddlePublisherEmbedConfig||!window.PeddlePublisherEmbedConfig.publisherID)throw new Error("Unable to bootstrap Peddle Publisher Embed, make sure to set PeddlePublisherEmbedConfig.publisherID");const e=(d,i)=>{e.queue.push({operation:d,options:i})};e.queue=[],window.PeddlePublisherEmbed=e;let done=!1;const ev=["pointerdown","keydown","scroll"],d=()=>{if(done)return;done=!0,ev.forEach(e=>window.removeEventListener(e,d,!0));const e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=${JSON.stringify(host + '/api/v1/embed/')}+window.PeddlePublisherEmbedConfig.publisherID;const i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(e,i)};ev.forEach(e=>window.addEventListener(e,d,{capture:!0,passive:!0,once:!0}));const l=()=>setTimeout(()=>(window.requestIdleCallback||setTimeout)(d,{timeout:2e3}),500);"complete"===document.readyState?l():window.addEventListener("load",l,!1)}}();`;
+  return `PeddlePublisherEmbedConfig={publisherID:${JSON.stringify(publisherID)},target:null,zIndex:10000},function(){if("function"!=typeof window.PeddlePublisherEmbed){if(!window.PeddlePublisherEmbedConfig||!window.PeddlePublisherEmbedConfig.publisherID)throw new Error("Unable to bootstrap Peddle Publisher Embed, make sure to set PeddlePublisherEmbedConfig.publisherID");const e=(d,i)=>{e.queue.push({operation:d,options:i})};e.queue=[],window.PeddlePublisherEmbed=e;let p;window.loadPeddleEmbed=()=>p||(p=new Promise((r,j)=>{const e=document.createElement("script");e.type="text/javascript",e.async=!0,e.onload=r,e.onerror=j,e.src=${JSON.stringify(host + '/api/v1/embed/')}+window.PeddlePublisherEmbedConfig.publisherID;const i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(e,i)}))}}();`;
 }
