@@ -15,8 +15,7 @@ const protection=await get(`environments/${t.environment}`);
 assert.equal(protection.deployment_branch_policy?.custom_branch_policies,true);
 const policies=(await get(`environments/${t.environment}/deployment-branch-policies`)).branch_policies;
 assert.equal(policies.length,1);assert.equal(policies[0].name,e.GITHUB_REF_NAME);assert.equal(policies[0].type,'branch');
-if(e.GITHUB_REF_NAME==='main') {
-  assert.equal(protection.can_admins_bypass,false);
-  assert.ok(protection.protection_rules.some(r=>r.type==='required_reviewers'&&r.reviewers?.some(x=>x.reviewer?.login==='amfrshawon')));
-}
+// Production needs no deployment reviewer (removed by the owner on 2026-10-18): the owner's approval is
+// the reviewed dev → main merge. The main-only branch policy above and no admin bypass still apply.
+if(e.GITHUB_REF_NAME==='main') assert.equal(protection.can_admins_bypass,false);
 console.log(`Verified ${e.GITHUB_REF_NAME} → ${t.origin} at ${e.GITHUB_SHA}`);
