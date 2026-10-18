@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0A2B5E' };
 
-const STYLES = ['/frontend/css/style.min.css?v=04b4da58b1', '/css/fixes.css?v=brand2', '/css/style_blocks.css', '/css/pages.css?v=6', '/css/inline.css?v=1', '/clone.css?v=copy1'];
+const STYLES = ['/frontend/css/style.min.css?v=04b4da58b1', '/css/fixes.css?v=brand3', '/css/style_blocks.css', '/css/pages.css?v=6', '/css/inline.css?v=1', '/clone.css?v=copy1'];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

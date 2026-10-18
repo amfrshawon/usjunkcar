@@ -11,6 +11,7 @@ export type PublicRoute = {
   family: string;
   title: string;
   description: string;
+  lastModified?: string;
   jsonLd: unknown;
   status: RouteStatus;
   environments: string[];

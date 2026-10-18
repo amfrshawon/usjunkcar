@@ -115,7 +115,8 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "locations",
@@ -374,14 +375,15 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "about",
       "path": "/about/",
       "family": "company",
-      "title": "About US Junk Cars | Fair Junk Car Buyers, Powered by Super Intelligent",
-      "description": "US Junk Cars buys junk, damaged and non-running vehicles across all 50 states with instant Super Intelligent offers, free towing, on-the-spot payment and responsible auto recycling.",
+      "title": "About US Junk Cars | Nationwide Cash for Junk Cars",
+      "description": "US Junk Cars buys junk, damaged and non-running vehicles in all 50 states with instant Super Intelligent offers, free towing and on-the-spot payment.",
       "jsonLd": [
         {
           "@context": "https://schema.org",
@@ -442,13 +444,14 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "faq",
       "path": "/faq/",
       "family": "faq",
-      "title": "Junk Car FAQ: Sell Without a Title, Pickup & Payment | US Junk Cars",
+      "title": "Junk Car FAQ: Titles, Free Towing & Pay | US Junk Cars",
       "description": "Can you sell a car without a title? How much do junkyards pay? Get clear answers about junking a car, free pickup, payment and paperwork.",
       "jsonLd": [
         {
@@ -602,14 +605,15 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "contact",
       "path": "/contact/",
       "family": "company",
-      "title": "Contact US Junk Cars | Call 1-844-512-0697 for Cash for Junk Cars",
-      "description": "Contact US Junk Cars 24/7 at 1-844-512-0697 or online. See what paperwork you need to junk a car, how to get the most money, pickup-day tips and how to avoid junk car scams.",
+      "title": "Contact US Junk Cars | Call 1-844-512-0697 (24/7)",
+      "description": "Contact US Junk Cars 24/7 at 1-844-512-0697 or get an instant offer online. See required title paperwork, pickup-day tips and how to avoid junk car scams.",
       "jsonLd": [
         {
           "@context": "https://schema.org",
@@ -723,7 +727,8 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "privacy-policy",
@@ -738,7 +743,7 @@
           "name": "Privacy Policy",
           "url": "https://usjunkcars.si/privacy-policy/",
           "datePublished": "2026-10-15",
-          "dateModified": "2026-10-15",
+          "dateModified": "2026-10-18",
           "publisher": {
             "@type": "Organization",
             "name": "US Junk Cars",
@@ -771,7 +776,8 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     },
     {
       "id": "terms-and-conditions",
@@ -819,7 +825,8 @@
         "development",
         "production"
       ],
-      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
+      "lastModified": "2026-10-18"
     }
   ]
 }

@@ -83,6 +83,7 @@ page = f'''<div class="breadcrumbs"><div class="container"><ul class="breadcrumb
 <p class="page-title__lead">The rules for using usjunkcars.si and selling your junk car to US Junk Cars, written in plain English.</p>
 <div class="legal-meta"><span><b>Effective:</b> {EFFECTIVE}</span><span><b>Last updated:</b> {EFFECTIVE}</span><span><b>Applies to:</b> usjunkcars.si and all sales</span></div></div></section>
 <section class="page-section"><div class="container">
+<h2 class="section-title">Key terms at a glance</h2>
 <div class="legal-glance">
 <div class="page-card"><h3>No obligation to sell</h3><p>Get an offer, ask questions and decline at any time before the sale is complete.</p></div>
 <div class="page-card"><h3>Describe the car honestly</h3><p>Your offer depends on accurate details. Big differences found at pickup can change the price.</p></div>
@@ -102,6 +103,7 @@ route = {
     'id': ID, 'path': PATH, 'family': 'legal',
     'title': 'Terms and Conditions | US Junk Cars',
     'description': 'Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.',
+    'lastModified': ISO,
     'jsonLd': [
         {'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Terms and Conditions', 'url': f'{SITE}{PATH}',
          'datePublished': ISO, 'dateModified': ISO, 'publisher': {'@type': 'Organization', 'name': 'US Junk Cars', 'legalName': 'USJunkCars', 'url': f'{SITE}/'}},

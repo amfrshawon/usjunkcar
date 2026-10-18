@@ -115,8 +115,10 @@ page = f'''<div class="breadcrumbs"><div class="container"><ul class="breadcrumb
 reg_path = ROOT / 'content/publication.json'
 reg = json.loads(reg_path.read_text())
 route = next(r for r in reg['routes'] if r['id'] == 'contact')
-route['description'] = ('Contact US Junk Cars 24/7 at 1-844-512-0697 or online. See what paperwork you need to junk a car, '
-                        'how to get the most money, pickup-day tips and how to avoid junk car scams.')
+route['title'] = 'Contact US Junk Cars | Call 1-844-512-0697 (24/7)'
+route['description'] = ('Contact US Junk Cars 24/7 at 1-844-512-0697 or get an instant offer online. '
+                        'See required title paperwork, pickup-day tips and how to avoid junk car scams.')
+route['lastModified'] = '2026-10-18'
 contact_ld = next(x for x in route['jsonLd'] if x.get('@type') == 'ContactPage')
 point = contact_ld['mainEntity'].setdefault('contactPoint', {})
 point.update({'@type': 'ContactPoint', 'telephone': '+1-844-512-0697', 'email': EMAIL, 'contactType': 'customer service',
