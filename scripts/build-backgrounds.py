@@ -103,3 +103,70 @@ flag = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" view
 for name, text in [('hero-board-red.svg', hero), ('cta-banner-blue.svg', banner), ('usa-flag-nationwide.svg', flag)]:
     (OUT / name).write_text(text)
 print('wrote backgrounds to', OUT)
+
+
+# ---------------------------------------------------------------- Animated waving flag
+# Same artwork as the still flag, animated with SMIL so it also plays inside an <img>.
+# The wave is pinned at the left (pole) edge and grows toward the free end.
+FRAMES, DUR, N = 16, 2.6, 18
+x0f, x1f = PAD, W - PAD
+top0 = PAD + 20
+
+
+def wave_t(x, phase):
+    k = (x - x0f) / (x1f - x0f)
+    return (6 + 22 * k) * math.sin(k * 2 * math.pi * 1.15 - phase) - 6 * k
+
+
+def band_t(y_top, y_bot, xa, xb, phase):
+    xs = [xa + (xb - xa) * i / N for i in range(N + 1)]
+    pts = [(x, y_top + wave_t(x, phase)) for x in xs] + [(x, y_bot + wave_t(x, phase)) for x in reversed(xs)]
+    return 'M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in pts) + 'Z'
+
+
+def anim(frames):
+    values = ';'.join(frames + frames[:1])
+    return f'<animate attributeName="d" dur="{DUR}s" repeatCount="indefinite" calcMode="linear" values="{values}"/>'
+
+
+phases = [2 * math.pi * f / FRAMES for f in range(FRAMES)]
+parts = []
+for i in range(13):
+    y0 = top0 + i * stripe_h
+    frames = [band_t(y0, y0 + stripe_h + .6, x0f, x1f, p) for p in phases]
+    parts.append(f'<path fill="{"#DE193E" if i % 2 == 0 else "#FFFFFF"}" d="{frames[0]}">{anim(frames)}</path>')
+canton = [band_t(top0, top0 + canton_h, x0f, x0f + canton_w, p) for p in phases]
+parts.append(f'<path fill="#0A2B5E" d="{canton[0]}">{anim(canton)}</path>')
+
+
+def star_d(x, y):
+    return 'M' + ' L'.join(f'{x + (7 if k % 2 == 0 else 2.9) * math.cos(-math.pi / 2 + k * math.pi / 5):.1f} '
+                           f'{y + (7 if k % 2 == 0 else 2.9) * math.sin(-math.pi / 2 + k * math.pi / 5):.1f}' for k in range(10)) + 'Z'
+
+
+# Stars in one column share an x position, so each column moves as a group.
+columns = {}
+for r in range(9):
+    for c in range(6 if r % 2 == 0 else 5):
+        x = x0f + canton_w * ((c * 2 + (1 if r % 2 else 0) + 1) / 12)
+        columns.setdefault(round(x, 1), []).append(star_d(x, top0 + canton_h * ((r + 1) / 10)))
+for x, stars in columns.items():
+    shifts = ';'.join(f'0 {wave_t(x, p):.1f}' for p in phases + phases[:1])
+    parts.append(f'<g fill="#FFFFFF"><path d="{" ".join(stars)}"/>'
+                 f'<animateTransform attributeName="transform" type="translate" dur="{DUR}s" repeatCount="indefinite" values="{shifts}"/></g>')
+
+# Moving light and shadow sell the folds: a soft band that travels with the wave.
+shade_id = 'fold'
+shading = (f'<linearGradient id="{shade_id}" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">'
+           f'<stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".2" stop-color="#FFF" stop-opacity=".22"/>'
+           f'<stop offset=".4" stop-color="#000" stop-opacity=".14"/><stop offset=".6" stop-color="#FFF" stop-opacity=".2"/>'
+           f'<stop offset=".8" stop-color="#000" stop-opacity=".14"/><stop offset="1" stop-color="#FFF" stop-opacity=".18"/>'
+           f'<animate attributeName="x1" dur="{DUR}s" repeatCount="indefinite" values="0;-.36;0"/>'
+           f'<animate attributeName="x2" dur="{DUR}s" repeatCount="indefinite" values="1;.64;1"/></linearGradient>')
+outline = [band_t(top0, top0 + 13 * stripe_h, x0f, x1f, p) for p in phases]
+parts.append(f'<path fill="url(#{shade_id})" d="{outline[0]}">{anim(outline)}</path>')
+
+waving = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" '
+          f'aria-label="US flag waving"><title>US flag waving</title><defs>{shading}</defs>{"".join(parts)}</svg>')
+(OUT / 'usa-flag-waving.svg').write_text(waving)
+print('wrote animated flag', round(len(waving) / 1024), 'KB')

@@ -22,7 +22,10 @@
 .faq-group { margin-top: 36px; }
 .faq-group:first-child { margin-top: 0; }
 .faq-group__title { margin: 0 0 8px; font-size: 22px; color: #0a2b5e; }
-.page-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.page-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+@media (min-width: 992px) {
+  .page-cta-row .button--white { font-size: 24px; height: 80px; }
+}
 @media (max-width: 575.98px) {
   .page-section { padding: 32px 0; }
   .page-content { font-size: 16px; }
