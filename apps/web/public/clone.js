@@ -105,7 +105,6 @@ if (brands) {
     }
   });
 }
-// Map names are available on both hover and keyboard focus.
 function labelMapLinks() {
   document.querySelectorAll('.map svg a').forEach(link => {
     const state = link.querySelector('[data-state]')?.getAttribute('data-state') || link.getAttribute('data-state') || new URL(link.href.baseVal, location.href).pathname.slice(1).replaceAll('-', ' ');
@@ -131,4 +130,64 @@ if (mapSlot) {
     }, {rootMargin: '150% 0px'});
     near.observe(mapSlot);
   } else loadMap();
+}
+
+// Blog 6-Topic Section filter and live keyword search.
+const blogTopicSections = [...document.querySelectorAll('[data-blog-topic-section]')];
+if (blogTopicSections.length) {
+  let activeCategory = 'all';
+  const searchInput = document.getElementById('blog-search-input');
+  const filterButtons = [...document.querySelectorAll('[data-blog-filter]')];
+  const countLabel = document.getElementById('blog-results-count');
+  const emptyState = document.getElementById('blog-empty-state');
+  const allCards = [...document.querySelectorAll('[data-blog-card]')];
+
+  function applyBlogFilters() {
+    const query = (searchInput?.value || '').trim().toLowerCase();
+    let visibleCount = 0;
+    let visibleTopics = 0;
+
+    blogTopicSections.forEach(section => {
+      const sectionCat = section.getAttribute('data-blog-topic-section');
+      const cards = [...section.querySelectorAll('[data-blog-card]')];
+      let sectionVisibleCards = 0;
+
+      cards.forEach(card => {
+        const text = ((card.textContent || '') + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        const matchCat = activeCategory === 'all' || sectionCat === activeCategory;
+        const matchQuery = !query || text.includes(query);
+        const show = matchCat && matchQuery;
+        card.hidden = !show;
+        if (show) {
+          visibleCount++;
+          sectionVisibleCards++;
+        }
+      });
+
+      section.hidden = sectionVisibleCards === 0;
+      if (sectionVisibleCards > 0) visibleTopics++;
+    });
+
+    if (countLabel) {
+      countLabel.textContent =
+        visibleCount === allCards.length
+          ? `Showing all ${allCards.length} guides across ${blogTopicSections.length} topics`
+          : `Showing ${visibleCount} of ${allCards.length} guides (${visibleTopics} ${visibleTopics === 1 ? 'topic' : 'topics'})`;
+    }
+    if (emptyState) emptyState.hidden = visibleCount > 0;
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.getAttribute('data-blog-filter') || 'all';
+      filterButtons.forEach(b => {
+        const isCurrent = b === btn;
+        b.classList.toggle('is-active', isCurrent);
+        b.setAttribute('aria-pressed', String(isCurrent));
+      });
+      applyBlogFilters();
+    });
+  });
+
+  searchInput?.addEventListener('input', applyBlogFilters);
 }

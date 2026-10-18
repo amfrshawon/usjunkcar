@@ -23,7 +23,9 @@ const nextConfig: NextConfig = {
     if (appEnv !== 'production') headers.push({ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' });
     // Next serves public/ files with max-age=0, so repeat visitors revalidate every asset. Scripts are
     // referenced with a ?v= version and fonts are renamed when they change, so both are cached for a
-    // year; images and video are not versioned, so they get a week.
+    // year; images are not versioned, so they get a week. Video files carry the first 8 hex of their
+    // SHA-256 in the name (Claude/launch-video/web/encode.sh), so a changed file gets a new URL and those
+    // are cached for a year; the later, more specific rule wins over the /video/ week.
     const cache = (value: string) => [{ key: 'Cache-Control', value }];
     return [
       { source: '/:path*', headers },
@@ -31,6 +33,7 @@ const nextConfig: NextConfig = {
       { source: '/frontend/fonts/:path*', headers: cache('public, max-age=31536000, immutable') },
       { source: '/images/:path*', headers: cache('public, max-age=604800, stale-while-revalidate=86400') },
       { source: '/video/:path*', headers: cache('public, max-age=604800, stale-while-revalidate=86400') },
+      { source: '/video/:file([^/]+\\.[0-9a-f]{8}\\.(?:mp4|webm|jpg|webp|avif))', headers: cache('public, max-age=31536000, immutable') },
     ];
   },
 };
