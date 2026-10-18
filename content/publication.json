@@ -379,23 +379,32 @@
       "path": "/about/",
       "family": "company",
       "title": "About US Junk Cars | Fair Junk Car Buyers, Powered by Super Intelligent",
-      "description": "US Junk Cars buys junk cars across the USA with clear instant offers, free towing and payment at pickup. Learn how our Super Intelligent pricing works.",
+      "description": "US Junk Cars buys junk, damaged and non-running vehicles across all 50 states with instant Super Intelligent offers, free towing, on-the-spot payment and responsible auto recycling.",
       "jsonLd": [
         {
           "@context": "https://schema.org",
           "@type": "AboutPage",
           "name": "About US Junk Cars",
           "url": "https://usjunkcars.si/about/",
+          "description": "Learn how US Junk Cars uses Super Intelligent valuation, nationwide free towing and licensed auto recycling partners to buy junk, damaged and non-running vehicles across the United States.",
           "about": {
             "@type": "AutomotiveBusiness",
             "name": "US Junk Cars",
             "url": "https://usjunkcars.si/",
+            "logo": "https://usjunkcars.si/images/brand/logo-stacked.svg",
+            "image": "https://usjunkcars.si/images/brand/og-image.png",
             "telephone": "+1-844-512-0697",
             "slogan": "Powered by Super Intelligent",
             "areaServed": {
               "@type": "Country",
               "name": "United States"
             },
+            "knowsAbout": [
+              "Cash for junk cars",
+              "Junk car removal and free towing",
+              "Selling a damaged or non-running vehicle",
+              "Environmentally responsible auto recycling"
+            ],
             "legalName": "USJunkCars",
             "address": {
               "@type": "PostalAddress",
