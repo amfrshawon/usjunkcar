@@ -10,3 +10,4 @@ playwright-report/
 __pycache__/
 release.tar.gz
 *.tsbuildinfo
+content/generated/

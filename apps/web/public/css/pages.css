@@ -117,7 +117,9 @@
 /* Homepage launch video: inline preview card and full-screen player */
 .lv__head { max-width: 760px; margin: 0 auto 34px; text-align: center; }
 .lv__head p { margin-top: 12px; font-size: 18px; line-height: 1.6; color: #474150; }
-.lv-card { position: relative; max-width: 1040px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #071a3d url("/video/usjunkcars-launch-poster.jpg") center / cover; box-shadow: 0 30px 70px rgba(10, 43, 94, .28); }
+.lv-card { position: relative; max-width: 1040px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #071a3d center / cover; box-shadow: 0 30px 70px rgba(10, 43, 94, .28); }
+/* The poster is attached by video-player.js once the card nears the viewport. */
+.lv-card.is-near { background-image: url("/video/usjunkcars-launch-poster.jpg"); }
 .lv-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .lv-card__open { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border: 0; padding: 0; background: linear-gradient(180deg, rgba(5, 15, 36, 0) 55%, rgba(5, 15, 36, .55)); cursor: pointer; color: #fff; }
 .lv-card__play { position: relative; display: flex; align-items: center; justify-content: center; width: 96px; height: 96px; border-radius: 50%; background: #de193e; box-shadow: 0 16px 40px rgba(222, 25, 62, .5); transition: transform .25s ease; }

@@ -10,6 +10,17 @@
   const track = (event, extra) => dataLayer.push({ event, video_title: 'USJunkCars launch', ...extra });
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData;
 
+  // The poster is a card background that is only attached once the card is within ~1.5 screens,
+  // so it does not compete with the hero image on first load.
+  if ('IntersectionObserver' in window) {
+    const near = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      card.classList.add('is-near');
+      near.disconnect();
+    }, { rootMargin: '150% 0px' });
+    near.observe(card);
+  } else card.classList.add('is-near');
+
   // Inline preview: play only while on screen, never with sound.
   if (!calm && 'IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
