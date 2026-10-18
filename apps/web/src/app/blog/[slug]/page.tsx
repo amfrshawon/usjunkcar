@@ -9,6 +9,8 @@ type BlogReference = { label: string; url: string };
 type BlogPost = {
   slug: string;
   title: string;
+  metaTitle?: string;
+  metaDescription?: string;
   category: string;
   categorySlug: string;
   date: string;
@@ -80,24 +82,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Page not found', robots: { index: false, follow: false } };
   }
   const url = `${CANONICAL_ORIGIN}/blog/${post.slug}/`;
-  const title = `${post.title} | USJunkCars Blog`;
+  const metaTitle = post.metaTitle || (post.title.length <= 48 ? `${post.title} | USJunkCars` : post.title);
+  const metaDescription = post.metaDescription || (post.summary.length > 160 ? `${post.summary.slice(0, 157)}...` : post.summary);
   return {
-    title: { absolute: title },
-    description: post.summary,
+    title: { absolute: metaTitle },
+    description: metaDescription,
     keywords: post.targetKeywords,
     alternates: { canonical: url },
     openGraph: {
       type: 'article',
       siteName: 'USJunkCars',
       url,
-      title,
-      description: post.summary,
+      title: metaTitle,
+      description: metaDescription,
       images: [post.heroImage ? { url: post.heroImage, width: 1200, height: 630, alt: post.title } : OG_IMAGE],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description: post.summary,
+      title: metaTitle,
+      description: metaDescription,
       images: [post.heroImage || OG_IMAGE.url],
     },
     robots:
