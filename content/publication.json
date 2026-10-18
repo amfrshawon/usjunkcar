@@ -845,6 +845,284 @@
       ],
       "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
       "lastModified": "2026-10-18"
+    },
+    {
+      "id": "blog",
+      "path": "/blog/",
+      "family": "blog",
+      "title": "Junk Car Selling Blog: Prices, Titles & Tips | USJunkCars",
+      "description": "Expert guides on selling a junk car for cash: scrap vs. parts pricing, selling without a title, pickup checklists, avoiding scams and auto recycling.",
+      "lastModified": "2026-10-18",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "US Junk Cars Blog & Seller Resource Center",
+          "url": "https://usjunkcars.si/blog/",
+          "description": "Practical guides on selling junk, damaged and non-running vehicles for cash with free towing across all 50 states.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "US Junk Cars",
+            "legalName": "USJunkCars",
+            "url": "https://usjunkcars.si/",
+            "logo": "https://usjunkcars.si/images/brand/logo-stacked.svg"
+          },
+          "blogPost": [
+            {
+              "@type": "BlogPosting",
+              "headline": "How Much Is My Junk Car Worth in 2026? Parts vs. Scrap Weight Explained",
+              "description": "Most junk cars sell for $250 to $1,500+ in 2026 depending on curb weight, OEM catalytic converter metals, and salvageable drivetrain demand. See how weight-only scrap quotes compare to whole-car parts valuations and calculate your true net payout after towing.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/how-much-is-my-junk-car-worth/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "How to Sell a Junk Car Without a Title: State Rules & Ownership Options",
+              "description": "Lost or misplaced your car title? Learn when licensed junk car buyers and auto recyclers can legally purchase a vehicle using alternative ownership documents, when state law requires a duplicate title or derelict vehicle affidavit, and how active liens impact your sale.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/sell-junk-car-without-a-title/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "Blown Engine or Bad Transmission? How to Decide Between Fixing and Selling",
+              "description": "Facing a $3,500 to $8,500 engine or transmission replacement quote on an older vehicle? Use the 50% Repair-to-Value formula and real 2026 shop cost benchmarks to decide whether to repair or take an instant cash offer with free shop-to-yard towing.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/blown-engine-or-bad-transmission-repair-vs-sell/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "What to Do Before the Tow Truck Arrives: 7-Step Junk Car Pickup Checklist",
+              "description": "A complete 7-step pre-arrival checklist for junk car sellers covering hidden interior compartments, infotainment and HomeLink garage code resets, title sign-off lines, license plates, toll transponders, and flatbed tow truck clearance.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/junk-car-pickup-checklist-before-tow-truck-arrives/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "What Happens to Your Junk Car After Pickup? Inside Modern Auto Recycling",
+              "description": "Automobiles are the most recycled consumer product in America, with 80% to 86% of every end-of-life vehicle recovered by weight. Follow your car step by step from EPA-compliant fluid depollution and OEM parts harvesting to Platinum Group Metal refining and electric-arc steel recycling.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/what-happens-to-your-junk-car-after-pickup-recycling/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "After the Tow Truck Leaves: License Plates, DMV Notice of Sale & Insurance Guide",
+              "description": "Handing over your keys and collecting cash for your junk car is only step one. Follow our state-by-state license plate removal rules, DMV Notice of Sale deadlines, and exact sequence for canceling insurance so you never get hit with civil fines or post-sale toll violations.",
+              "datePublished": "2026-10-18",
+              "dateModified": "2026-10-18",
+              "url": "https://usjunkcars.si/blog/what-to-do-with-license-plates-and-insurance-after-selling/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "Why Pickup Trucks, SUVs & Work Vans Command Higher Junk Car Offers",
+              "description": "Full-size pickup trucks, body-on-frame SUVs, and commercial cargo vans routinely earn 40% to 150% higher junk car payouts than sedans. Learn how extra curb weight, 4x4 transfer cases, diesel powertrains, and dual catalytic converters drive top-tier offers.",
+              "datePublished": "2026-10-17",
+              "dateModified": "2026-10-17",
+              "url": "https://usjunkcars.si/blog/scrap-metal-prices-vs-whole-car-offers/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "How Junk Car Scams Work (and 5 Red Flags Every Seller Should Watch For)",
+              "description": "An investigative seller's guide to exposing junk car bait-and-switch quotes, hidden hookup fees, unlicensed curbstoners, and illegal 'open title' jumping that leaves you legally and financially liable for a car you already sold.",
+              "datePublished": "2026-10-17",
+              "dateModified": "2026-10-17",
+              "url": "https://usjunkcars.si/blog/how-to-avoid-junk-car-bait-and-switch-scams/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "Clean Title vs. Salvage Title vs. Non-Repairable Certificate: What It Means When Selling",
+              "description": "Not all car titles carry the same resale power. Understand how insurance total-loss thresholds, NMVTIS title brands, Salvage vs. Rebuilt inspections, and Non-Repairable Certificates of Destruction impact who can legally buy your vehicle and how much cash you'll receive.",
+              "datePublished": "2026-10-16",
+              "dateModified": "2026-10-16",
+              "url": "https://usjunkcars.si/blog/clean-vs-salvage-vs-rebuilt-title-value/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "How to Sell a Wrecked, Totaled or Storm-Damaged Car for Cash",
+              "description": "Uninsured collision, deployed airbags, bent frame, hurricane floodwater, or severe hail damage? Learn how state total-loss thresholds work, how to calculate owner-retained salvage settlements, and how to turn a wrecked car into immediate cash with $0 towing.",
+              "datePublished": "2026-10-16",
+              "dateModified": "2026-10-16",
+              "url": "https://usjunkcars.si/blog/selling-wrecked-flooded-or-hail-damaged-car/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "Why Letting an Unused Car Sit in Your Driveway Costs More Than You Think",
+              "description": "Keeping a non-running car in your driveway isn't free. Between $400–$1,800+ in annual insurance, registration, municipal blight fines, rodent harness damage, and toxic fluid leaks, discover the true 12-month cost of an idle vehicle—and how to turn it into immediate cash.",
+              "datePublished": "2026-10-15",
+              "dateModified": "2026-10-15",
+              "url": "https://usjunkcars.si/blog/environmental-benefits-of-junking-an-old-car/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            },
+            {
+              "@type": "BlogPosting",
+              "headline": "How Free Junk Car Pickup Works at Apartments, Street Parking & Repair Shops",
+              "description": "Your dead car doesn't have to be sitting in a suburban driveway to qualify for free towing and on-the-spot cash. Learn how our dispatchers use low-clearance wheel-lift wreckers for underground apartment garages, navigate tight city street parking, and coordinate directly with repair shops before storage fees eat your payout.",
+              "datePublished": "2026-10-15",
+              "dateModified": "2026-10-15",
+              "url": "https://usjunkcars.si/blog/selling-a-junk-car-from-an-apartment-garage-or-mechanic-shop/",
+              "author": {
+                "@type": "Organization",
+                "name": "US Junk Cars Editorial Team",
+                "url": "https://usjunkcars.si/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "US Junk Cars",
+                "legalName": "USJunkCars",
+                "url": "https://usjunkcars.si/"
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://usjunkcars.si/blog/"
+            }
+          ]
+        }
+      ],
+      "status": "review",
+      "environments": [
+        "local",
+        "development"
+      ],
+      "approval": null
     }
   ]
 }
