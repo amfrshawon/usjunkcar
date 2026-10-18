@@ -23,6 +23,19 @@ Private review credentials are saved outside Git on the owner's computer at `~/.
 
 Each GitHub environment has its own `VPS_SSH_KEY`. Temporary private generation files were removed after upload. Root-owned authorized keys restrict access to the root-owned release receiver for that environment; shell commands, forwarding and PTYs are disabled. Pinned host key: `infra/vps/known_hosts`. No Vercel token is needed; dormant Vercel projects are unused.
 
+### Private repository: branch check token
+The repository is private since 2026-10-18. Before switching releases, the receiver confirms with GitHub that the branch still points at the commit being deployed. That call needs a read-only token in `/etc/usjunkcars/<branch>.github-token` (`root:usjunkcars-<branch>`, mode 640). The token is never loaded into the app's environment. Without the file, every deploy is refused. Owner steps, as root on the VPS:
+
+1. On GitHub, create a fine-grained personal access token. Settings → Developer settings → Fine-grained tokens. Choose resource owner `amfrshawon`, *Only select repositories* → `usjunkcar`, and Repository permissions → **Contents: Read-only** (Metadata read is added automatically). Set the expiry to 1 year and note the renewal date.
+2. Back up and install the receiver from this repository (copy it to the VPS first, for example with `scp infra/vps/receive-release.py root@69.62.69.84:/tmp/`):
+   `cp -p /usr/local/lib/usjunkcars/receive-release.py /usr/local/lib/usjunkcars/receive-release.py.bak-$(date +%F)`
+   `install -m 755 -o root -g root /tmp/receive-release.py /usr/local/lib/usjunkcars/receive-release.py && rm /tmp/receive-release.py`
+3. Store the token for both branches, without echoing it or writing it to shell history:
+   `read -rs TOKEN && for b in dev main; do install -m 640 -o root -g "usjunkcars-$b" /dev/null "/etc/usjunkcars/$b.github-token"; printf '%s\n' "$TOKEN" > "/etc/usjunkcars/$b.github-token"; done; unset TOKEN`
+4. Re-run the latest failed deploy, for example `gh run rerun <run id> --failed`.
+
+To renew the token, repeat step 3. To roll back the receiver, restore the `.bak-*` copy.
+
 ## Next agent: application activation contract
 
 1. Read AGENTS.md and the product specifications. Read installed Next.js guides before framework code. Build `apps/web` using standalone output and workspace tracing. Keep the root static fixture out of the public app. Pin pnpm/dependencies and commit the lockfile with approved application work.
