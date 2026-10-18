@@ -109,12 +109,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "locations",
@@ -367,12 +368,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "about",
@@ -434,12 +436,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "faq",
@@ -593,12 +596,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "contact",
@@ -713,12 +717,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "privacy-policy",
@@ -760,12 +765,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     },
     {
       "id": "terms-and-conditions",
@@ -807,12 +813,13 @@
           ]
         }
       ],
-      "status": "review",
+      "status": "published",
       "environments": [
         "local",
-        "development"
+        "development",
+        "production"
       ],
-      "approval": null
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
     }
   ]
 }
