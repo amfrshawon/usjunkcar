@@ -109,6 +109,17 @@ test('no reference-business identity in pages or public assets', async () => {
   }
 });
 
+test('every public page loads Google Tag Manager and the site event script', async () => {
+  for (const route of visible) {
+    const html = await (await fetch(`${origin}${route.path}`)).text();
+    assert.match(html, /googletagmanager\.com\/gtm\.js\?id=/, `${route.path} is missing the GTM loader`);
+    assert.match(html, /GTM-TNC9P49R/, `${route.path} uses the wrong container`);
+    assert.match(html, /googletagmanager\.com\/ns\.html\?id=GTM-TNC9P49R/, `${route.path} is missing the GTM noscript frame`);
+    assert.match(html, /src="\/analytics\.js\?v=\d+"/, `${route.path} is missing analytics.js`);
+  }
+  assert.equal((await fetch(`${origin}/analytics.js`)).status, 200);
+});
+
 test('no more than ten public content pages', () => {
   assert.ok(visible.length <= 10);
 });
@@ -123,6 +134,16 @@ test('Peddle uses the live account only in production', async () => {
     assert.match(page, /publisherID:"329729"/);
     assert.match(page, /staging-publisher-embed\.peddle\.com/);
   }
+});
+
+test('homepage names the site for search results', async () => {
+  const html = await (await fetch(`${origin}/`)).text();
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].flatMap(m => [JSON.parse(m[1])].flat());
+  const site = blocks.find(b => b['@type'] === 'WebSite');
+  assert.ok(site, 'homepage needs WebSite structured data');
+  assert.equal(site.name, 'USJunkCars');
+  assert.equal(site.url, 'https://usjunkcars.si/');
+  assert.match(html, /<meta property="og:site_name" content="USJunkCars"\/>/);
 });
 
 test('SEO quality: titles, descriptions, heading hierarchy, content depth, contextual links and CSS assets', () => {

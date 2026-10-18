@@ -101,7 +101,7 @@ reg_path = ROOT / 'content/publication.json'
 reg = json.loads(reg_path.read_text())
 route = {
     'id': ID, 'path': PATH, 'family': 'legal',
-    'title': 'Terms and Conditions | US Junk Cars',
+    'title': 'Terms and Conditions | USJunkCars',
     'description': 'Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.',
     'lastModified': ISO,
     'jsonLd': [

@@ -41,6 +41,16 @@ export const PEDDLE = buildEnv === 'production'
   ? { publisherID: '5173226', host: 'https://publisher-embed.peddle.com' }
   : { publisherID: '329729', host: 'https://staging-publisher-embed.peddle.com' };
 
+/**
+ * Google Tag Manager loads in every environment so tags can be tested in GTM Preview, but the GA4
+ * and Clarity tags inside the container only fire on the production hostname.
+ */
+export const GTM_ID = 'GTM-TNC9P49R';
+
+export function gtmBootstrap(): string {
+  return `window.dataLayer=window.dataLayer||[];window.dataLayer.push({app_env:${JSON.stringify(buildEnv)}});(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',${JSON.stringify(GTM_ID)});`;
+}
+
 /** Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment. */
 export function peddleBootstrap(): string {
   const { publisherID, host } = PEDDLE;

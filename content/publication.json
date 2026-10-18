@@ -7,9 +7,27 @@
       "id": "home",
       "path": "/",
       "family": "homepage",
-      "title": "Cash for Junk Cars: Instant Offer & Free Towing | US Junk Cars",
+      "title": "Cash for Junk Cars: Instant Offer & Free Towing | USJunkCars",
       "description": "Get cash for junk cars anywhere in the USA. We buy junk cars in any condition, with or without a title. Instant online offer, free towing, paid at pickup.",
       "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://usjunkcars.si/#website",
+          "name": "USJunkCars",
+          "alternateName": [
+            "US Junk Cars",
+            "USJunkCars.si"
+          ],
+          "url": "https://usjunkcars.si/",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@type": "Organization",
+            "name": "USJunkCars",
+            "legalName": "USJunkCars",
+            "url": "https://usjunkcars.si/"
+          }
+        },
         {
           "@context": "https://schema.org",
           "@type": "AutomotiveBusiness",
@@ -122,7 +140,7 @@
       "id": "locations",
       "path": "/locations/",
       "family": "service-area-directory",
-      "title": "Junk Car Removal Near Me in All 50 States | US Junk Cars",
+      "title": "Junk Car Removal Near Me in All 50 States | USJunkCars",
       "description": "Junk car removal near you in every state. Get cash for junk cars with free pickup from your driveway, street or shop. Check your ZIP code for an instant offer.",
       "jsonLd": [
         {
@@ -382,7 +400,7 @@
       "id": "about",
       "path": "/about/",
       "family": "company",
-      "title": "About US Junk Cars | Nationwide Cash for Junk Cars",
+      "title": "About USJunkCars | Nationwide Cash for Junk Cars",
       "description": "US Junk Cars buys junk, damaged and non-running vehicles in all 50 states with instant Super Intelligent offers, free towing and on-the-spot payment.",
       "jsonLd": [
         {
@@ -451,7 +469,7 @@
       "id": "faq",
       "path": "/faq/",
       "family": "faq",
-      "title": "Junk Car FAQ: Titles, Free Towing & Pay | US Junk Cars",
+      "title": "Junk Car FAQ: Titles, Free Towing & Pay | USJunkCars",
       "description": "Can you sell a car without a title? How much do junkyards pay? Get clear answers about junking a car, free pickup, payment and paperwork.",
       "jsonLd": [
         {
@@ -612,7 +630,7 @@
       "id": "contact",
       "path": "/contact/",
       "family": "company",
-      "title": "Contact US Junk Cars | Call 1-844-512-0697 (24/7)",
+      "title": "Contact USJunkCars | Call 1-844-512-0697 (24/7)",
       "description": "Contact US Junk Cars 24/7 at 1-844-512-0697 or get an instant offer online. See required title paperwork, pickup-day tips and how to avoid junk car scams.",
       "jsonLd": [
         {
@@ -734,7 +752,7 @@
       "id": "privacy-policy",
       "path": "/privacy-policy/",
       "family": "legal",
-      "title": "Privacy Policy | US Junk Cars",
+      "title": "Privacy Policy | USJunkCars",
       "description": "How US Junk Cars collects, uses, shares and protects your personal information, and your privacy rights when you sell your junk car.",
       "jsonLd": [
         {
@@ -783,7 +801,7 @@
       "id": "terms-and-conditions",
       "path": "/terms-and-conditions/",
       "family": "legal",
-      "title": "Terms and Conditions | US Junk Cars",
+      "title": "Terms and Conditions | USJunkCars",
       "description": "Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.",
       "jsonLd": [
         {

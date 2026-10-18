@@ -47,6 +47,21 @@ def health(port, sha, environment):
         time.sleep(1)
     return False
 
+def branch_head(branch):
+    """The branch's current commit from GitHub. The repository is private, so this reads a
+    read-only token (root:<deploy user>, mode 640) that is never passed to the app."""
+    token_file = Path(f'/etc/usjunkcars/{branch}.github-token')
+    if not token_file.is_file():
+        raise ValueError(f'{token_file} missing; cannot verify the branch of a private repository')
+    token = token_file.read_text().strip()
+    if not re.fullmatch(r'github_pat_[A-Za-z0-9_]{20,255}', token):
+        raise ValueError(f'{token_file} does not hold a fine-grained GitHub token')
+    req = urllib.request.Request(f'https://api.github.com/repos/amfrshawon/usjunkcar/git/ref/heads/{branch}', headers={
+        'User-Agent': 'usjunkcars-release', 'Accept': 'application/vnd.github+json',
+        'Authorization': f'Bearer {token}', 'X-GitHub-Api-Version': '2022-11-28'})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return json.load(r)['object']['sha']
+
 def main():
     branch = sys.argv[1]
     if branch not in ['dev', 'main']:
@@ -107,11 +122,9 @@ def main():
                 except subprocess.TimeoutExpired:
                     os.killpg(candidate.pid, signal.SIGKILL)
                     candidate.wait()
-            # Public repository check also prevents stale runs overtaking a newer reviewed push.
-            req = urllib.request.Request(f'https://api.github.com/repos/amfrshawon/usjunkcar/git/ref/heads/{branch}', headers={'User-Agent':'usjunkcars-release'})
-            with urllib.request.urlopen(req, timeout=15) as r:
-                if json.load(r)['object']['sha'] != sha:
-                    raise ValueError('Branch advanced; refusing stale deployment')
+            # Independent check against GitHub prevents stale runs overtaking a newer reviewed push.
+            if branch_head(branch) != sha:
+                raise ValueError('Branch advanced; refusing stale deployment')
             release = root / 'releases' / (sha + '-' + str(time.time_ns()))
             shutil.move(str(stage), release)
             (release / '.release.env').write_text(f'RELEASE_SHA={sha}\n')
