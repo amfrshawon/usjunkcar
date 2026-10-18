@@ -22,3 +22,10 @@ button.video-section__play { background: transparent; border: 0; padding: 0; fon
 .faq-accordion--answered .faq-item > summary::-webkit-details-marker { display: none; }
 .faq-accordion--answered .faq-item[open] > summary:after { transform: rotate(-90deg); }
 .faq-item__answer { margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #474150; }
+/* Below desktop the FAQ columns stack as plain full-width blocks, so every question shares one right
+   edge in every browser (iPhone Safari drew the first flex column narrower). */
+@media (max-width: 991px) {
+  .faq-accordion { display: block; }
+  .faq-accordion__column, .faq-accordion--answered .faq-item, .faq-accordion--answered .faq-item > summary { width: 100%; max-width: none; box-sizing: border-box; }
+  .faq-accordion__column:first-child { margin-bottom: 24px; }
+}

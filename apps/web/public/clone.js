@@ -104,6 +104,25 @@ if (brands) {
       brandTrack.scrollBy({left: (event.key === 'ArrowRight' ? 1 : -1) * brandTrack.clientWidth, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
     }
   });
+  // Auto-slide one logo every 1.6 s while the slider is on screen, looping back at the end. It pauses
+  // while the visitor hovers, touches or focuses it (and for 4 s after), and never runs with reduced motion.
+  let brandVisible = false, brandHeld = false, brandResumeAt = 0;
+  new IntersectionObserver(([entry]) => { brandVisible = entry.isIntersecting; }, {threshold: 0.3}).observe(brands);
+  const holdBrands = () => { brandHeld = true; };
+  const releaseBrands = () => { brandHeld = false; brandResumeAt = Date.now() + 4000; };
+  brands.addEventListener('pointerenter', holdBrands);
+  brands.addEventListener('pointerleave', releaseBrands);
+  brandTrack.addEventListener('touchstart', holdBrands, {passive: true});
+  brandTrack.addEventListener('touchend', releaseBrands, {passive: true});
+  brands.addEventListener('focusin', holdBrands);
+  brands.addEventListener('focusout', releaseBrands);
+  setInterval(() => {
+    if (reducedMotion.matches || !brandVisible || brandHeld || document.hidden || Date.now() < brandResumeAt) return;
+    const item = brandTrack.querySelector('.brands-slider__item');
+    const step = item ? item.getBoundingClientRect().width + 8 : brandTrack.clientWidth / 4;
+    const atEnd = brandTrack.scrollLeft + brandTrack.clientWidth >= brandTrack.scrollWidth - 4;
+    brandTrack.scrollTo({left: atEnd ? 0 : brandTrack.scrollLeft + step, behavior: 'smooth'});
+  }, 1600);
 }
 function labelMapLinks() {
   document.querySelectorAll('.map svg a').forEach(link => {
