@@ -109,3 +109,15 @@ test('no reference-business identity in pages or public assets', async () => {
 test('no more than ten public content pages', () => {
   assert.ok(visible.length <= 10);
 });
+
+test('Peddle uses the live account only in production', async () => {
+  const page = await (await fetch(`${origin}/api/v1/health`).then(() => fetch(`${origin}/not-a-page/`))).text();
+  if (env === 'production') {
+    assert.match(page, /publisherID:"5173226"/);
+    assert.match(page, /https:\/\/publisher-embed\.peddle\.com\/api\/v1\/embed\//);
+    assert.doesNotMatch(page, /staging-publisher-embed|329729/);
+  } else {
+    assert.match(page, /publisherID:"329729"/);
+    assert.match(page, /staging-publisher-embed\.peddle\.com/);
+  }
+});

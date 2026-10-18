@@ -44,6 +44,14 @@
             ],
             "opens": "00:00",
             "closes": "23:59"
+          },
+          "legalName": "USJunkCars",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jacksonville",
+            "addressRegion": "FL",
+            "postalCode": "32224",
+            "addressCountry": "US"
           }
         },
         {
@@ -123,7 +131,15 @@
             "@type": "AutomotiveBusiness",
             "name": "US Junk Cars",
             "url": "https://usjunkcars.si/",
-            "telephone": "+1-844-512-0697"
+            "telephone": "+1-844-512-0697",
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
+            }
           },
           "areaServed": [
             {
@@ -379,6 +395,14 @@
             "areaServed": {
               "@type": "Country",
               "name": "United States"
+            },
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
             }
           }
         },
@@ -572,7 +596,7 @@
       "path": "/contact/",
       "family": "company",
       "title": "Contact US Junk Cars | Call 1-844-512-0697 for Cash for Junk Cars",
-      "description": "Contact US Junk Cars at 1-844-512-0697 or get an instant cash offer for your junk car online. Free towing and payment at pickup across the USA.",
+      "description": "Contact US Junk Cars 24/7 at 1-844-512-0697 or online. See what paperwork you need to junk a car, how to get the most money, pickup-day tips and how to avoid junk car scams.",
       "jsonLd": [
         {
           "@context": "https://schema.org",
@@ -588,7 +612,30 @@
               "telephone": "+1-844-512-0697",
               "contactType": "customer service",
               "areaServed": "US",
-              "availableLanguage": "English"
+              "availableLanguage": "English",
+              "email": "support@usjunkcars.si",
+              "hoursAvailable": {
+                "@type": "OpeningHoursSpecification",
+                "opens": "00:00",
+                "closes": "23:59",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ]
+              }
+            },
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
             }
           }
         },
@@ -607,6 +654,52 @@
               "position": 2,
               "name": "Contact us",
               "item": "https://usjunkcars.si/contact/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I sell a junk car without a title?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Often, yes. Many states accept a current registration with a matching photo ID, and some do not require a title for older vehicles. Tell us what documents you have when you request your offer and we will confirm before pickup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Who pays the most for junk cars?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The best price usually comes from a buyer who values the whole car, including reusable parts, not only its scrap weight, and who includes towing for free. Compare offers by the amount you actually receive after any towing or paperwork fees."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How fast can you pick up my car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most pickups happen within one to two days of accepting your offer, and same-day pickup is often possible. You choose the time slot that works for you."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I have to be there for the pickup?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually someone needs to hand over the keys and sign the title or bill of sale. If you cannot be there, tell us when you schedule and we will explain the options your state allows."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What areas do you serve?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We buy junk cars across the United States. Enter your ZIP code in the offer form to confirm pickup for your address."
+              }
             }
           ]
         }
@@ -635,7 +728,8 @@
           "publisher": {
             "@type": "Organization",
             "name": "US Junk Cars",
-            "url": "https://usjunkcars.si/"
+            "url": "https://usjunkcars.si/",
+            "legalName": "USJunkCars"
           }
         },
         {
@@ -681,6 +775,7 @@
           "publisher": {
             "@type": "Organization",
             "name": "US Junk Cars",
+            "legalName": "USJunkCars",
             "url": "https://usjunkcars.si/"
           }
         },

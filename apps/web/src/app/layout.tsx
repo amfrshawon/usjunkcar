@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { HtmlFragment } from '@/components/Fragment';
-import { CANONICAL_ORIGIN } from '@/server/config';
+import { CANONICAL_ORIGIN, peddleBootstrap } from '@/server/config';
 import { readFragment } from '@/server/publication';
 
 export const metadata: Metadata = {
@@ -20,14 +20,14 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0A2B5E' };
 
-const STYLES = ['/frontend/css/style.min.css?v=04b4da58b1', '/css/fixes.css?v=brand2', '/css/style_blocks.css', '/css/pages.css?v=3', '/css/inline.css?v=1', '/clone.css?v=copy1'];
+const STYLES = ['/frontend/css/style.min.css?v=04b4da58b1', '/css/fixes.css?v=brand2', '/css/style_blocks.css', '/css/pages.css?v=5', '/css/inline.css?v=1', '/clone.css?v=copy1'];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US">
       <head>
         {STYLES.map(href => <link key={href} rel="stylesheet" href={href} precedence="default" />)}
-        <script dangerouslySetInnerHTML={{ __html: readFragment('shell', 'peddle-embed.js') }} />
+        <script dangerouslySetInnerHTML={{ __html: peddleBootstrap() }} />
       </head>
       <body className="home" id="top" style={{ position: 'relative' }}>
         <HtmlFragment html={readFragment('shell', 'sprite.svg')} />

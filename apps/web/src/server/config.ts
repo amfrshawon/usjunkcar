@@ -32,3 +32,17 @@ export function assertRuntimeMatchesBuild(): void {
     throw new Error(`SITE_URL ${site} does not match ${runtime} origin ${expected}`);
   }
 }
+
+/**
+ * Peddle instant-offer embed. Production uses the live publisher account; local and dev use the
+ * staging account so test submissions never create real offers.
+ */
+export const PEDDLE = buildEnv === 'production'
+  ? { publisherID: '5173226', host: 'https://publisher-embed.peddle.com' }
+  : { publisherID: '329729', host: 'https://staging-publisher-embed.peddle.com' };
+
+/** Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment. */
+export function peddleBootstrap(): string {
+  const { publisherID, host } = PEDDLE;
+  return `PeddlePublisherEmbedConfig={publisherID:${JSON.stringify(publisherID)},target:null,zIndex:10000},function(){if("function"!=typeof window.PeddlePublisherEmbed){if(!window.PeddlePublisherEmbedConfig||!window.PeddlePublisherEmbedConfig.publisherID)throw new Error("Unable to bootstrap Peddle Publisher Embed, make sure to set PeddlePublisherEmbedConfig.publisherID");const e=(d,i)=>{e.queue.push({operation:d,options:i})};e.queue=[],window.PeddlePublisherEmbed=e;const d=()=>{const e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=${JSON.stringify(host + '/api/v1/embed/')}+window.PeddlePublisherEmbedConfig.publisherID;const d=document.getElementsByTagName("script")[0];d.parentNode.insertBefore(e,d)};"complete"===document.readyState?d():window.addEventListener("load",d,!1)}}();`;
+}

@@ -12,7 +12,7 @@ PATH, ID = '/terms-and-conditions/', 'terms-and-conditions'
 
 SECTIONS = [
     ('agreement', 'Agreement to these terms', '''
-<p>These Terms and Conditions ("Terms") govern your use of <a href="/">usjunkcars.si</a> and of the services offered by US Junk Cars ("US Junk Cars", "we", "us"), including instant cash offers, vehicle pickup and payment. By using the website, requesting an offer, scheduling a pickup or selling a vehicle through us, you agree to these Terms and to our <a href="/privacy-policy/">Privacy Policy</a>.</p>
+<p>These Terms and Conditions ("Terms") govern your use of <a href="/">usjunkcars.si</a> and of the services offered by USJunkCars, doing business as US Junk Cars, of Jacksonville, FL 32224 ("US Junk Cars", "we", "us"), including instant cash offers, vehicle pickup and payment. By using the website, requesting an offer, scheduling a pickup or selling a vehicle through us, you agree to these Terms and to our <a href="/privacy-policy/">Privacy Policy</a>.</p>
 <p>If you do not agree, please do not use the website or our services.</p>'''),
     ('eligibility', 'Who can sell a vehicle', '''
 <ul>
@@ -63,7 +63,7 @@ SECTIONS = [
     ('indemnity', 'Your responsibility for false information', '''
 <p>You agree to compensate US Junk Cars and its partners for losses caused by information you knowingly misstate, including selling a vehicle you do not have the right to sell or concealing a lien.</p>'''),
     ('disputes', 'Disputes and governing law', '''
-<p>If you have a concern, please contact us first so we can try to resolve it informally. These Terms are governed by the laws of the United States and of the state in which US Junk Cars is organized, without regard to conflict-of-law rules, unless the law of your state of residence requires otherwise.</p>'''),
+<p>If you have a concern, please contact us first so we can try to resolve it informally. These Terms are governed by the laws of the State of Florida and applicable federal law, without regard to conflict-of-law rules, unless the law of your state of residence requires otherwise.</p>'''),
     ('changes', 'Changes to these terms', '''
 <p>We may update these Terms as our services or the law change. The updated version is posted on this page with a new effective date. Terms in effect when you accepted an offer apply to that sale.</p>'''),
     ('contact', 'Contact us', f'''
@@ -71,6 +71,7 @@ SECTIONS = [
 <ul>
 <li>Email: <a href="mailto:{EMAIL}">{EMAIL}</a></li>
 <li>Phone: <a href="{TEL}">{PHONE}</a></li>
+<li>Mail: USJunkCars, Jacksonville, FL 32224, United States</li>
 <li>Website: <a href="/contact/">usjunkcars.si/contact</a></li>
 </ul>'''),
 ]
@@ -103,7 +104,7 @@ route = {
     'description': 'Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.',
     'jsonLd': [
         {'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Terms and Conditions', 'url': f'{SITE}{PATH}',
-         'datePublished': ISO, 'dateModified': ISO, 'publisher': {'@type': 'Organization', 'name': 'US Junk Cars', 'url': f'{SITE}/'}},
+         'datePublished': ISO, 'dateModified': ISO, 'publisher': {'@type': 'Organization', 'name': 'US Junk Cars', 'legalName': 'USJunkCars', 'url': f'{SITE}/'}},
         {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
             {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': f'{SITE}/'},
             {'@type': 'ListItem', 'position': 2, 'name': 'Terms and Conditions', 'item': f'{SITE}{PATH}'}]}],
