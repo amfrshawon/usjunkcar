@@ -10,6 +10,29 @@
   const track = (event, extra) => dataLayer.push({ event, video_title: 'USJunkCars launch', ...extra });
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData;
 
+  // Each video has an AV1 WebM (a third to two thirds smaller) and an H.264 MP4 for browsers without
+  // AV1 decoding, such as older iPhones. Only a confident "probably" picks AV1.
+  const probe = document.createElement('video');
+  const av1 = codecs => probe.canPlayType(`video/webm; codecs="${codecs}"`) === 'probably';
+  const silentAv1 = av1('av01.0.05M.08');
+  const soundAv1 = av1('av01.0.08M.08, opus');
+  const pick = (mp4, webm, ok) => (webm && ok ? webm : mp4);
+  // If a browser claims AV1 but then fails to decode it, switch that element to the MP4 once.
+  const load = (el, mp4, webm, ok) => {
+    const src = pick(mp4, webm, ok);
+    el.dataset.fallback = src === mp4 ? '' : mp4;
+    el.src = src;
+  };
+  const fallBack = (el, wanted) => el.addEventListener('error', () => {
+    const mp4 = el.dataset.fallback;
+    if (!mp4) return;
+    el.dataset.fallback = '';
+    el.src = mp4;
+    if (wanted()) el.play().catch(() => {});
+  });
+  let previewVisible = false;
+  fallBack(preview, () => previewVisible);
+
   // The poster is a card background that is only attached once the card is within ~1.5 screens,
   // so it does not compete with the hero image on first load.
   if ('IntersectionObserver' in window) {
@@ -24,8 +47,9 @@
   // Inline preview: play only while on screen, never with sound.
   if (!calm && 'IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
+      previewVisible = entry.isIntersecting;
       if (entry.isIntersecting) {
-        if (!preview.src) preview.src = preview.dataset.src;
+        if (!preview.src) load(preview, preview.dataset.src, preview.dataset.srcAv1, silentAv1);
         preview.play().catch(() => {});
       } else preview.pause();
     }, { threshold: 0.35 }).observe(preview);
@@ -62,6 +86,7 @@
 </div>`;
     document.body.appendChild(modal);
     video = modal.querySelector('.lv-video');
+    fallBack(video, () => modal.classList.contains('is-open'));
     muteBtn = modal.querySelector('.lv-mute');
     volume = modal.querySelector('.lv-volume');
     playBtn = modal.querySelector('.lv-play');
@@ -148,8 +173,10 @@
     if (modal.classList.contains('is-open')) return;
     // Phones held upright get the vertical cut; everything else the 16:9 film.
     const upright = matchMedia('(orientation: portrait) and (max-width: 820px)').matches;
-    const src = upright ? card.dataset.vertical : card.dataset.full;
-    if (video.getAttribute('src') !== src) video.src = src;
+    const [mp4, webm] = upright ? [card.dataset.vertical, card.dataset.verticalAv1] : [card.dataset.full, card.dataset.fullAv1];
+    const src = pick(mp4, webm, soundAv1);
+    // Keep whatever is loaded (including an MP4 fallback) when reopening the same variant.
+    if (video.getAttribute('src') !== src && video.getAttribute('src') !== mp4) load(video, mp4, webm, soundAv1);
     video.currentTime = 0;
     video.muted = false;
     lastProgress = 0;

@@ -2,6 +2,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
@@ -83,10 +84,12 @@ test('trailing-slash addresses redirect', async () => {
   assert.equal(res.headers.get('location'), '/about/');
 });
 
-test('sitemap lists only public routes and robots match the environment', async () => {
+test('sitemap lists only public routes, plus blog posts when the blog is public, and robots match the environment', async () => {
   const sitemap = await (await fetch(`${origin}/sitemap.xml`)).text();
   const listed = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]).sort();
-  assert.deepEqual(listed, visible.map(r => `https://usjunkcars.si${r.path}`).sort());
+  const blog = visible.find(r => r.id === 'blog');
+  const posts = blog ? JSON.parse(readFileSync(path.join(stage, 'content/blog/posts.json'), 'utf8')).map(p => `https://usjunkcars.si${blog.path}${p.slug}/`) : [];
+  assert.deepEqual(listed, [...visible.map(r => `https://usjunkcars.si${r.path}`), ...posts].sort());
   const robots = await (await fetch(`${origin}/robots.txt`)).text();
   if (env === 'production') assert.match(robots, /Sitemap: https:\/\/usjunkcars\.si\/sitemap\.xml/);
   else assert.match(robots, /Disallow: \//);
@@ -132,6 +135,38 @@ test('content pages are lean static documents for fast mobile loads', async () =
   const home = await (await fetch(`${origin}/`)).text();
   assert.match(home, /<link rel="preload" href="\/images\/backgrounds\/hero-board-red\.webp" as="image" fetchpriority="high"\/>/);
   assert.equal((await fetch(`${origin}/fragments/us-map.html`)).status, 200);
+});
+
+test('launch video files are fingerprinted, cached for a year and listed in the video sitemap', async () => {
+  const home = await (await fetch(`${origin}/`)).text();
+  const urls = [...new Set([...home.matchAll(/\/video\/[^"')\s]+/g)].map(m => m[0]))];
+  // Teaser, film and vertical cut each in AV1 WebM and H.264 MP4, plus the poster in AVIF, WebP and JPEG.
+  for (const attr of ['data-src', 'data-full', 'data-vertical']) {
+    assert.match(home, new RegExp(`${attr}="/video/[^"]+\\.mp4"`), `${attr} needs an MP4`);
+    assert.match(home, new RegExp(`${attr}-av1="/video/[^"]+\\.webm"`), `${attr} needs an AV1 WebM`);
+  }
+  for (const ext of ['avif', 'webp', 'jpg']) assert.ok(urls.some(u => u.endsWith(`.${ext}`)), `poster .${ext} missing`);
+  for (const url of urls) {
+    const [, hash] = /\.([0-9a-f]{8})\.[a-z0-9]+$/.exec(url) ?? [];
+    assert.ok(hash, `${url} is not fingerprinted`);
+    const file = readFileSync(path.join(stage, 'apps/web/public', url));
+    assert.equal(createHash('sha256').update(file).digest('hex').slice(0, 8), hash, `${url} hash does not match its content`);
+    const res = await fetch(origin + url, { headers: { Range: 'bytes=0-99' } });
+    assert.equal(res.status, 206, `${url} must support range requests`);
+    assert.equal(res.headers.get('cache-control'), 'public, max-age=31536000, immutable', url);
+    await res.arrayBuffer();
+  }
+  const sitemap = await (await fetch(`${origin}/sitemap.xml`)).text();
+  const blocks = [...home.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].flatMap(m => [JSON.parse(m[1])].flat());
+  const video = blocks.find(b => b['@type'] === 'VideoObject');
+  assert.match(video.uploadDate, /T\d\d:\d\d:\d\d[+-]\d\d:\d\d$/, 'uploadDate needs a time and timezone');
+  for (const u of [video.contentUrl, video.thumbnailUrl]) assert.ok(urls.includes(new URL(u).pathname), `${u} is not used on the page`);
+  if (visible.some(r => r.path === '/')) {
+    assert.match(sitemap, /xmlns:video="http:\/\/www\.google\.com\/schemas\/sitemap-video\/1\.1"/);
+    assert.ok(sitemap.includes(`<video:content_loc>${video.contentUrl}</video:content_loc>`));
+    assert.ok(sitemap.includes(`<video:publication_date>${video.uploadDate}</video:publication_date>`));
+    assert.ok(sitemap.includes('<video:duration>57</video:duration>'));
+  }
 });
 
 test('no more than ten public content pages', () => {

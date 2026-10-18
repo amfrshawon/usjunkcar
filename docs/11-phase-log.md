@@ -37,3 +37,43 @@
   - The locations page still inlines its own map SVG.
   - The lazy-loaded waving-flag SVG (`usa-flag-waving.svg`, 32 KiB gzip) is unchanged; a lighter version would need a visual review.
   - PSI on production after release.
+
+## 2026-10-18 · Launch video delivery (`dev`, on top of the blog commits `ac4dc91`)
+
+- **Why:** the inline preview was the whole 57 s film without sound (2.4 MB) and played as soon as the card was visible. The film (9.0 MB) and vertical cut (3.9 MB) were H.264 only, the poster was a 74 KB JPEG, and `/video/` files were cached for a week because their names never changed.
+- **Teaser:** the inline preview is now an 8.4 s silent loop of five scenes from the 1080p60 master: Super Intelligent pricing, the phone "offer ready" screen, the free tow, "paid on the spot", and the end card with usjunkcars.si and the phone number, joined by 0.3 s fades. It is 362 KB as AV1 WebM and 452 KB as H.264 MP4, against 2,431 KB before.
+- **AV1 + MP4:** the teaser, film (1080p30, AV1 + Opus 96k, 3.31 MB vs 8.95 MB) and vertical cut (720×1280, 2.06 MB vs 3.86 MB) each ship as AV1 WebM plus the H.264 MP4. `video-player.js` picks AV1 only when `canPlayType` answers "probably" (`av01.0.05M.08`, or `av01.0.08M.08, opus` for the versions with sound). If an AV1 file still fails to load or decode, the element switches to the MP4 once. Quality (SSIM against the master, higher is better): teaser 0.986 (AV1) vs 0.982 (H.264), film 0.986 vs 0.983, vertical 0.985 vs 0.983. VP9 was tried for the teaser and rejected: 612 KB, larger than H.264.
+- **Poster:** the same brand end card (48.2 s), re-cut from the master as AVIF/WebP: 1280 px 28/34 KB, 768 px for screens ≤ 640 px 15/19 KB. The JPEG is kept as the fallback for browsers without `image-set()` `type()` and for the `<noscript>` style. It still attaches only near the viewport (speed-up phase).
+- **Fingerprinted names and caching:** every `/video/` file is named `<name>.<first 8 hex of SHA-256>.<ext>`, so a changed file gets a new URL. A `next.config.ts` rule after the one-week `/video/*` rule gives these names `public, max-age=31536000, immutable`. Renamed: `usjunkcars-launch-1080.25610612.mp4`, `-vertical.5c87ec32.mp4`, `-poster.c24edaa1.jpg`. Removed: `usjunkcars-launch-preview-720.mp4`. The encode script and masters are in the untracked `Claude/launch-video/` (`web/encode.sh` is deterministic: two runs, identical hashes; ffmpeg 9.0.2, SVT-AV1 4.2.0, libwebp, avifenc).
+- **Nginx `/video/` decision:** not changed. Node already answers Range requests (206), and with year-long immutable caching repeat visitors do not ask again. Serving from nginx (`alias /srv/usjunkcars/<branch>/current/apps/web/public/video/`) would save Node one stream per new visitor, but it needs three things first. (1) Check that the nginx user can read the restricted release directory. (2) Repeat dev's `X-Robots-Tag`/`no-store` headers in that location, because a location `add_header` replaces the server-level ones. (3) Install it by hand on the shared VPS. Worth doing only if video traffic grows, or as part of a CDN decision (`docs/15-cdn-recommendation.md`, owner decision; no DNS was changed).
+- **SEO:** the VideoObject `uploadDate` is now `2026-10-18T13:39:22+06:00` (the production merge of the video), and `thumbnailUrl`/`contentUrl` point at the fingerprinted JPEG/MP4. `sitemap.ts` adds a `video:video` block for every route whose JSON-LD has a VideoObject, built from that VideoObject (title, description, thumbnail, content URL, duration 57, publication date), with the text XML-escaped because Next does not escape it.
+- **Measurements** (local development builds of `9dd7aca` and this change on that base, no gzip proxy; after rebasing onto `ac4dc91` the CI check and the headless checks were re-run with the same results):
+  - Lighthouse 12.8.2 mobile, 3 runs each: 93 → 93, FCP 2.0–2.1 s, LCP 3.0 s, TBT 10–20 ms, CLS 0.001, ~482 KiB both. On a phone the video section starts well below the first screen, so the first load does not change.
+  - Headless Chrome 152, cache disabled, page load then scroll to the video and watch 10 s:
+
+    | | First load | /video/ bytes on first load | After scroll + 10 s | /video/ bytes |
+    |---|---|---|---|---|
+    | Desktop 1366×800, before | 501 KB | 72 KB (JPEG poster) | 2,960 KB | 2,447 KB |
+    | Desktop, after | 457 KB | 28 KB (AVIF poster) | 895 KB | 382 KB |
+    | Phone 390×844 @3×, before | 468 KB | 0 | 2,955 KB | 2,447 KB |
+    | Phone, after | 470 KB | 0 | 878 KB | 369 KB |
+
+    Opening the film now costs 3.3 MB instead of 9.0 MB, and the vertical cut 2.1 MB instead of 3.9 MB, in AV1 browsers.
+- **Verification:**
+  - **Headless Chrome 152, 18 behaviour checks passed:**
+    - The teaser is AV1, muted and looping. It plays only while visible and pauses when scrolled away.
+    - The full-screen player opens with the AV1 film and sound on (audio decoded). Tap to mute, tap to unmute and the volume slider (0.4) all work, and close stops the film.
+    - On a phone held upright: the 768 AVIF poster, and the vertical AV1 cut (720×1280).
+    - With AV1 reported unsupported, the MP4 teaser and film play. With a broken AV1 URL, both switch to the MP4 and play.
+    - The 19th check expected no `/video/` request before scrolling. On a 1366×800 desktop the card is already within 1.5 screens, so the poster loads at once by design, as before.
+  - **Server:** every file returns 206 to a Range request with a single `immutable` Cache-Control.
+  - **CI:** `pnpm run ci:check` passed, including a new site test (both environments) that checks every `/video/` URL on the homepage:
+    - it is fingerprinted, and the hash matches the file;
+    - it supports Range and is cached immutably;
+    - the poster comes in AVIF/WebP/JPEG, and each video has an AV1 WebM and an MP4;
+    - `uploadDate` has a timezone, and the sitemap's `video:video` matches the VideoObject.
+- **Not done / open:**
+  - Safari/iOS were not tested on a device. iPhones without AV1 hardware decoding should report no AV1 support and get the MP4s; that path was simulated in Chrome.
+  - PSI on production after the release.
+  - The VideoObject `embedUrl` points at the homepage section, not a standalone player page.
+  - Two of the teaser's scenes show claims already in the film ("about two minutes", free towing, paid on the spot) and need the same owner approval as the film (`docs/13-launch-video-script.md`).

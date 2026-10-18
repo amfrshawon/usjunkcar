@@ -19,7 +19,7 @@ export const ICONS: { rel: 'icon' | 'apple-touch-icon'; href: string; sizes?: st
   { rel: 'apple-touch-icon', href: '/images/favicon/apple-touch-icon.png', sizes: '180x180' },
 ];
 export const MANIFEST = '/images/favicon/site.webmanifest';
-export const SCRIPTS = ['/clone.js?v=next2', '/peddle-offer.js?v=3', '/analytics.js?v=1', '/video-player.js?v=2'];
+export const SCRIPTS = ['/clone.js?v=next2', '/peddle-offer.js?v=3', '/analytics.js?v=1', '/video-player.js?v=3'];
 const OG_IMAGE = { url: '/images/brand/og-image.png', width: 1200, height: 630, alt: 'US Junk Cars, powered by Super Intelligent' };
 
 /** The purged site stylesheet built by scripts/build-css.mjs, inlined so first paint needs no CSS request. */
