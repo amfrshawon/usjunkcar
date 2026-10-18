@@ -19,6 +19,11 @@ assert.ok(visible.length <= registry.maxPublicContentPages, `More than ${registr
 
 // Every internal page link on visible content must point to a visible route.
 const paths = new Set(visible.map(r => r.path));
+const blogPostsPath = 'content/blog/posts.json';
+if (paths.has('/blog/') && existsSync(blogPostsPath)) {
+  const posts = JSON.parse(readFileSync(blogPostsPath, 'utf8'));
+  for (const post of posts) paths.add(`/blog/${post.slug}/`);
+}
 const sources = ['content/shell/header.html', 'content/shell/footer.html', ...visible.map(r => `content/pages/${r.id}.html`)];
 const broken = new Set();
 for (const file of sources) {
