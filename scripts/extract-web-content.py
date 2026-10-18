@@ -1,10 +1,16 @@
 """Extract the reviewed static pages into Next.js content: shared shell fragments, page bodies and the route registry.
 
+RETIRED after the Next.js migration: content/ is now the source of truth and has newer edits than the
+static reference pages. Re-running this would overwrite them. Edit content/ directly instead.
+
 Run once per content refresh from the repository root:  python3 scripts/extract-web-content.py
 The static pages remain the design reference; apps/web renders the extracted fragments.
 """
 import html, json, pathlib, re
 
+import sys
+if '--force' not in sys.argv:
+    sys.exit('Retired: edit content/ directly (pass --force only to rebuild content from the static reference).')
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CONTENT = ROOT / 'content'
 (CONTENT / 'pages').mkdir(parents=True, exist_ok=True)

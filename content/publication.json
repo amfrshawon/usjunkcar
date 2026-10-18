@@ -663,6 +663,52 @@
         "development"
       ],
       "approval": null
+    },
+    {
+      "id": "terms-and-conditions",
+      "path": "/terms-and-conditions/",
+      "family": "legal",
+      "title": "Terms and Conditions | US Junk Cars",
+      "description": "Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Terms and Conditions",
+          "url": "https://usjunkcars.si/terms-and-conditions/",
+          "datePublished": "2026-10-18",
+          "dateModified": "2026-10-18",
+          "publisher": {
+            "@type": "Organization",
+            "name": "US Junk Cars",
+            "url": "https://usjunkcars.si/"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Terms and Conditions",
+              "item": "https://usjunkcars.si/terms-and-conditions/"
+            }
+          ]
+        }
+      ],
+      "status": "review",
+      "environments": [
+        "local",
+        "development"
+      ],
+      "approval": null
     }
   ]
 }
