@@ -125,6 +125,16 @@ test('Peddle uses the live account only in production', async () => {
   }
 });
 
+test('homepage names the site for search results', async () => {
+  const html = await (await fetch(`${origin}/`)).text();
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].flatMap(m => [JSON.parse(m[1])].flat());
+  const site = blocks.find(b => b['@type'] === 'WebSite');
+  assert.ok(site, 'homepage needs WebSite structured data');
+  assert.equal(site.name, 'USJunkCars');
+  assert.equal(site.url, 'https://usjunkcars.si/');
+  assert.match(html, /<meta property="og:site_name" content="USJunkCars"\/>/);
+});
+
 test('SEO quality: titles, descriptions, heading hierarchy, content depth, contextual links and CSS assets', () => {
   const inboundBodyLinks = new Map(visible.map(r => [r.path, 0]));
   for (const route of visible) {

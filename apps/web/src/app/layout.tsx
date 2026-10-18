@@ -5,7 +5,7 @@ import { readFragment } from '@/server/publication';
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_ORIGIN),
-  applicationName: 'US Junk Cars',
+  applicationName: 'USJunkCars',
   icons: {
     icon: [
       { url: '/images/favicon/favicon.ico', sizes: '48x48' },

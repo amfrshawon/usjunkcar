@@ -21,7 +21,7 @@ export function pageMetadata(id: string): Metadata {
     title: { absolute: route.title },
     description: route.description,
     alternates: { canonical: url },
-    openGraph: { type: 'website', siteName: 'US Junk Cars', url, title: route.title, description: route.description, images: [OG_IMAGE] },
+    openGraph: { type: 'website', siteName: 'USJunkCars', url, title: route.title, description: route.description, images: [OG_IMAGE] },
     twitter: { card: 'summary_large_image', title: route.title, description: route.description, images: [OG_IMAGE.url] },
     robots: buildEnv === 'production'
       ? { index: true, follow: true, 'max-image-preview': 'large' }
