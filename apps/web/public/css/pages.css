@@ -279,11 +279,53 @@
 .blog-figure img { width: 100%; height: auto; max-height: 480px; object-fit: cover; border-radius: 12px; border: 1px solid #d5e2ee; box-shadow: 0 4px 14px rgba(10, 43, 94, 0.06); display: block; }
 .blog-figcaption { margin-top: 9px; font-size: 13.5px; line-height: 1.5; color: #64748b; font-style: italic; text-align: center; }
 
+/* Homepage launch video: inline preview card and full-screen player */
+.lv__head { max-width: 760px; margin: 0 auto 34px; text-align: center; }
+.lv__head p { margin-top: 12px; font-size: 18px; line-height: 1.6; color: #474150; }
+.lv-card { position: relative; max-width: 1040px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #071a3d center / cover; box-shadow: 0 30px 70px rgba(10, 43, 94, .28); }
+/* The poster is attached by video-player.js once the card nears the viewport. */
+.lv-card.is-near { background-image: url("/video/usjunkcars-launch-poster.jpg"); }
+.lv-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lv-card__open { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border: 0; padding: 0; background: linear-gradient(180deg, rgba(5, 15, 36, 0) 55%, rgba(5, 15, 36, .55)); cursor: pointer; color: #fff; }
+.lv-card__play { position: relative; display: flex; align-items: center; justify-content: center; width: 96px; height: 96px; border-radius: 50%; background: #de193e; box-shadow: 0 16px 40px rgba(222, 25, 62, .5); transition: transform .25s ease; }
+.lv-card__play svg { width: 40px; height: 40px; margin-left: 5px; }
+.lv-card__play::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .7); animation: lv-ring 2.2s ease-out infinite; }
+@keyframes lv-ring { from { transform: scale(.85); opacity: 1; } to { transform: scale(1.45); opacity: 0; } }
+.lv-card__open:hover .lv-card__play, .lv-card__open:focus-visible .lv-card__play { transform: scale(1.08); }
+.lv-card__open:focus-visible { outline: 3px solid #4f9bff; outline-offset: -3px; }
+.lv-card__label { position: absolute; left: 24px; bottom: 22px; display: inline-flex; gap: 10px; align-items: center; padding: 10px 18px; border-radius: 999px; background: rgba(5, 15, 36, .65); font: 700 16px/1 Manrope, system-ui, sans-serif; backdrop-filter: blur(6px); }
+.lv-card__label em { font-style: normal; opacity: .75; }
+@media (max-width: 640px) { .lv-card { border-radius: 16px; } .lv-card__play { width: 72px; height: 72px; } .lv-card__play svg { width: 30px; height: 30px; } .lv-card__label { left: 14px; bottom: 14px; font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .lv-card__play::before { animation: none; } }
+
+html.lv-lock, html.lv-lock body { overflow: hidden; }
+.lv-modal { position: fixed; inset: 0; z-index: 2147483000; display: none; background: #000; color: #fff; font-family: Manrope, system-ui, sans-serif; }
+.lv-modal.is-open { display: block; }
+.lv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; cursor: pointer; }
+.lv-modal button { -webkit-tap-highlight-color: transparent; }
+.lv-modal svg { width: 24px; height: 24px; display: block; }
+.lv-close, .lv-tap, .lv-controls { transition: opacity .35s ease; }
+.lv-modal.is-idle .lv-close, .lv-modal.is-idle .lv-controls, .lv-modal.is-idle .lv-tap { opacity: 0; }
+.lv-modal.is-idle { cursor: none; }
+.lv-close { position: absolute; top: max(18px, env(safe-area-inset-top)); right: 18px; width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .16); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); }
+.lv-tap { position: absolute; top: max(22px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; border: 0; background: rgba(255, 255, 255, .92); color: #0a2b5e; font: 800 16px/1 Manrope, system-ui, sans-serif; cursor: pointer; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.lv-controls { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 16px; padding: 60px 24px max(22px, env(safe-area-inset-bottom)); background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .75)); }
+.lv-btn { flex: none; width: 46px; height: 46px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.lv-bar { position: relative; flex: 1; height: 28px; cursor: pointer; touch-action: none; }
+.lv-bar::before, .lv-fill { content: ""; position: absolute; left: 0; top: 50%; height: 5px; margin-top: -2.5px; border-radius: 3px; }
+.lv-bar::before { right: 0; background: rgba(255, 255, 255, .28); }
+.lv-fill { width: 0; background: #de193e; }
+.lv-fill::after { content: ""; position: absolute; right: -7px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: #fff; }
+.lv-time { flex: none; min-width: 92px; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; opacity: .9; }
+.lv-volume { --v: 100%; flex: none; width: 110px; height: 5px; border-radius: 3px; -webkit-appearance: none; appearance: none; background: linear-gradient(90deg, #fff var(--v), rgba(255, 255, 255, .28) var(--v)); cursor: pointer; }
+.lv-volume::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 0; }
+.lv-volume::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 0; }
+.lv-modal :focus-visible { outline: 3px solid #4f9bff; outline-offset: 2px; }
+@media (max-width: 640px) { .lv-controls { gap: 10px; padding-left: 14px; padding-right: 14px; } .lv-time { min-width: 0; font-size: 12px; } .lv-volume { width: 70px; } }
+
 @media (max-width: 575.98px) {
   .blog-featured, .blog-article { padding: 20px; }
   .blog-featured__title, .blog-article h1.section-title { font-size: 24px; }
   .blog-grid { grid-template-columns: 1fr; }
   .blog-card__badges { flex-wrap: wrap; }
 }
-
-

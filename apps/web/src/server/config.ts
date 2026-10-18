@@ -47,12 +47,22 @@ export const PEDDLE = buildEnv === 'production'
  */
 export const GTM_ID = 'GTM-TNC9P49R';
 
+/**
+ * The standard GTM snippet, except gtm.js is fetched after the page has loaded (or on the first
+ * interaction, if sooner) so the 130 KiB container never competes with the hero for bandwidth.
+ * dataLayer and the gtm.start timestamp are set immediately, so events pushed before the container
+ * arrives are queued and processed in order once it loads.
+ */
 export function gtmBootstrap(): string {
-  return `window.dataLayer=window.dataLayer||[];window.dataLayer.push({app_env:${JSON.stringify(buildEnv)}});(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',${JSON.stringify(GTM_ID)});`;
+  return `window.dataLayer=window.dataLayer||[];window.dataLayer.push({app_env:${JSON.stringify(buildEnv)}});(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var done=0,ev=['pointerdown','keydown','scroll'],load=function(){if(done)return;done=1;ev.forEach(function(e){w.removeEventListener(e,load,true)});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);};ev.forEach(function(e){w.addEventListener(e,load,{capture:true,passive:true,once:true})});var later=function(){setTimeout(function(){(w.requestIdleCallback||setTimeout)(load,{timeout:2000})},500)};d.readyState==='complete'?later():w.addEventListener('load',later);})(window,document,'script','dataLayer',${JSON.stringify(GTM_ID)});`;
 }
 
-/** Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment. */
+/**
+ * Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment. The stub
+ * queues calls (boot, open, hydrate) until the embed script arrives. That script is fetched shortly
+ * after the page has loaded, or on the visitor's first interaction if sooner, instead of on `load`.
+ */
 export function peddleBootstrap(): string {
   const { publisherID, host } = PEDDLE;
-  return `PeddlePublisherEmbedConfig={publisherID:${JSON.stringify(publisherID)},target:null,zIndex:10000},function(){if("function"!=typeof window.PeddlePublisherEmbed){if(!window.PeddlePublisherEmbedConfig||!window.PeddlePublisherEmbedConfig.publisherID)throw new Error("Unable to bootstrap Peddle Publisher Embed, make sure to set PeddlePublisherEmbedConfig.publisherID");const e=(d,i)=>{e.queue.push({operation:d,options:i})};e.queue=[],window.PeddlePublisherEmbed=e;const d=()=>{const e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=${JSON.stringify(host + '/api/v1/embed/')}+window.PeddlePublisherEmbedConfig.publisherID;const d=document.getElementsByTagName("script")[0];d.parentNode.insertBefore(e,d)};"complete"===document.readyState?d():window.addEventListener("load",d,!1)}}();`;
+  return `PeddlePublisherEmbedConfig={publisherID:${JSON.stringify(publisherID)},target:null,zIndex:10000},function(){if("function"!=typeof window.PeddlePublisherEmbed){if(!window.PeddlePublisherEmbedConfig||!window.PeddlePublisherEmbedConfig.publisherID)throw new Error("Unable to bootstrap Peddle Publisher Embed, make sure to set PeddlePublisherEmbedConfig.publisherID");const e=(d,i)=>{e.queue.push({operation:d,options:i})};e.queue=[],window.PeddlePublisherEmbed=e;let done=!1;const ev=["pointerdown","keydown","scroll"],d=()=>{if(done)return;done=!0,ev.forEach(e=>window.removeEventListener(e,d,!0));const e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=${JSON.stringify(host + '/api/v1/embed/')}+window.PeddlePublisherEmbedConfig.publisherID;const i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(e,i)};ev.forEach(e=>window.addEventListener(e,d,{capture:!0,passive:!0,once:!0}));const l=()=>setTimeout(()=>(window.requestIdleCallback||setTimeout)(d,{timeout:2e3}),500);"complete"===document.readyState?l():window.addEventListener("load",l,!1)}}();`;
 }

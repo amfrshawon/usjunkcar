@@ -7,11 +7,12 @@
 
   embed('boot');
 
-  document.querySelectorAll('[data-peddle-offer]').forEach(link => {
-    link.addEventListener('click', event => {
-      event.preventDefault();
-      embed('open');
-    });
+  // Delegated, so controls added later (the lazily loaded homepage map) open the offer too.
+  document.addEventListener('click', event => {
+    const link = event.target instanceof Element && event.target.closest('[data-peddle-offer]');
+    if (!link) return;
+    event.preventDefault();
+    embed('open');
   });
 
   // The hero search asks for "City or ZIP code"; a US ZIP prefills the offer, anything else just opens it.
