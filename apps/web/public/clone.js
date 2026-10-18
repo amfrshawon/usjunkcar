@@ -124,17 +124,55 @@ if (brands) {
     brandTrack.scrollTo({left: atEnd ? 0 : brandTrack.scrollLeft + step, behavior: 'smooth'});
   }, 1600);
 }
+const stateName = link => (link.getAttribute('data-state') || link.querySelector('[data-state]')?.getAttribute('data-state') ||
+  new URL(link.href.baseVal ?? link.href, location.href).pathname.slice(1).replaceAll('-', ' ')).replace(/\b\w/g, c => c.toUpperCase());
 function labelMapLinks() {
   document.querySelectorAll('.map svg a').forEach(link => {
-    const state = link.querySelector('[data-state]')?.getAttribute('data-state') || link.getAttribute('data-state') || new URL(link.href.baseVal, location.href).pathname.slice(1).replaceAll('-', ' ');
-    link.setAttribute('aria-label', state.replace(/\b\w/g, c => c.toUpperCase()));
-    if (!link.querySelector('title')) {
-      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      title.textContent = state; link.prepend(title);
-    }
+    if (!link.hasAttribute('aria-label')) link.setAttribute('aria-label', `Cash for junk cars in ${stateName(link)}`);
+    link.querySelectorAll('title').forEach(t => t.remove()); // the browser's own tooltip waits ~1 s; ours is instant
   });
 }
 labelMapLinks();
+// Map label: appears instantly beside the pointer, follows it smoothly, flips at the screen edges, and also
+// shows for keyboard focus. Touch devices skip it (a tap opens the offer straight away).
+const mapBox = document.querySelector('.map');
+if (mapBox && matchMedia('(hover: hover)').matches) {
+  const tip = document.createElement('div');
+  tip.className = 'map-tip';
+  tip.setAttribute('aria-hidden', 'true');
+  tip.innerHTML = '<span class="map-tip__dot"></span><span><strong class="map-tip__name"></strong><span class="map-tip__cta">Get your instant offer →</span></span>';
+  document.body.append(tip);
+  const nameEl = tip.querySelector('.map-tip__name');
+  let current = null, x = 0, y = 0, frame = 0;
+  const place = () => {
+    frame = 0;
+    const w = tip.offsetWidth, h = tip.offsetHeight, gap = 18;
+    let left = x + gap, top = y - h - gap;
+    if (left + w > innerWidth - 8) left = x - w - gap;
+    if (top < 8) top = y + gap;
+    tip.style.transform = `translate3d(${Math.round(left)}px, ${Math.round(top)}px, 0)`;
+  };
+  const show = link => {
+    if (current !== link) { current = link; nameEl.textContent = stateName(link); }
+    tip.classList.add('is-on');
+    if (!frame) frame = requestAnimationFrame(place);
+  };
+  const hide = () => { current = null; tip.classList.remove('is-on'); };
+  mapBox.addEventListener('pointermove', event => {
+    const link = event.target instanceof Element && event.target.closest('svg a');
+    if (!link) return hide();
+    x = event.clientX; y = event.clientY; show(link);
+  });
+  mapBox.addEventListener('pointerleave', hide);
+  mapBox.addEventListener('focusin', event => {
+    const link = event.target instanceof Element && event.target.closest('svg a');
+    if (!link) return;
+    const r = link.getBoundingClientRect();
+    x = r.left + r.width / 2; y = r.top + r.height / 2; show(link);
+  });
+  mapBox.addEventListener('focusout', hide);
+  addEventListener('scroll', hide, {passive: true});
+}
 // The homepage map is ~100 KB of SVG, so it is fetched when it nears the viewport instead of being
 // part of the page. Its box has a fixed height, so nothing moves when it arrives.
 const mapSlot = document.querySelector('[data-map-src]');

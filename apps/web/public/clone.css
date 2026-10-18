@@ -29,3 +29,11 @@ button.video-section__play { background: transparent; border: 0; padding: 0; fon
   .faq-accordion__column, .faq-accordion--answered .faq-item, .faq-accordion--answered .faq-item > summary { width: 100%; max-width: none; box-sizing: border-box; }
   .faq-accordion__column:first-child { margin-bottom: 24px; }
 }
+/* Map state label (clone.js): instant, follows the pointer, brand navy with a red accent. */
+.map-tip { position: fixed; left: 0; top: 0; z-index: 1000; display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border-radius: 14px; background: rgba(10, 43, 94, .94); color: #fff; box-shadow: 0 14px 34px rgba(5, 15, 36, .35), inset 0 1px 0 rgba(255, 255, 255, .12); backdrop-filter: blur(8px); pointer-events: none; white-space: nowrap; opacity: 0; scale: .92; transition: opacity .12s ease, scale .12s ease; will-change: transform; }
+.map-tip.is-on { opacity: 1; scale: 1; }
+.map-tip__dot { width: 10px; height: 10px; border-radius: 50%; background: #de193e; box-shadow: 0 0 0 4px rgba(222, 25, 62, .28); flex: none; }
+.map-tip__name { display: block; font: 800 17px/1.15 Manrope, system-ui, sans-serif; letter-spacing: -.01em; }
+.map-tip__cta { display: block; margin-top: 3px; font: 600 12.5px/1.2 Manrope, system-ui, sans-serif; color: #b9d2ff; }
+.map svg a path { transition: fill .15s ease; }
+@media (prefers-reduced-motion: reduce) { .map-tip, .map svg a path { transition: none; } }
