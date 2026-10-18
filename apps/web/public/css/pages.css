@@ -23,8 +23,25 @@
 .faq-group:first-child { margin-top: 0; }
 .faq-group__title { margin: 0 0 8px; font-size: 22px; color: #0a2b5e; }
 .page-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.button--red {
+  background-image: linear-gradient(180deg, #ef3d5f -105.72%, #c40f30 3.52%, #c40f30);
+  color: #fff;
+  font-weight: 700;
+  transition: background-image .3s;
+}
+.button--red:before {
+  background: linear-gradient(180deg, #ef3d5f, #c40f30 98.53%, #c40f30 185.55%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity .3s;
+  width: 100%;
+}
+.button--red:hover:before { opacity: 0; }
 @media (min-width: 992px) {
-  .page-cta-row .button--white { font-size: 24px; height: 80px; }
+  .page-cta-row .button--red { font-size: 24px; height: 80px; }
 }
 @media (max-width: 575.98px) {
   .page-section { padding: 32px 0; }
