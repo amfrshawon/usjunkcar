@@ -84,10 +84,12 @@ test('trailing-slash addresses redirect', async () => {
   assert.equal(res.headers.get('location'), '/about/');
 });
 
-test('sitemap lists only public routes and robots match the environment', async () => {
+test('sitemap lists only public routes, plus blog posts when the blog is public, and robots match the environment', async () => {
   const sitemap = await (await fetch(`${origin}/sitemap.xml`)).text();
   const listed = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]).sort();
-  assert.deepEqual(listed, visible.map(r => `https://usjunkcars.si${r.path}`).sort());
+  const blog = visible.find(r => r.id === 'blog');
+  const posts = blog ? JSON.parse(readFileSync(path.join(stage, 'content/blog/posts.json'), 'utf8')).map(p => `https://usjunkcars.si${blog.path}${p.slug}/`) : [];
+  assert.deepEqual(listed, [...visible.map(r => `https://usjunkcars.si${r.path}`), ...posts].sort());
   const robots = await (await fetch(`${origin}/robots.txt`)).text();
   if (env === 'production') assert.match(robots, /Sitemap: https:\/\/usjunkcars\.si\/sitemap\.xml/);
   else assert.match(robots, /Disallow: \//);
