@@ -1,0 +1,825 @@
+{
+  "version": 1,
+  "maxPublicContentPages": 10,
+  "note": "Owner approval required: set status \"published\", add \"production\" to environments and record approval before release.",
+  "routes": [
+    {
+      "id": "home",
+      "path": "/",
+      "family": "homepage",
+      "title": "Cash for Junk Cars: Instant Offer & Free Towing | US Junk Cars",
+      "description": "Get cash for junk cars anywhere in the USA. We buy junk cars in any condition, with or without a title. Instant online offer, free towing, paid at pickup.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "AutomotiveBusiness",
+          "name": "US Junk Cars",
+          "url": "https://usjunkcars.si/",
+          "logo": "https://usjunkcars.si/images/brand/logo-stacked.svg",
+          "image": "https://usjunkcars.si/images/brand/og-image.png",
+          "telephone": "+1-844-512-0697",
+          "slogan": "Powered by Super Intelligent",
+          "description": "Get cash for junk cars anywhere in the USA. We buy junk cars in any condition, with or without a title. Instant online offer, free towing, paid at pickup.",
+          "areaServed": {
+            "@type": "Country",
+            "name": "United States"
+          },
+          "makesOffer": {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Cash for junk cars with free towing"
+            }
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "00:00",
+            "closes": "23:59"
+          },
+          "legalName": "USJunkCars",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jacksonville",
+            "addressRegion": "FL",
+            "postalCode": "32224",
+            "addressCountry": "US"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I get cash for my junk car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Click Get My Offer or call 1-844-512-0697, describe your car and see your offer. Accept it, choose a pickup time, and you get paid when the driver collects the car."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much will you pay for my junk car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It depends on the year, make, model, condition, location and current scrap and parts demand. Your instant offer shows the exact amount before you agree to anything."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I sell a junk car without a title?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Often, yes. Title rules differ by state, and many states accept a registration or other proof of ownership instead. Tell us what you have and we will check it before pickup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is towing really free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Pickup is free and nothing is taken out of your offer for towing, whether the car runs or not."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you buy cars that do not run?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. We buy non-running, wrecked, flooded, burned and stripped cars, as well as cars with blown engines or bad transmissions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What do I need to do after the car is picked up?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Remove your license plates and personal items, cancel your insurance, and follow your state rules for notifying the DMV of the sale."
+              }
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "locations",
+      "path": "/locations/",
+      "family": "service-area-directory",
+      "title": "Junk Car Removal Near Me in All 50 States | US Junk Cars",
+      "description": "Junk car removal near you in every state. Get cash for junk cars with free pickup from your driveway, street or shop. Check your ZIP code for an instant offer.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Junk car removal and cash for junk cars",
+          "provider": {
+            "@type": "AutomotiveBusiness",
+            "name": "US Junk Cars",
+            "url": "https://usjunkcars.si/",
+            "telephone": "+1-844-512-0697",
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
+            }
+          },
+          "areaServed": [
+            {
+              "@type": "State",
+              "name": "Alabama"
+            },
+            {
+              "@type": "State",
+              "name": "Alaska"
+            },
+            {
+              "@type": "State",
+              "name": "Arizona"
+            },
+            {
+              "@type": "State",
+              "name": "Arkansas"
+            },
+            {
+              "@type": "State",
+              "name": "California"
+            },
+            {
+              "@type": "State",
+              "name": "Colorado"
+            },
+            {
+              "@type": "State",
+              "name": "Connecticut"
+            },
+            {
+              "@type": "State",
+              "name": "Delaware"
+            },
+            {
+              "@type": "State",
+              "name": "Florida"
+            },
+            {
+              "@type": "State",
+              "name": "Georgia"
+            },
+            {
+              "@type": "State",
+              "name": "Hawaii"
+            },
+            {
+              "@type": "State",
+              "name": "Idaho"
+            },
+            {
+              "@type": "State",
+              "name": "Illinois"
+            },
+            {
+              "@type": "State",
+              "name": "Indiana"
+            },
+            {
+              "@type": "State",
+              "name": "Iowa"
+            },
+            {
+              "@type": "State",
+              "name": "Kansas"
+            },
+            {
+              "@type": "State",
+              "name": "Kentucky"
+            },
+            {
+              "@type": "State",
+              "name": "Louisiana"
+            },
+            {
+              "@type": "State",
+              "name": "Maine"
+            },
+            {
+              "@type": "State",
+              "name": "Maryland"
+            },
+            {
+              "@type": "State",
+              "name": "Massachusetts"
+            },
+            {
+              "@type": "State",
+              "name": "Michigan"
+            },
+            {
+              "@type": "State",
+              "name": "Minnesota"
+            },
+            {
+              "@type": "State",
+              "name": "Mississippi"
+            },
+            {
+              "@type": "State",
+              "name": "Missouri"
+            },
+            {
+              "@type": "State",
+              "name": "Montana"
+            },
+            {
+              "@type": "State",
+              "name": "Nebraska"
+            },
+            {
+              "@type": "State",
+              "name": "Nevada"
+            },
+            {
+              "@type": "State",
+              "name": "New Hampshire"
+            },
+            {
+              "@type": "State",
+              "name": "New Jersey"
+            },
+            {
+              "@type": "State",
+              "name": "New Mexico"
+            },
+            {
+              "@type": "State",
+              "name": "New York"
+            },
+            {
+              "@type": "State",
+              "name": "North Carolina"
+            },
+            {
+              "@type": "State",
+              "name": "North Dakota"
+            },
+            {
+              "@type": "State",
+              "name": "Ohio"
+            },
+            {
+              "@type": "State",
+              "name": "Oklahoma"
+            },
+            {
+              "@type": "State",
+              "name": "Oregon"
+            },
+            {
+              "@type": "State",
+              "name": "Pennsylvania"
+            },
+            {
+              "@type": "State",
+              "name": "Rhode Island"
+            },
+            {
+              "@type": "State",
+              "name": "South Carolina"
+            },
+            {
+              "@type": "State",
+              "name": "South Dakota"
+            },
+            {
+              "@type": "State",
+              "name": "Tennessee"
+            },
+            {
+              "@type": "State",
+              "name": "Texas"
+            },
+            {
+              "@type": "State",
+              "name": "Utah"
+            },
+            {
+              "@type": "State",
+              "name": "Vermont"
+            },
+            {
+              "@type": "State",
+              "name": "Virginia"
+            },
+            {
+              "@type": "State",
+              "name": "Washington"
+            },
+            {
+              "@type": "State",
+              "name": "West Virginia"
+            },
+            {
+              "@type": "State",
+              "name": "Wisconsin"
+            },
+            {
+              "@type": "State",
+              "name": "Wyoming"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "District of Columbia"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Locations",
+              "item": "https://usjunkcars.si/locations/"
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "about",
+      "path": "/about/",
+      "family": "company",
+      "title": "About US Junk Cars | Fair Junk Car Buyers, Powered by Super Intelligent",
+      "description": "US Junk Cars buys junk, damaged and non-running vehicles across all 50 states with instant Super Intelligent offers, free towing, on-the-spot payment and responsible auto recycling.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "About US Junk Cars",
+          "url": "https://usjunkcars.si/about/",
+          "description": "Learn how US Junk Cars uses Super Intelligent valuation, nationwide free towing and licensed auto recycling partners to buy junk, damaged and non-running vehicles across the United States.",
+          "about": {
+            "@type": "AutomotiveBusiness",
+            "name": "US Junk Cars",
+            "url": "https://usjunkcars.si/",
+            "logo": "https://usjunkcars.si/images/brand/logo-stacked.svg",
+            "image": "https://usjunkcars.si/images/brand/og-image.png",
+            "telephone": "+1-844-512-0697",
+            "slogan": "Powered by Super Intelligent",
+            "areaServed": {
+              "@type": "Country",
+              "name": "United States"
+            },
+            "knowsAbout": [
+              "Cash for junk cars",
+              "Junk car removal and free towing",
+              "Selling a damaged or non-running vehicle",
+              "Environmentally responsible auto recycling"
+            ],
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About",
+              "item": "https://usjunkcars.si/about/"
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "faq",
+      "path": "/faq/",
+      "family": "faq",
+      "title": "Junk Car FAQ: Sell Without a Title, Pickup & Payment | US Junk Cars",
+      "description": "Can you sell a car without a title? How much do junkyards pay? Get clear answers about junking a car, free pickup, payment and paperwork.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I sell a junk car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Request an instant offer online or by phone, accept the price you see, choose a pickup time, and get paid when the tow truck collects the car. Most sellers finish the whole process in a day or two."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much will you pay for my junk car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every offer is calculated for your vehicle. The year, make, model, condition, location and current scrap and parts prices all matter. A newer car with sellable parts usually earns more than its scrap weight alone."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much do junkyards pay for cars?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Scrapyards mostly pay by weight, so the price follows scrap steel markets and changes week to week. Because our offers also count the value of reusable parts, they can beat a weight-only quote, and towing is included."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is the offer guaranteed?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your offer holds as long as the car matches what you described. If the driver finds something major that was not mentioned, such as a missing engine, the price may be adjusted before pickup. You can always decline."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I sell a car without a title?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Often, yes. Rules depend on your state and the age of the vehicle. Many states accept a current registration plus a photo ID, and older vehicles may need less. Tell us what paperwork you have and we will confirm before pickup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need a title to junk my car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A title makes it fastest, but it is not always required. If your title is lost, you can usually request a duplicate from your state DMV, or we can check whether your registration is enough."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What do I need to junk my car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Have the title (or accepted alternative), a valid photo ID, and the keys if you have them. Remove your personal items and license plates before the driver arrives."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I sell a car that is still financed?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "If there is an active loan, the lender holds the title, so the loan must be paid off before the car can be sold for scrap. Contact your lender for a payoff amount first."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is towing really free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Pickup is free and nothing is subtracted from your offer for towing, whether the car runs or not."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How fast can you pick up my car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most pickups happen within one to two days of accepting your offer, and same-day pickup is often possible. Your available time slots appear when you schedule."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I have to be there during pickup?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually someone needs to hand over the title and keys and sign the paperwork. If you cannot be present, tell us when you schedule and we will explain the options for your state."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How will I be paid?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You are paid at pickup, when the driver collects the car. The payment method is shown when you schedule."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you buy cars that do not run?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. We buy non-running cars, cars with blown engines or failed transmissions, and wrecked, flooded, burned or stripped vehicles."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I sell a car that does not run?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Describe the problem honestly in the offer form. A car that does not start can still be worth more than scrap, and our tow truck handles cars that cannot move under their own power."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What should I do after the car is picked up?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Cancel your insurance, return or transfer the license plates as your state requires, and file a notice of sale or release of liability with your DMV if your state has one."
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "FAQ",
+              "item": "https://usjunkcars.si/faq/"
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "contact",
+      "path": "/contact/",
+      "family": "company",
+      "title": "Contact US Junk Cars | Call 1-844-512-0697 for Cash for Junk Cars",
+      "description": "Contact US Junk Cars 24/7 at 1-844-512-0697 or online. See what paperwork you need to junk a car, how to get the most money, pickup-day tips and how to avoid junk car scams.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact US Junk Cars",
+          "url": "https://usjunkcars.si/contact/",
+          "mainEntity": {
+            "@type": "AutomotiveBusiness",
+            "name": "US Junk Cars",
+            "url": "https://usjunkcars.si/",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+1-844-512-0697",
+              "contactType": "customer service",
+              "areaServed": "US",
+              "availableLanguage": "English",
+              "email": "support@usjunkcars.si",
+              "hoursAvailable": {
+                "@type": "OpeningHoursSpecification",
+                "opens": "00:00",
+                "closes": "23:59",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ]
+              }
+            },
+            "legalName": "USJunkCars",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jacksonville",
+              "addressRegion": "FL",
+              "postalCode": "32224",
+              "addressCountry": "US"
+            }
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Contact us",
+              "item": "https://usjunkcars.si/contact/"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I sell a junk car without a title?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Often, yes. Many states accept a current registration with a matching photo ID, and some do not require a title for older vehicles. Tell us what documents you have when you request your offer and we will confirm before pickup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Who pays the most for junk cars?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The best price usually comes from a buyer who values the whole car, including reusable parts, not only its scrap weight, and who includes towing for free. Compare offers by the amount you actually receive after any towing or paperwork fees."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How fast can you pick up my car?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most pickups happen within one to two days of accepting your offer, and same-day pickup is often possible. You choose the time slot that works for you."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I have to be there for the pickup?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually someone needs to hand over the keys and sign the title or bill of sale. If you cannot be there, tell us when you schedule and we will explain the options your state allows."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What areas do you serve?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We buy junk cars across the United States. Enter your ZIP code in the offer form to confirm pickup for your address."
+              }
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "privacy-policy",
+      "path": "/privacy-policy/",
+      "family": "legal",
+      "title": "Privacy Policy | US Junk Cars",
+      "description": "How US Junk Cars collects, uses, shares and protects your personal information, and your privacy rights when you sell your junk car.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Privacy Policy",
+          "url": "https://usjunkcars.si/privacy-policy/",
+          "datePublished": "2026-10-15",
+          "dateModified": "2026-10-15",
+          "publisher": {
+            "@type": "Organization",
+            "name": "US Junk Cars",
+            "url": "https://usjunkcars.si/",
+            "legalName": "USJunkCars"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Privacy Policy",
+              "item": "https://usjunkcars.si/privacy-policy/"
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    },
+    {
+      "id": "terms-and-conditions",
+      "path": "/terms-and-conditions/",
+      "family": "legal",
+      "title": "Terms and Conditions | US Junk Cars",
+      "description": "Terms for using usjunkcars.si and selling your junk car: offers, title and ownership, free pickup, payment at pickup and your responsibilities.",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Terms and Conditions",
+          "url": "https://usjunkcars.si/terms-and-conditions/",
+          "datePublished": "2026-10-18",
+          "dateModified": "2026-10-18",
+          "publisher": {
+            "@type": "Organization",
+            "name": "US Junk Cars",
+            "legalName": "USJunkCars",
+            "url": "https://usjunkcars.si/"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://usjunkcars.si/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Terms and Conditions",
+              "item": "https://usjunkcars.si/terms-and-conditions/"
+            }
+          ]
+        }
+      ],
+      "status": "published",
+      "environments": [
+        "local",
+        "development",
+        "production"
+      ],
+      "approval": "owner 2026-10-18 (release of dev incl. ed6873d)"
+    }
+  ]
+}

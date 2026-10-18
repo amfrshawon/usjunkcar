@@ -1,5 +1,14 @@
 {
-  "name": "usjunkcars-homepage-clone",
+  "name": "usjunkcars",
   "private": true,
-  "scripts": { "dev": "python3 -m http.server 4173 --bind 127.0.0.1", "start": "python3 -m http.server 4173 --bind 127.0.0.1" }
+  "packageManager": "pnpm@10.34.7",
+  "engines": { "node": ">=24.22.0 <25" },
+  "scripts": {
+    "dev": "pnpm --filter @usjunkcars/web dev",
+    "build": "pnpm --filter @usjunkcars/web build",
+    "reference": "python3 -m http.server 4173 --bind 127.0.0.1",
+    "ci:check": "node scripts/ci-check.mjs",
+    "ci:package": "python3 scripts/package-app.py",
+    "ci:predeploy": "node scripts/predeploy.mjs"
+  }
 }

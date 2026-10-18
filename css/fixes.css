@@ -56,10 +56,6 @@
 	margin-right: 32px;
 }
 
-html.yeps-bottom-show .top-button{
-	bottom: calc(var(--yeps-bottom-height, 0px) + 12px);
-}
-
 @media (max-width: 575.98px) {
 	.top-button span{
 		display: none;
@@ -90,5 +86,39 @@ html.yeps-bottom-show .top-button{
 	.location .hiw {
 		margin-top: 150px;
 		margin-bottom: 100px;
+	}
+}
+
+/* Brand logo (US Junk Cars, powered by Super Intelligent) */
+.header .logo {
+	max-width: none;
+}
+
+.header .logo__img {
+	display: block;
+	width: auto;
+	height: 56px;
+}
+
+.footer__logo-img {
+	display: block;
+	width: 260px;
+	max-width: 100%;
+	height: auto;
+}
+
+@media (min-width: 576px) {
+	.header .logo__img {
+		height: 66px;
+	}
+}
+
+@media (min-width: 1025px) {
+	.header .logo__img {
+		height: 80px;
+	}
+
+	.footer__logo-img {
+		width: 300px;
 	}
 }
