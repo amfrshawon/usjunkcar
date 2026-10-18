@@ -5,7 +5,7 @@ The owner's approval applies to an identified scope/revision, never all future w
 1. Implement on local `dev`, test, start localhost, and show the owner the actual preview and changes. Do not commit/push application work until the owner approves that scope and requests dev promotion.
 2. Commit/push the reviewed scope to `dev`. GitHub Actions validates it and, once the dev deployment flag is approved/enabled, deploys to private `https://dev.usjunkcars.si`. The owner reviews desktop and mobile using the private preview credentials.
 3. After final approval of that exact dev release, use the existing `dev` → `main` PR. Do not merge PR #1 without separate approval. If dev changes after review, obtain review of the new scope.
-4. CI validates main. The protected `production` environment requires owner `amfrshawon` to approve deployment before production credentials are exposed. Only main may deploy to `https://usjunkcars.si`.
+4. CI validates main. The `production` environment allows only `main` and no admin bypass; since 2026-10-18 it has no required reviewer (owner's decision), so the owner's approval is the merge of the reviewed `dev` → `main` PR. Only main may deploy to `https://usjunkcars.si`.
 
 Only dev/main are long-lived remote branches. Both deny force pushes/deletion. Main requires a PR, current base, `Validate` and resolved conversations, including for administrators. Zero independent PR reviewers supports the solo owner; explicit release approval is still required. Production environment administrator bypass is disabled.
 

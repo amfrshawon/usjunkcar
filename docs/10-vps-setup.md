@@ -63,7 +63,7 @@ For fresh-server recovery, inspect `infra/vps/bootstrap.sh`: it is one-time boot
 
 1. **Approve pages.** In `content/publication.json`, for each page approved for launch set `"status": "published"`, add `"production"` to `environments`, and record `"approval"` (for example `"owner 2026-10-15"`). The homepage must be approved. Unapproved pages return 404 in production, and `ci:predeploy` fails if any approved page links to an unapproved one.
 2. **Enable production** by setting `environments.main.enabled` to `true` in `infra/deployment.json`.
-3. **Release** through the reviewed `dev` → `main` pull request. CI runs `ci:check`, the protected `production` environment waits for owner approval, then `ci:package` builds the production artifact and the receiver health-checks it before switching.
+3. **Release** through the reviewed `dev` → `main` pull request. CI runs `ci:check`, the `production` environment (main only, no admin bypass, no required reviewer since 2026-10-18) starts the deployment, then `ci:package` builds the production artifact and the receiver health-checks it before switching.
 
 The installed receiver already accepts `nextjs-standalone` releases, so no server change is needed for the app path.
 
