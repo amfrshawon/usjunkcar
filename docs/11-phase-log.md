@@ -77,3 +77,41 @@
   - PSI on production after the release.
   - The VideoObject `embedUrl` points at the homepage section, not a standalone player page.
   - Two of the teaser's scenes show claims already in the film ("about two minutes", free towing, paid on the spot) and need the same owner approval as the film (`docs/13-launch-video-script.md`).
+
+## 2026-10-18 · SEO audit fixes: topic links, guide links, Peddle on demand (local `dev` on `800ee1a`, not pushed)
+
+- **Why:** the 18 Oct audit of usjunkcars.si graded site structure C+. Condition anchors in the shared mobile menu ("Car Without Title", "Blown Engine Car", "Non Running Car"…) pointed at `/#conditions` or `/#titles`, so search engines saw them as links to `/`. The 20 "Trending locations" in the footer all pointed at `/locations/`. "Prices for Scrap and Junk Cars" and "Sell a Car Without a Title" pointed at `/faq/`. The main pages linked to none of the 12 guides. The Peddle embed and its hidden iframe (with AWS captcha resources) loaded on every page view.
+- **Topic links:** each menu, footer and homepage anchor now goes to the guide that matches it. No new routes.
+
+  | Anchor | Now links to |
+  |---|---|
+  | Car Without Title, Sell a Car Without a Title, the homepage "Without Title" card | `/blog/sell-junk-car-without-a-title/` |
+  | Non Running Car, Blown Engine Car, Car with Broken Transmission | `/blog/blown-engine-or-bad-transmission-repair-vs-sell/` |
+  | Damaged Car | `/blog/selling-wrecked-flooded-or-hail-damaged-car/` |
+  | Scrap Car, Prices for Scrap and Junk Cars (menu and footer) | `/blog/how-much-is-my-junk-car-worth/` |
+  | RV and Motorhome | `/blog/scrap-metal-prices-vs-whole-car-offers/` (the heavy-vehicle guide; there is no RV-specific page) |
+  | Used Car | `/blog/environmental-benefits-of-junking-an-old-car/` (an unused car sitting in the driveway) |
+  | Cash for Junk Cars | `/` (the homepage topic) |
+
+  The 20 state, city and county names in "Trending locations" are now plain text (muted so they do not look clickable), followed by one link: "See every state we serve →" to `/locations/`.
+- **Guide links:** 2–3 links inside existing copy on each main page. Home: 3 FAQ answers (value, no title, plates/DMV/insurance). About: blown engine/transmission, storm damage, recycling. FAQ: value, no title, plates/DMV/insurance. Contact: no title, the 7-step pickup checklist, scam red flags. Locations: apartment/shop pickup, heavy vehicles, no title. The homepage also has a "Seller Guides" strip before "Popular Ways Sellers Find Us": four cards (no title, value, blown engine, pickup checklist) and a "Browse all 12 junk car guides" link. Styles are in `css/pages.css` (`.guides__*`, footer spans, `.is-loading`).
+- **Peddle on demand:** `peddleBootstrap()` keeps Peddle's stub queue but no longer fetches the embed on `load`/first interaction. Instead it defines `window.loadPeddleEmbed()`. `peddle-offer.js` (now `?v=4`) starts loading on `pointerdown` on any `[data-peddle-offer]` control, or on the first click or ZIP search. The control gets `is-loading`/`aria-busy` until Peddle's iframe has loaded (at most 3 s), then the offer opens. Later clicks open at once. If the script errors or takes over 10 s, the first click goes to `tel:+18445120697` and later clicks use the plain `tel:` link. `analytics.js` is unchanged; `offer_open` and `zip_submit` still fire, in the capture phase.
+- **Measurements** (Lighthouse 13.5.0, mobile preset, simulated throttling, local development builds of `800ee1a` and this change, behind the gzip proxy, 3 runs each):
+
+  | | Score | FCP | LCP | Speed Index | TBT | CLS | Transfer |
+  |---|---|---|---|---|---|---|---|
+  | `/` before | 97–98 | 1.4–1.5 s | 2.4 s | 1.4–1.5 s | 0–20 ms | 0.001 | 363 KiB |
+  | `/` after | 97–98 | 1.4–1.5 s | 2.4 s | 1.4–1.5 s | 0–10 ms | 0.001 | 361 KiB |
+  | `/blog/sell-junk-car-without-a-title/` before | 93–94 | 1.5 s | 3.0–3.1 s | 1.5 s | 10–20 ms | 0.007–0.044 | 464–468 KiB |
+  | `/blog/sell-junk-car-without-a-title/` after | 93 | 1.5 s | 3.1 s | 1.5 s | 10–20 ms | 0.044 | 466 KiB |
+
+  The scores do not change: Peddle was already deferred until after `load`, so it never affected FCP/LCP. What changes is what a visitor downloads without asking for an offer. Before, every page view fetched `staging-publisher-embed.peddle.com/api/v1/embed/…` and created Peddle's hidden iframe, which loads its captcha resources. After, no request goes to Peddle until an offer control is pressed (checked in Lighthouse's network log and in the browser after 8 s idle). Cross-origin sizes inside the iframe are not visible to the page, so the saving is not measured in KiB.
+- **Verification:**
+  - **Links:** a crawl of the development build from `/` reached 20 pages (8 content pages + 12 guides), all 200, no other internal links. Every anchor in the table above goes to the listed URL.
+  - **Peddle (in-app Chrome, staging account):** at desktop width the header "Online Quote" showed the loading state for ~2 s, then the Peddle iframe opened and one `offer_open` (header) was pushed. At 375 px the hero ZIP search with 32224 opened Peddle with `zipcode=32224` and pushed `zip_submit`. The offer button on the guide page also opened Peddle. With the embed script blocked, the loading state cleared and the next click was not intercepted, so the `tel:` link works. Peddle's staging modal opens on its "confirm you are human" step, the same as in the old build.
+  - **Layout:** the guides strip is 4 columns at 1440 px and 1 column at 375 px, with no horizontal overflow. Footer checked at both widths. No console errors on `/`, `/about/`, `/faq/`, `/contact/`, `/locations/` or the guide page.
+  - **CI:** `pnpm run ci:check` passed (14/14 site tests in both the development and production builds).
+- **Not done / open:**
+  - No RV-specific guide; "RV and Motorhome" goes to the heavy-vehicle guide.
+  - The production Peddle account and Safari/iOS were not tested.
+  - Real-world PSI after release.
