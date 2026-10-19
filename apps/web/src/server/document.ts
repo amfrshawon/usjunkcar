@@ -1,5 +1,5 @@
 import 'server-only';
-import { buildEnv, CANONICAL_ORIGIN, GTM_ID, gtmBootstrap, peddleBootstrap } from './config';
+import { buildEnv, CANONICAL_ORIGIN, GTM_ID, gtmBootstrap, peddleBootstrap, UMAMI } from './config';
 import { findRoute, isPublic, readFragment } from './publication';
 
 /**
@@ -54,6 +54,7 @@ function renderDocument(page: Page): string {
     ...page.headTags,
     ...ICONS.map(({ rel, ...attrs }) => link({ rel, ...attrs })),
     `<script>${peddleBootstrap()}</script>`,
+    UMAMI ? `<script defer src="${UMAMI.src}" data-website-id="${UMAMI.websiteId}"></script>` : '',
   ];
   const body = [
     `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,

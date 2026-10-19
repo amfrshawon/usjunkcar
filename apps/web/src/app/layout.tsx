@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { HtmlFragment } from '@/components/Fragment';
-import { CANONICAL_ORIGIN, GTM_ID, gtmBootstrap, peddleBootstrap } from '@/server/config';
+import { CANONICAL_ORIGIN, GTM_ID, gtmBootstrap, peddleBootstrap, UMAMI } from '@/server/config';
 import { ICONS, MANIFEST, SCRIPTS, SITE_NAME, siteCss, THEME_COLOR } from '@/server/document';
 import { readFragment } from '@/server/publication';
 
@@ -24,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: gtmBootstrap() }} />
         <style dangerouslySetInnerHTML={{ __html: siteCss() }} />
         <script dangerouslySetInnerHTML={{ __html: peddleBootstrap() }} />
+        {UMAMI && <script defer src={UMAMI.src} data-website-id={UMAMI.websiteId} />}
       </head>
       <body className="home" id="top" style={{ position: 'relative' }}>
         <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} /></noscript>

@@ -58,6 +58,14 @@ export function gtmBootstrap(): string {
 }
 
 /**
+ * Umami Cloud (cookieless page analytics). Only production builds load it, so dev and local visits
+ * never reach the owner's stats.
+ */
+export const UMAMI = buildEnv === 'production'
+  ? { src: 'https://cloud.umami.is/script.js', websiteId: 'ff63be05-561a-4172-ac0c-53c743c318ad' }
+  : null;
+
+/**
  * Peddle's bootstrap snippet (from the publisher dashboard), parameterised by environment, minus its
  * automatic script load. The stub queues calls (boot, open, hydrate) until the embed script arrives,
  * and window.loadPeddleEmbed() fetches that script. peddle-offer.js calls it only when a visitor first
