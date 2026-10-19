@@ -237,3 +237,14 @@ test('SEO quality: titles, descriptions, heading hierarchy, content depth, conte
     }
   }
 });
+
+test('Umami analytics loads only in production, on every public page', async () => {
+  const tag = '<script defer="" src="https://cloud.umami.is/script.js" data-website-id="ff63be05-561a-4172-ac0c-53c743c318ad">';
+  const plain = '<script defer src="https://cloud.umami.is/script.js" data-website-id="ff63be05-561a-4172-ac0c-53c743c318ad"></script>';
+  for (const route of visible) {
+    const html = await (await fetch(origin + route.path)).text();
+    const has = html.includes(plain) || html.includes(tag);
+    if (env === 'production') assert.ok(has, `Umami missing on ${route.path}`);
+    else assert.ok(!html.includes('cloud.umami.is'), `Umami must not load in ${env} (${route.path})`);
+  }
+});

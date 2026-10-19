@@ -780,7 +780,7 @@
           "name": "Privacy Policy",
           "url": "https://usjunkcars.si/privacy-policy/",
           "datePublished": "2026-10-15",
-          "dateModified": "2026-10-18",
+          "dateModified": "2026-10-20",
           "publisher": {
             "@type": "Organization",
             "name": "US Junk Cars",
@@ -814,7 +814,7 @@
         "production"
       ],
       "approval": "owner 2026-10-18 (release of dev incl. ed6873d)",
-      "lastModified": "2026-10-18"
+      "lastModified": "2026-10-20"
     },
     {
       "id": "terms-and-conditions",
